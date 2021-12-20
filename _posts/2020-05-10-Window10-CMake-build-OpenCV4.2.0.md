@@ -4,8 +4,6 @@ title:      Window10 CMake 配置OpenCV源码
 category: 	blog
 ---
 
-## Window10 CMake 配置OpenCV源码
-
 0、下载opencv-4.2.0-vc14_vc15.exe 和 opencv_contrib-4.2.0.zip 并解压
 
 1、打开CMake gui软件，配置路径

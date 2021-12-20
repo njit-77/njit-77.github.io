@@ -4,8 +4,6 @@ title:      Window10 VS2019配置tesseract源码
 category: 	blog
 ---
 
-## Window10 VS2019配置tesseract源码
-
 1、配置tessract源码，折腾了好久[2020.5.5-2020.5.11]，今晚终于配置成功了。
 
 ### 成功

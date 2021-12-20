@@ -4,8 +4,6 @@ title:      vs创建qt dll，并使用qt控制台测试
 category: 	blog
 ---
 
-## vs创建qt dll，并使用qt控制台测试
-
 ### 创建qt dll项目
 
 1、vs新建，创建Qt Class Library

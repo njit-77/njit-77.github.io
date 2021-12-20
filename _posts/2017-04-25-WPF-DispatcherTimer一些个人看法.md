@@ -32,7 +32,7 @@ private void DispatcherTimer_Click(object sender, EventArgs e)
 
 在DispatcherTimer_Click函数入口设断点，发现程序无法进入。
 
-![1](/images/WPF-DispatcherTimer一些个人看法/1.png)
+![1](/images/WPF-DispatcherTimer一些个人看法/1.PNG)
 
 如果这样创建对象
 

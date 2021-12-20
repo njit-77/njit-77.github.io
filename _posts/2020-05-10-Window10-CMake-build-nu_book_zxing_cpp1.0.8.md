@@ -2,14 +2,15 @@
 layout:     post
 title:      Window 10 CMake build nu-book_zxing-cpp 1.0.8
 category: 	blog
-
 ---
+
+## Window 10 CMake build nu-book_zxing-cpp 1.0.8
 
 1、打开CMake，设置代码路径，生成路径。
 
 设置OpenCV_DIR值
 
-!![OpenCV_DIR](/images/Window10 cmake-zxing1.0.8/1.PNG)
+![OpenCV_DIR](/images/Window10 cmake-zxing1.0.8/1.PNG)
 
 2、点击Configure
 

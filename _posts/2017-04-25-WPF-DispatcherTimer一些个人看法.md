@@ -4,11 +4,7 @@ title:      WPF  DispatcherTimer一些个人看法
 category: 	blog
 ---
 
-## WPF  DispatcherTimer一些个人看法
-
 wpf中的DispatcherTimer基本用法，本文不在叙述。主要写一些不同的，来提醒自己不要再犯同样错误。
-
-
 
 前几天写代码时发现。当在非UI线程创建DispatcherTimer实例时，程序无法进入Tick事件
 
@@ -36,11 +32,7 @@ private void DispatcherTimer_Click(object sender, EventArgs e)
 
 在DispatcherTimer_Click函数入口设断点，发现程序无法进入。
 
-![](https://img2018.cnblogs.com/blog/1773352/201909/1773352-20190905183659513-729598169.png)
-
-
-
-
+![](/images/WPF-DispatcherTimer一些个人看法/1.png)
 
 如果这样创建对象
 
@@ -68,9 +60,7 @@ private void DispatcherTimer_Click(object sender, EventArgs e)
 
 程序可以进入Tick事件。
 
-![](https://img2018.cnblogs.com/blog/1773352/201909/1773352-20190905183715352-1329255005.png)
-
-
+![](/images/WPF-DispatcherTimer一些个人看法/2.png)
 
 或者这样创建对象
 

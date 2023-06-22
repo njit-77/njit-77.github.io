@@ -109,11 +109,11 @@ public class Database
 
 结果如下
 
-![](images/C# 简单 操作Sqlite、Mysql数据库/sqlite-1.png)
+![](images/C#简单操作Sqlite、Mysql数据库/sqlite-1.png)
 
 
 
-![](images/C# 简单 操作Sqlite、Mysql数据库/sqlite-2.png)
+![](images/C#简单操作Sqlite、Mysql数据库/sqlite-2.png)
 
 
 
@@ -187,11 +187,11 @@ public class Database
 
 结果如下
 
-![](images/C# 简单 操作Sqlite、Mysql数据库/mysql-1.png)
+![](images/C#简单操作Sqlite、Mysql数据库/mysql-1.png)
 
 
 
-![](images/C# 简单 操作Sqlite、Mysql数据库/mysql-2.png)
+![](images/C#简单操作Sqlite、Mysql数据库/mysql-2.png)
 
 #### 完整代码
 

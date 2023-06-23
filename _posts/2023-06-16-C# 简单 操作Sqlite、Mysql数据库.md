@@ -109,9 +109,9 @@ public class Database
 
 结果如下
 
-![sqlite-1](/images/C#简单操作Sqlite、Mysql数据库/sqlite-1.png)
+![sqlite-1](/images/C%23简单操作Sqlite、Mysql数据库/sqlite-1.png)
 
-![sqlite-2](/images/C#简单操作Sqlite、Mysql数据库/sqlite-2.png)
+![sqlite-2](/images/C%23简单操作Sqlite、Mysql数据库/sqlite-2.png)
 
 
 #### MySql数据库
@@ -183,9 +183,9 @@ public class Database
 ```
 
 结果如下
-![mysql-1](/images/C#简单操作Sqlite、Mysql数据库/mysql-1.png)
+![mysql-1](/images/C%23简单操作Sqlite、Mysql数据库/mysql-1.png)
 
-![mysql-2](/images/C#简单操作Sqlite、Mysql数据库/mysql-2.png)
+![mysql-2](/images/C%23简单操作Sqlite、Mysql数据库/mysql-2.png)
 
 
 #### 完整代码

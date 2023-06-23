@@ -109,11 +109,12 @@ public class Database
 
 结果如下
 
-![](/images/C#简单操作Sqlite、Mysql数据库/sqlite-1.png)
+![](/images/Window10 cmake-zxing1.0.8/1.PNG)
+![sqlite-1](/images/C#简单操作Sqlite、Mysql数据库/sqlite-1.png)
 
 
 
-![](/images/C#简单操作Sqlite、Mysql数据库/sqlite-2.png)
+![sqlite-1](/images/C#简单操作Sqlite、Mysql数据库/sqlite-2.png)
 
 
 

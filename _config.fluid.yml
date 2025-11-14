@@ -300,7 +300,7 @@ web_analytics:
 
     # 用于统计 PV UV 的开始时间，格式为 "YYYY-MM-DD"
     # statistics on the start time, the format is "YYYY-MM-DD"
-    start_time:  2025-01-11
+    start_time: 2021-12-20
 
     # 新建一个 umami viewOnly 用户，然后通过 login api 获取该用户 token
     # create an umami viewOnly user, and then get user token through the login api

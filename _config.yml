@@ -103,4 +103,4 @@ theme: fluid
 deploy:
   type: git
   repo: git@github.com:njit-77/njit-77.github.io.git
-  branch: gh-pages   # 或者根据你的实际情况设置为 ph-pages 
+  branch: ph-pages   # 或者根据你的实际情况设置为 ph-pages 

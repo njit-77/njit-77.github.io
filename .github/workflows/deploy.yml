@@ -42,10 +42,6 @@ jobs:
         GIT_NAME: ${{ secrets.GIT_NAME }}            # Git 用户名
         GIT_EMAIL: ${{ secrets.GIT_EMAIL }}          # Git 用户邮箱
       run: |
-        mkdir -p ~/.ssh/            
-        echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_ed25519
-        chmod 600 ~/.ssh/id_ed25519
-        ssh-keyscan github.com >> ~/.ssh/known_hosts  
         git config --global user.name "$GIT_NAME"     
         git config --global user.email "$GIT_EMAIL"   
-        hexo deploy --cname neurowave.tech    
+        hexo deploy

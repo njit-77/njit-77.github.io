@@ -38,10 +38,9 @@ jobs:
     # 步骤 5：部署到 GitHub Pages
     - name: Deploy to GitHub Pages  # 使用 Hexo 部署到 GitHub Pages
       env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE }}   # 使用 GitHub Secrets 中存储的 SSH 私钥
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}   # 使用 GitHub Secrets 中存储的 SSH 私钥
         GIT_NAME: ${{ secrets.GIT_NAME }}            # Git 用户名
         GIT_EMAIL: ${{ secrets.GIT_EMAIL }}          # Git 用户邮箱
-        MY_TOKEN: ${{ secrets.MY_TOKEN }}            # 使用 GitHub Secrets 中存储的 Token
       run: |
         mkdir -p ~/.ssh/            
         echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_ed25519

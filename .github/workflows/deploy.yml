@@ -1,0 +1,52 @@
+name: Deploy Hexo Blog             # 这是 Actions 的名字，随意命名
+
+# 当 push 事件发生时触发部署
+on:
+  push:
+    branches:
+      - main                       # 当推送到 main 分支时触发部署（根据你的分支选择）
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest          # 选择运行环境，这里选择最新的 Ubuntu
+
+    steps:
+    # 步骤 1：拉取代码
+    - name: Checkout repository     # 从 GitHub 仓库拉取代码
+      uses: actions/checkout@v2
+      with:
+        ref: main                   # 选择部署的分支
+
+    # 步骤 2：设置 Node 环境
+    - name: Setup Node.js           # 安装 Node.js 环境
+      uses: actions/setup-node@v2
+      with:
+        node-version: 'v24'      # 设置 Node.js 版本
+
+    # 步骤 3：安装依赖
+    - name: Install dependencies    # 安装 Hexo 和相关依赖
+      run: |
+        npm install -g hexo-cli    
+        npm install                 
+
+    # 步骤 4：生成静态文件
+    - name: Hexo Generate           # 使用 Hexo 生成静态文件
+      run: |
+        hexo clean                 
+        hexo generate              
+
+    # 步骤 5：部署到 GitHub Pages
+    - name: Deploy to GitHub Pages  # 使用 Hexo 部署到 GitHub Pages
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE }}   # 使用 GitHub Secrets 中存储的 SSH 私钥
+        GIT_NAME: ${{ secrets.GIT_NAME }}            # Git 用户名
+        GIT_EMAIL: ${{ secrets.GIT_EMAIL }}          # Git 用户邮箱
+        MY_TOKEN: ${{ secrets.MY_TOKEN }}            # 使用 GitHub Secrets 中存储的 Token
+      run: |
+        mkdir -p ~/.ssh/            
+        echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_ed25519
+        chmod 600 ~/.ssh/id_ed25519
+        ssh-keyscan github.com >> ~/.ssh/known_hosts  
+        git config --global user.name "$GIT_NAME"     
+        git config --global user.email "$GIT_EMAIL"   
+        hexo deploy --cname neurowave.tech    

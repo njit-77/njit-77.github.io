@@ -101,6 +101,4 @@ theme: fluid
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
-  type: git
-  repo: git@github.com:njit-77/njit-77.github.io.git
-  branch: main
+  type: 

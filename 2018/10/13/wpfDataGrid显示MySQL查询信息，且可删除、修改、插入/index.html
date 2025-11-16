@@ -1,0 +1,767 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="njit-77">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1、入行好几年了，工作中使用数据库几率很小(传统行业)。借着十一假期回家机会，学习下数据库。 2、初次了解数据库相关知识，如果本文有误，还望告知。 3、本文主要目的，记录下wpf界面显示数据库信息，且可进行删除、修改、插入命令。并反馈数据到MySQL。做个记录，以便以后工作中使用到时没个头绪。 4、MySQL的基本讲解不再介绍，安装过程什么的，我也是按照网上教程一步一步进行的，假定MySQL已安装">
+<meta property="og:type" content="article">
+<meta property="og:title" content="wpfDataGrid显示MySQL查询信息，且可删除、修改、插入">
+<meta property="og:url" content="https://njit-77.github.io/2018/10/13/wpfDataGrid%E6%98%BE%E7%A4%BAMySQL%E6%9F%A5%E8%AF%A2%E4%BF%A1%E6%81%AF%EF%BC%8C%E4%B8%94%E5%8F%AF%E5%88%A0%E9%99%A4%E3%80%81%E4%BF%AE%E6%94%B9%E3%80%81%E6%8F%92%E5%85%A5/index.html">
+<meta property="og:site_name" content="njit-77&#39;s Blog">
+<meta property="og:description" content="1、入行好几年了，工作中使用数据库几率很小(传统行业)。借着十一假期回家机会，学习下数据库。 2、初次了解数据库相关知识，如果本文有误，还望告知。 3、本文主要目的，记录下wpf界面显示数据库信息，且可进行删除、修改、插入命令。并反馈数据到MySQL。做个记录，以便以后工作中使用到时没个头绪。 4、MySQL的基本讲解不再介绍，安装过程什么的，我也是按照网上教程一步一步进行的，假定MySQL已安装">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://njit-77.github.io/images/wpfDataGrid%E6%98%BE%E7%A4%BAMySQL%E6%9F%A5%E8%AF%A2%E4%BF%A1%E6%81%AF%EF%BC%8C%E4%B8%94%E5%8F%AF%E5%88%A0%E9%99%A4%E3%80%81%E4%BF%AE%E6%94%B9%E3%80%81%E6%8F%92%E5%85%A5/1.PNG">
+<meta property="og:image" content="https://njit-77.github.io/images/wpfDataGrid%E6%98%BE%E7%A4%BAMySQL%E6%9F%A5%E8%AF%A2%E4%BF%A1%E6%81%AF%EF%BC%8C%E4%B8%94%E5%8F%AF%E5%88%A0%E9%99%A4%E3%80%81%E4%BF%AE%E6%94%B9%E3%80%81%E6%8F%92%E5%85%A5/2.PNG">
+<meta property="article:published_time" content="2018-10-12T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-16T08:40:24.629Z">
+<meta property="article:author" content="njit-77">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://njit-77.github.io/images/wpfDataGrid%E6%98%BE%E7%A4%BAMySQL%E6%9F%A5%E8%AF%A2%E4%BF%A1%E6%81%AF%EF%BC%8C%E4%B8%94%E5%8F%AF%E5%88%A0%E9%99%A4%E3%80%81%E4%BF%AE%E6%94%B9%E3%80%81%E6%8F%92%E5%85%A5/1.PNG">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>wpfDataGrid显示MySQL查询信息，且可删除、修改、插入 - njit-77&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"njit-77.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2021-12-20T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Hello World</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="wpfDataGrid显示MySQL查询信息，且可删除、修改、插入"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2018-10-13 00:00" pubdate>
+          2018-10-13 00:00:00
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          945 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          8 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">wpfDataGrid显示MySQL查询信息，且可删除、修改、插入</h1>
+            
+              <p id="updated-time" class="note note-info" style="">
+                
+                  
+                    本文最后更新于 2025-11-16 16:40:24
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <p>1、入行好几年了，工作中使用数据库几率很小(传统行业)。借着十一假期回家机会，学习下数据库。</p>
+<p>2、初次了解数据库相关知识，如果本文有误，还望告知。</p>
+<p>3、本文主要目的，记录下wpf界面显示数据库信息，且可进行删除、修改、插入命令。并反馈数据到MySQL。做个记录，以便以后工作中使用到时没个头绪。</p>
+<p>4、MySQL的基本讲解不再介绍，安装过程什么的，我也是按照网上教程一步一步进行的，假定MySQL已安装成功，且新建有数据库，见下图:</p>
+<p><img src="/images/wpfDataGrid%E6%98%BE%E7%A4%BAMySQL%E6%9F%A5%E8%AF%A2%E4%BF%A1%E6%81%AF%EF%BC%8C%E4%B8%94%E5%8F%AF%E5%88%A0%E9%99%A4%E3%80%81%E4%BF%AE%E6%94%B9%E3%80%81%E6%8F%92%E5%85%A5/1.PNG" srcset="/img/loading.gif" lazyload alt="1"></p>
+<p>废话不多说，直接上代码</p>
+<p>界面代码xaml</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs xaml">&lt;Grid&gt;<br>    &lt;DataGrid x:Name=&quot;DataGrid1&quot; HorizontalAlignment=&quot;Left&quot; Height=&quot;400&quot; Margin=&quot;10,10,0,0&quot; VerticalAlignment=&quot;Top&quot; Width=&quot;537&quot; LoadingRow=&quot;DataGrid_LoadingRow&quot;&gt;<br>        &lt;DataGrid.Columns&gt;<br>            &lt;DataGridTextColumn Header=&quot;id&quot; Width=&quot;50&quot; Binding=&quot;&#123;Binding Path=id&#125;&quot;/&gt;<br>            &lt;DataGridTextColumn Header=&quot;name&quot; Width=&quot;*&quot; Binding=&quot;&#123;Binding Path=name&#125;&quot;/&gt;<br>            &lt;DataGridTextColumn Header=&quot;phone&quot; Width=&quot;*&quot; Binding=&quot;&#123;Binding Path=phone&#125;&quot;/&gt;<br>            &lt;DataGridTextColumn Header=&quot;email&quot; Width=&quot;*&quot; Binding=&quot;&#123;Binding Path=email&#125;&quot;/&gt;<br>        &lt;/DataGrid.Columns&gt;<br>    &lt;/DataGrid&gt;<br>    &lt;Button x:Name=&quot;DeleteButton&quot; Content=&quot;删除&quot; Margin=&quot;0,40,10,0&quot; VerticalAlignment=&quot;Top&quot; Click=&quot;DeleteButton_Click&quot; HorizontalAlignment=&quot;Right&quot; Width=&quot;75&quot;/&gt;<br>    &lt;Button x:Name=&quot;UpdateButton&quot; Content=&quot;修改&quot; Margin=&quot;0,80,10,0&quot; VerticalAlignment=&quot;Top&quot; Click=&quot;UpdateButton_Click&quot; HorizontalAlignment=&quot;Right&quot; Width=&quot;75&quot;/&gt;<br>    &lt;Button x:Name=&quot;InsertButton&quot; Content=&quot;插入&quot; Margin=&quot;0,120,10,0&quot; VerticalAlignment=&quot;Top&quot; Click=&quot;InsertButton_Click&quot; HorizontalAlignment=&quot;Right&quot; Width=&quot;75&quot;/&gt;<br>&lt;/Grid&gt;<br></code></pre></td></tr></table></figure>
+
+<p>后端代码cs</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">partial</span> <span class="hljs-keyword">class</span> <span class="hljs-title">MainWindow</span> : <span class="hljs-title">Window</span><br>&#123;<br>    <span class="hljs-comment">//SQLBulkCopy</span><br>    Random rd = <span class="hljs-keyword">new</span> Random();<br>    <span class="hljs-built_in">string</span> sqlstr = <span class="hljs-string">&quot;Data Source=127.0.0.1;User ID=root;Password=root;DataBase=test;Charset=utf8;&quot;</span>;<br>    MySql.Data.MySqlClient.MySqlConnection con;<br>    MySql.Data.MySqlClient.MySqlDataAdapter adapter;<br>    System.Data.DataSet ds;<br>    System.Data.DataTable dt;<br><br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">MainWindow</span>()</span><br>    &#123;<br>        InitializeComponent();<br><br>        UpdateMySQLData();<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">DataGrid_LoadingRow</span>(<span class="hljs-params"><span class="hljs-built_in">object</span> sender, System.Windows.Controls.DataGridRowEventArgs e</span>)</span><br>    &#123;<br>        e.Row.Header = e.Row.GetIndex() + <span class="hljs-number">1</span>;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">UpdateMySQLData</span>()</span><br>    &#123;<br>        <span class="hljs-keyword">if</span> (con == <span class="hljs-literal">null</span>)<br>        &#123;<br>            con = <span class="hljs-keyword">new</span> MySql.Data.MySqlClient.MySqlConnection(sqlstr);<br>            con.Open();<br>        &#125;<br>        <span class="hljs-keyword">if</span> (adapter == <span class="hljs-literal">null</span>)<br>        &#123;<br>            adapter = <span class="hljs-keyword">new</span> MySql.Data.MySqlClient.MySqlDataAdapter(<span class="hljs-string">&quot;select * from user&quot;</span>, con);<br>        &#125;<br>        <span class="hljs-keyword">if</span> (ds == <span class="hljs-literal">null</span>)<br>        &#123;<br>            ds = <span class="hljs-keyword">new</span> System.Data.DataSet();<br>        &#125;<br>        ds.Clear();<br>        adapter.Fill(ds, <span class="hljs-string">&quot;user&quot;</span>);<br>        <span class="hljs-keyword">if</span> (dt == <span class="hljs-literal">null</span>)<br>        &#123;<br>            dt = ds.Tables[<span class="hljs-string">&quot;user&quot;</span>];<br>        &#125;<br>        DataGrid1.ItemsSource = dt.DefaultView;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">DeleteButton_Click</span>(<span class="hljs-params"><span class="hljs-built_in">object</span> sender, RoutedEventArgs e</span>)</span><br>    &#123;<br>        <span class="hljs-built_in">int</span> index = DataGrid1.SelectedIndex;<br>        <span class="hljs-keyword">if</span> (index == <span class="hljs-number">-1</span>) <span class="hljs-keyword">return</span>;<br>        <span class="hljs-meta">#<span class="hljs-keyword">if</span> MySQLCommand</span><br>            <span class="hljs-built_in">string</span> DeleteSqlCommand = <span class="hljs-built_in">string</span>.Format(<span class="hljs-string">&quot;delete from user where id = &#x27;&#123;0&#125;&#x27;&quot;</span>, dt.Rows[index][<span class="hljs-string">&quot;id&quot;</span>]);<br>        MySql.Data.MySqlClient.MySqlCommand cmd = <span class="hljs-keyword">new</span> MySql.Data.MySqlClient.MySqlCommand(DeleteSqlCommand, con);<br>        cmd.ExecuteNonQuery();<br><br>        UpdateMySQLData();<br>        <span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br>            dt.Rows[index].Delete();<br>        <span class="hljs-comment">//dt.Rows.RemoveAt(index);==dt.Rows[index].Delete() + dt.AcceptChanges()</span><br>        MySql.Data.MySqlClient.MySqlCommandBuilder builder = <span class="hljs-keyword">new</span> MySql.Data.MySqlClient.MySqlCommandBuilder(adapter);<br>        adapter.Update(dt);<br>        dt.AcceptChanges();<br>        <span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">UpdateButton_Click</span>(<span class="hljs-params"><span class="hljs-built_in">object</span> sender, RoutedEventArgs e</span>)</span><br>    &#123;<br>        <span class="hljs-meta">#<span class="hljs-keyword">if</span> MySQLCommand</span><br>            <span class="hljs-built_in">int</span> index = DataGrid1.SelectedIndex;<br>        <span class="hljs-built_in">string</span> UpdateSqlCommand = <span class="hljs-built_in">string</span>.Format(<span class="hljs-string">&quot;update user set id = &#x27;&#123;0&#125;&#x27;, name = &#x27;&#123;1&#125;&#x27;, phone = &#x27;&#123;2&#125;&#x27;, email = &#x27;&#123;3&#125;&#x27; where id = &#x27;&#123;0&#125;&#x27;&quot;</span>,<br>                                                dt.Rows[index][<span class="hljs-string">&quot;id&quot;</span>], dt.Rows[index][<span class="hljs-string">&quot;name&quot;</span>], dt.Rows[index][<span class="hljs-string">&quot;phone&quot;</span>], dt.Rows[index][<span class="hljs-string">&quot;email&quot;</span>]);<br>        MySql.Data.MySqlClient.MySqlCommand cmd = <span class="hljs-keyword">new</span> MySql.Data.MySqlClient.MySqlCommand(UpdateSqlCommand, con);<br>        cmd.ExecuteNonQuery();<br><br>        UpdateMySQLData();<br>        <span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br>            MySql.Data.MySqlClient.MySqlCommandBuilder builder = <span class="hljs-keyword">new</span> MySql.Data.MySqlClient.MySqlCommandBuilder(adapter);<br>        adapter.Update(dt);<br>        dt.AcceptChanges();<br>        <span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">InsertButton_Click</span>(<span class="hljs-params"><span class="hljs-built_in">object</span> sender, RoutedEventArgs e</span>)</span><br>    &#123;<br>        <span class="hljs-meta">#<span class="hljs-keyword">if</span> MySQLCommand</span><br>            <span class="hljs-built_in">string</span> InsertSqlCommand = <span class="hljs-built_in">string</span>.Format(<span class="hljs-string">&quot;insert into user(id, name, phone,email) values(&#x27;&#123;0&#125;&#x27;,&#x27;&#123;1&#125;&#x27;,&#x27;&#123;2&#125;&#x27;,&#x27;&#123;3&#125;&#x27;)&quot;</span>, rd.Next(<span class="hljs-number">100</span>), <span class="hljs-string">&quot;ZhangSan&quot;</span>, <span class="hljs-number">12332112345</span>, <span class="hljs-string">&quot;zhangsan@qq.com&quot;</span>);<br>        MySql.Data.MySqlClient.MySqlCommand cmd = <span class="hljs-keyword">new</span> MySql.Data.MySqlClient.MySqlCommand(InsertSqlCommand, con);<br>        cmd.ExecuteNonQuery();<br><br>        <span class="hljs-built_in">string</span> InsertSqlCommand2 = <span class="hljs-built_in">string</span>.Format(<span class="hljs-string">&quot;insert into user(id, name, phone,email) values(&#x27;&#123;0&#125;&#x27;,&#x27;&#123;1&#125;&#x27;,&#x27;&#123;2&#125;&#x27;,&#x27;&#123;3&#125;&#x27;)&quot;</span>, rd.Next(<span class="hljs-number">100</span>), <span class="hljs-string">&quot;LiSi&quot;</span>, <span class="hljs-number">12332112345</span>, <span class="hljs-string">&quot;lisi@yahoo.com&quot;</span>);<br>        MySql.Data.MySqlClient.MySqlCommand cmd2 = <span class="hljs-keyword">new</span> MySql.Data.MySqlClient.MySqlCommand(InsertSqlCommand2, con);<br>        cmd2.ExecuteNonQuery();<br><br>        UpdateMySQLData();<br>        <span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br>            System.Data.DataRow dr = dt.NewRow();<br>        dr[<span class="hljs-number">0</span>] = rd.Next(<span class="hljs-number">100</span>);<br>        dr[<span class="hljs-number">1</span>] = <span class="hljs-string">&quot;ZhangSan&quot;</span>;<br>        dr[<span class="hljs-number">2</span>] = <span class="hljs-string">&quot;12332112345&quot;</span>;<br>        dr[<span class="hljs-number">3</span>] = <span class="hljs-string">&quot;zhangsan@qq.com&quot;</span>;<br>        dt.Rows.Add(dr);<br><br>        System.Data.DataRow dr2 = dt.NewRow();<br>        dr2[<span class="hljs-number">0</span>] = rd.Next(<span class="hljs-number">100</span>);<br>        dr2[<span class="hljs-number">1</span>] = <span class="hljs-string">&quot;LiSi&quot;</span>;<br>        dr2[<span class="hljs-number">2</span>] = <span class="hljs-string">&quot;12332154321&quot;</span>;<br>        dr2[<span class="hljs-number">3</span>] = <span class="hljs-string">&quot;lisi@yahoo.com&quot;</span>;<br>        dt.Rows.Add(dr2);<br><br>        MySql.Data.MySqlClient.MySqlCommandBuilder builder = <span class="hljs-keyword">new</span> MySql.Data.MySqlClient.MySqlCommandBuilder(adapter);<br>        adapter.Update(ds, <span class="hljs-string">&quot;user&quot;</span>);<br>        dt.AcceptChanges();<br>        <span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>软件打开界面<br><img src="/images/wpfDataGrid%E6%98%BE%E7%A4%BAMySQL%E6%9F%A5%E8%AF%A2%E4%BF%A1%E6%81%AF%EF%BC%8C%E4%B8%94%E5%8F%AF%E5%88%A0%E9%99%A4%E3%80%81%E4%BF%AE%E6%94%B9%E3%80%81%E6%8F%92%E5%85%A5/2.PNG" srcset="/img/loading.gif" lazyload alt="2"></p>
+<p>删除时一直不失败，网上找了好久才找到答案</p>
+<p>参考资料<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/sz101/article/details/5837950">https://blog.csdn.net/sz101/article/details/5837950</a><br><a target="_blank" rel="noopener" href="https://bbs.csdn.net/wap/topics/390845652">https://bbs.csdn.net/wap/topics/390845652</a><br><a target="_blank" rel="noopener" href="http://www.cnblogs.com/perfect/archive/2007/08/06/844634.html">http://www.cnblogs.com/perfect/archive/2007/08/06/844634.html</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/wpf/" class="category-chain-item">wpf</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>wpfDataGrid显示MySQL查询信息，且可删除、修改、插入</div>
+      <div>https://njit-77.github.io/2018/10/13/wpfDataGrid显示MySQL查询信息，且可删除、修改、插入/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>njit-77</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2018年10月13日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/10/14/IEEE%E6%B5%AE%E7%82%B9%E8%A1%A8%E7%A4%BA/" title="IEEE浮点表示">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">IEEE浮点表示</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2018/09/21/datalab/" title="datalab笔记">
+                        <span class="hidden-mobile">datalab笔记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

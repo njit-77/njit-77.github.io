@@ -1,0 +1,769 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="njit-77">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Byte[]转灰度图1234567891011121314151617181920212223242526272829303132public static Bitmap ByteToGrayBitmap(byte[] imageBuffer, int imageWidth, int imageHeight)&#123;    Bitmap bmp &#x3D; new Bitmap(imageWidth,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常用代码片段">
+<meta property="og:url" content="https://njit-77.github.io/2022/01/13/%E5%B8%B8%E7%94%A8%E4%BB%A3%E7%A0%81%E7%89%87%E6%AE%B5/index.html">
+<meta property="og:site_name" content="njit-77&#39;s Blog">
+<meta property="og:description" content="Byte[]转灰度图1234567891011121314151617181920212223242526272829303132public static Bitmap ByteToGrayBitmap(byte[] imageBuffer, int imageWidth, int imageHeight)&#123;    Bitmap bmp &#x3D; new Bitmap(imageWidth,">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-12T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-16T09:23:18.434Z">
+<meta property="article:author" content="njit-77">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>常用代码片段 - njit-77&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"njit-77.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2021-12-20T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Hello World</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="常用代码片段"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-01-13 00:00" pubdate>
+          2022-01-13 00:00:00
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          11 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">常用代码片段</h1>
+            
+              <p id="updated-time" class="note note-info" style="">
+                
+                  
+                    本文最后更新于 2025-11-16 17:23:18
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h5 id="Byte-转灰度图"><a href="#Byte-转灰度图" class="headerlink" title="Byte[]转灰度图"></a>Byte[]转灰度图</h5><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Bitmap <span class="hljs-title">ByteToGrayBitmap</span>(<span class="hljs-params"><span class="hljs-built_in">byte</span>[] imageBuffer, <span class="hljs-built_in">int</span> imageWidth, <span class="hljs-built_in">int</span> imageHeight</span>)</span><br>&#123;<br>    Bitmap bmp = <span class="hljs-keyword">new</span> Bitmap(imageWidth, imageHeight, PixelFormat.Format8bppIndexed);<br>    BitmapData bmpData = bmp.LockBits(<span class="hljs-keyword">new</span> Rectangle(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, imageWidth, imageHeight),<br>                                      ImageLockMode.WriteOnly, PixelFormat.Format8bppIndexed);<br>    <span class="hljs-keyword">unsafe</span><br>    &#123;<br>        <span class="hljs-keyword">fixed</span> (<span class="hljs-built_in">byte</span>* image = imageBuffer)<br>        &#123;<br>            <span class="hljs-keyword">for</span> (<span class="hljs-built_in">int</span> y = <span class="hljs-number">0</span>; y &lt; imageHeight; y++)<br>            &#123;<br>                <span class="hljs-built_in">byte</span>* src = image + imageWidth * y;<br>                <span class="hljs-built_in">byte</span>* dst = (<span class="hljs-built_in">byte</span>*)bmpData.Scan0 + bmpData.Stride * y;<br>                Buffer.MemoryCopy(src, dst, imageWidth, imageWidth);<br>            &#125;<br>        &#125;<br>    &#125;<br><br>    bmp.UnlockBits(bmpData);<br><br>    ColorPalette tempPalette;<br>    <span class="hljs-keyword">using</span> (Bitmap tempBmp = <span class="hljs-keyword">new</span> Bitmap(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, PixelFormat.Format8bppIndexed))<br>    &#123;<br>        tempPalette = tempBmp.Palette;<br>    &#125;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-built_in">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">256</span>; i++)<br>    &#123;<br>        tempPalette.Entries[i] = Color.FromArgb(i, i, i);<br>    &#125;<br>    bmp.Palette = tempPalette;<br>    <span class="hljs-keyword">return</span> bmp;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="Byte-转彩色图"><a href="#Byte-转彩色图" class="headerlink" title="Byte[]转彩色图"></a>Byte[]转彩色图</h5><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Bitmap <span class="hljs-title">ByteToBitmap</span>(<span class="hljs-params"><span class="hljs-built_in">byte</span>[] imageBuffer, <span class="hljs-built_in">int</span> imageWidth, <span class="hljs-built_in">int</span> imageHeight</span>)</span><br>&#123;<br>    Bitmap bmp = <span class="hljs-keyword">new</span> Bitmap(imageWidth, imageHeight, PixelFormat.Format24bppRgb);<br>    BitmapData bmpData = bmp.LockBits(<span class="hljs-keyword">new</span> Rectangle(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, imageWidth, imageHeight),<br>                                      ImageLockMode.WriteOnly, PixelFormat.Format24bppRgb);<br>    <span class="hljs-keyword">unsafe</span><br>    &#123;<br>        <span class="hljs-keyword">fixed</span> (<span class="hljs-built_in">byte</span>* image = imageBuffer)<br>        &#123;<br>            <span class="hljs-keyword">for</span> (<span class="hljs-built_in">int</span> y = <span class="hljs-number">0</span>; y &lt; imageHeight; y++)<br>            &#123;<br>                <span class="hljs-built_in">byte</span>* src = image + imageWidth * <span class="hljs-number">3</span> * y;<br>                <span class="hljs-built_in">byte</span>* dst = (<span class="hljs-built_in">byte</span>*)bmpData.Scan0 + bmpData.Stride * y;<br>                Buffer.MemoryCopy(src, dst, imageWidth * <span class="hljs-number">3</span>, imageWidth * <span class="hljs-number">3</span>);<br>            &#125;<br>        &#125;<br>    &#125;<br><br>    bmp.UnlockBits(bmpData);<br>    <span class="hljs-keyword">return</span> bmp;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="PictureBox双缓存"><a href="#PictureBox双缓存" class="headerlink" title="PictureBox双缓存"></a>PictureBox双缓存</h5><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">SetDoubleBuffering</span>()</span><br>&#123;<br>    <span class="hljs-keyword">this</span>.SetStyle(ControlStyles.ResizeRedraw, <span class="hljs-literal">true</span>);<br>    <span class="hljs-keyword">this</span>.SetStyle(ControlStyles.OptimizedDoubleBuffer, <span class="hljs-literal">true</span>);<br>    <span class="hljs-keyword">this</span>.SetStyle(ControlStyles.AllPaintingInWmPaint, <span class="hljs-literal">true</span>);<br>    <span class="hljs-keyword">this</span>.SetStyle(ControlStyles.UserPaint, <span class="hljs-literal">true</span>);<br>    <span class="hljs-keyword">this</span>.SetStyle(ControlStyles.SupportsTransparentBackColor, <span class="hljs-literal">true</span>);<br>    <span class="hljs-keyword">this</span>.UpdateStyles();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="c-INIHelper"><a href="#c-INIHelper" class="headerlink" title="c++ INIHelper"></a>c++ INIHelper</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">pragma</span> once</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">ifndef</span> IniHelper_H</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> IniHelper_H</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;Windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;atlstr.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;io.h&gt;</span></span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">IniHelper</span><br>&#123;<br>    <span class="hljs-keyword">private</span>:<br>    <span class="hljs-function"><span class="hljs-type">static</span> LPCTSTR <span class="hljs-title">CharToLPCTSTR</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* value)</span></span>;<br>    <span class="hljs-function"><span class="hljs-type">static</span> std::string <span class="hljs-title">GetStringA</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* key, std::string def_val = <span class="hljs-string">&quot;&quot;</span>)</span></span>;<br>    <span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">WriteStringA</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* key, std::string value)</span></span>;<br><br>    <span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">SetFileName</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* fileName)</span></span>;<br>    <span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">SetSection</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* section)</span></span>;<br><br>    <span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">int</span> <span class="hljs-title">GetInt</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* key, <span class="hljs-type">int</span> def_val = <span class="hljs-number">0</span>)</span></span>;<br>    <span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">WriteInt</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* key, <span class="hljs-type">int</span> value)</span></span>;<br><br>    <span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">bool</span> <span class="hljs-title">GetBool</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* key, <span class="hljs-type">bool</span> def_val = <span class="hljs-literal">false</span>)</span></span>;<br>    <span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">WriteBool</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* key, <span class="hljs-type">bool</span> value)</span></span>;<br><br>    <span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">double</span> <span class="hljs-title">GetDouble</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* key, <span class="hljs-type">double</span> def_val = <span class="hljs-number">0.0</span>)</span></span>;<br>    <span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">WriteDouble</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* key, <span class="hljs-type">double</span> value)</span></span>;<br><br>    <span class="hljs-function"><span class="hljs-type">static</span> CString <span class="hljs-title">GetString</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* key, std::string def_val = <span class="hljs-string">&quot;&quot;</span>)</span></span>;<br>    <span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">WriteString</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* key, CString value)</span></span>;<br>&#125;;<br><br>CHAR FileName[MAXBYTE];<br>CHAR Section[MAXBYTE];<br><br><span class="hljs-function"><span class="hljs-keyword">inline</span> LPCTSTR <span class="hljs-title">IniHelper::CharToLPCTSTR</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* value)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> num = <span class="hljs-built_in">MultiByteToWideChar</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, value, <span class="hljs-number">-1</span>, <span class="hljs-literal">NULL</span>, <span class="hljs-number">0</span>);<br>    <span class="hljs-type">wchar_t</span>* wide = <span class="hljs-keyword">new</span> <span class="hljs-type">wchar_t</span>[num];<br>    <span class="hljs-built_in">MultiByteToWideChar</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, value, <span class="hljs-number">-1</span>, wide, num);<br>    <span class="hljs-keyword">return</span> wide;<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">inline</span> std::string <span class="hljs-title">IniHelper::GetStringA</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* key, std::string def_val)</span></span><br><span class="hljs-function"></span>&#123;<br>    CHAR cTmp[MAXBYTE];<br>    <span class="hljs-built_in">memset</span>(cTmp, <span class="hljs-number">0</span>, <span class="hljs-built_in">sizeof</span>(cTmp));<br>    <span class="hljs-built_in">GetPrivateProfileStringA</span>(Section, key, def_val.<span class="hljs-built_in">c_str</span>(), cTmp, MAXBYTE, FileName);<br>    <span class="hljs-keyword">return</span> cTmp;<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-type">void</span> <span class="hljs-title">IniHelper::WriteStringA</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* key, std::string value)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">WritePrivateProfileStringA</span>(Section, key, value.<span class="hljs-built_in">c_str</span>(), FileName);<br>&#125;<br><br><br><span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-type">void</span> <span class="hljs-title">IniHelper::SetFileName</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* fileName)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">memset</span>(FileName, <span class="hljs-number">0</span>, <span class="hljs-built_in">sizeof</span>(FileName));<br>    <span class="hljs-built_in">memcpy</span>(FileName, fileName, <span class="hljs-built_in">strlen</span>(fileName) + <span class="hljs-number">1</span>);<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-type">void</span> <span class="hljs-title">IniHelper::SetSection</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* section)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">memset</span>(Section, <span class="hljs-number">0</span>, <span class="hljs-built_in">sizeof</span>(Section));<br>    <span class="hljs-built_in">memcpy</span>(Section, section, <span class="hljs-built_in">strlen</span>(section) + <span class="hljs-number">1</span>);<br>&#125;<br><br><br><span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-type">int</span> <span class="hljs-title">IniHelper::GetInt</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* key, <span class="hljs-type">int</span> def_val)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">GetPrivateProfileInt</span>(<span class="hljs-built_in">CharToLPCTSTR</span>(Section),<br>                                <span class="hljs-built_in">CharToLPCTSTR</span>(key), def_val,<br>                                <span class="hljs-built_in">CharToLPCTSTR</span>(FileName));<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-type">void</span> <span class="hljs-title">IniHelper::WriteInt</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* key, <span class="hljs-type">int</span> value)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">WriteStringA</span>(key, std::<span class="hljs-built_in">to_string</span>(value).<span class="hljs-built_in">c_str</span>());<br>&#125;<br><br><br><span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-type">bool</span> <span class="hljs-title">IniHelper::GetBool</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* key, <span class="hljs-type">bool</span> def_val)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">GetStringA</span>(key, def_val ? <span class="hljs-string">&quot;True&quot;</span> : <span class="hljs-string">&quot;False&quot;</span>) == <span class="hljs-string">&quot;True&quot;</span>;<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-type">void</span> <span class="hljs-title">IniHelper::WriteBool</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* key, <span class="hljs-type">bool</span> value)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">WriteStringA</span>(key, value ? <span class="hljs-string">&quot;True&quot;</span> : <span class="hljs-string">&quot;False&quot;</span>);<br>&#125;<br><br><br><span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-type">double</span> <span class="hljs-title">IniHelper::GetDouble</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* key, <span class="hljs-type">double</span> def_val)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">atof</span>(<span class="hljs-built_in">GetStringA</span>(key, std::<span class="hljs-built_in">to_string</span>(def_val).<span class="hljs-built_in">c_str</span>()).<span class="hljs-built_in">c_str</span>());<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-type">void</span> <span class="hljs-title">IniHelper::WriteDouble</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* key, <span class="hljs-type">double</span> value)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">WriteStringA</span>(key, std::<span class="hljs-built_in">to_string</span>(value).<span class="hljs-built_in">c_str</span>());<br>&#125;<br><br><br><span class="hljs-function"><span class="hljs-keyword">inline</span> CString <span class="hljs-title">IniHelper::GetString</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* key, std::string def_val)</span></span><br><span class="hljs-function"></span>&#123;<br>    TCHAR cTmp[MAXBYTE];<br>    <span class="hljs-built_in">memset</span>(cTmp, <span class="hljs-number">0</span>, <span class="hljs-built_in">sizeof</span>(cTmp));<br>    <span class="hljs-built_in">GetPrivateProfileString</span>(<span class="hljs-built_in">CharToLPCTSTR</span>(Section),<br>                            <span class="hljs-built_in">CharToLPCTSTR</span>(key),<br>                            <span class="hljs-built_in">CharToLPCTSTR</span>(def_val.<span class="hljs-built_in">c_str</span>()), cTmp, MAXBYTE,<br>                            <span class="hljs-built_in">CharToLPCTSTR</span>(FileName));<br>    <span class="hljs-keyword">return</span> cTmp;<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-type">void</span> <span class="hljs-title">IniHelper::WriteString</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* key, CString value)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (_access(FileName, <span class="hljs-number">0</span>))<br>    &#123;<br>        <span class="hljs-function">FILE* <span class="hljs-title">pFile</span><span class="hljs-params">(<span class="hljs-literal">NULL</span>)</span></span>;<br>        <span class="hljs-keyword">if</span> (_wfopen_s(&amp;pFile, <span class="hljs-built_in">CharToLPCTSTR</span>(FileName), <span class="hljs-string">L&quot;wt, ccs=UNICODE&quot;</span>) == <span class="hljs-number">0</span>)<br>            <span class="hljs-built_in">fclose</span>(pFile);<br>    &#125;	<br><br>    <span class="hljs-built_in">WritePrivateProfileString</span>(<span class="hljs-built_in">CharToLPCTSTR</span>(Section),<br>                              <span class="hljs-built_in">CharToLPCTSTR</span>(key),<br>                              value,<br>                              <span class="hljs-built_in">CharToLPCTSTR</span>(FileName));<br>&#125;<br><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">// !IniHelper_H</span></span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;IniHelper.h&quot;</span></span><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    IniHelper::<span class="hljs-built_in">SetFileName</span>(<span class="hljs-string">&quot;D:\\1.ini&quot;</span>);<br>    IniHelper::<span class="hljs-built_in">SetSection</span>(<span class="hljs-string">&quot;Default&quot;</span>);<br>    <span class="hljs-keyword">auto</span> test1 = IniHelper::<span class="hljs-built_in">GetString</span>(<span class="hljs-string">&quot;Test1&quot;</span>);<br>    <span class="hljs-keyword">auto</span> test2 = IniHelper::<span class="hljs-built_in">GetString</span>(<span class="hljs-string">&quot;Test2&quot;</span>);<br>    <span class="hljs-keyword">auto</span> test3 = IniHelper::<span class="hljs-built_in">GetString</span>(<span class="hljs-string">&quot;Test3&quot;</span>);<br>    <span class="hljs-keyword">auto</span> test4 = IniHelper::<span class="hljs-built_in">GetInt</span>(<span class="hljs-string">&quot;Test4&quot;</span>);<br>    <span class="hljs-keyword">auto</span> test5 = IniHelper::<span class="hljs-built_in">GetDouble</span>(<span class="hljs-string">&quot;Test5&quot;</span>);<br>    <span class="hljs-keyword">auto</span> test6 = IniHelper::<span class="hljs-built_in">GetBool</span>(<span class="hljs-string">&quot;Test6&quot;</span>);<br><br>    IniHelper::<span class="hljs-built_in">SetFileName</span>(<span class="hljs-string">&quot;D:\\test3.ini&quot;</span>);<br>    IniHelper::<span class="hljs-built_in">SetSection</span>(<span class="hljs-string">&quot;Default&quot;</span>);<br>    IniHelper::<span class="hljs-built_in">WriteString</span>(<span class="hljs-string">&quot;Test1&quot;</span>, test1);<br>    IniHelper::<span class="hljs-built_in">WriteString</span>(<span class="hljs-string">&quot;Test2&quot;</span>, test2);<br>    IniHelper::<span class="hljs-built_in">WriteString</span>(<span class="hljs-string">&quot;Test3&quot;</span>, test3);<br>    IniHelper::<span class="hljs-built_in">WriteInt</span>(<span class="hljs-string">&quot;Test4&quot;</span>, test4);<br>    IniHelper::<span class="hljs-built_in">WriteDouble</span>(<span class="hljs-string">&quot;Test5&quot;</span>, test5);<br>    IniHelper::<span class="hljs-built_in">WriteBool</span>(<span class="hljs-string">&quot;Test6&quot;</span>, test6);<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="OTSU算法"><a href="#OTSU算法" class="headerlink" title="OTSU算法"></a>OTSU算法</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">OTSU</span><span class="hljs-params">(Mat&amp; src)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> hist[UCHAR_MAX + <span class="hljs-number">1</span>]&#123; <span class="hljs-number">0</span> &#125;;<br>    <span class="hljs-type">float</span> histPro[UCHAR_MAX + <span class="hljs-number">1</span>]&#123; <span class="hljs-number">0</span> &#125;;<br>    <span class="hljs-type">int</span> height = src.rows;<br>    <span class="hljs-type">int</span> width = src.cols;<br>    <span class="hljs-type">int</span> channel = src.<span class="hljs-built_in">channels</span>();<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> y = <span class="hljs-number">0</span>; y &lt; height; y++)<br>    &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> x = <span class="hljs-number">0</span>; x &lt; width; x++)<br>        &#123;<br>            <span class="hljs-keyword">if</span> (channel == <span class="hljs-number">1</span>)<br>            &#123;<br>                hist[src.<span class="hljs-built_in">at</span>&lt;uchar&gt;(y, x)]++;<br>            &#125;<br>            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (channel == <span class="hljs-number">3</span>)<br>            &#123;<br>                hist[src.<span class="hljs-built_in">at</span>&lt;Vec3b&gt;(y, x)[<span class="hljs-number">0</span>]]++;<br>                hist[src.<span class="hljs-built_in">at</span>&lt;Vec3b&gt;(y, x)[<span class="hljs-number">1</span>]]++;<br>                hist[src.<span class="hljs-built_in">at</span>&lt;Vec3b&gt;(y, x)[<span class="hljs-number">2</span>]]++;<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-type">long</span> sum = height * width * channel;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; UCHAR_MAX + <span class="hljs-number">1</span>; i++)<br>    &#123;<br>        histPro[i] = hist[i] * <span class="hljs-number">1.0</span> / sum;<br>    &#125;<br><br>    <span class="hljs-type">double</span> avgValue = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; UCHAR_MAX + <span class="hljs-number">1</span>; i++)<br>    &#123;<br>        avgValue += i * histPro[i];<br>    &#125;<br><br>    <span class="hljs-type">int</span> index = <span class="hljs-number">0</span>;<br>    <span class="hljs-type">double</span> w0 = <span class="hljs-number">0.0</span>, w1 = <span class="hljs-number">1.0</span>;<br>    <span class="hljs-type">double</span> u0 = <span class="hljs-number">0.0</span>, u1 = avgValue;<br>    <span class="hljs-type">double</span> u0tmp = <span class="hljs-number">0.0</span>, u1tmp = <span class="hljs-number">0.0</span>;<br>    <span class="hljs-type">double</span> max_g = <span class="hljs-number">0.0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; UCHAR_MAX + <span class="hljs-number">1</span>; i++)<br>    &#123;<br>        w0 += histPro[i];<br>        w1 = <span class="hljs-number">1</span> - w0;<br><br>        u0tmp += i * histPro[i];<br>        u1tmp = avgValue - u0tmp;<br><br>        u0 = u0tmp / w0;<br>        u1 = u1tmp / w1;<br><br>        <span class="hljs-type">double</span> g = w0 * w1 * (u0 - u1) * (u0 - u1);<br>        <span class="hljs-keyword">if</span> (g &gt; max_g)<br>        &#123;<br>            max_g = g;<br>            index = i;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> index;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="OpenCV"><a href="#OpenCV" class="headerlink" title="OpenCV"></a>OpenCV</h4><h5 id="unsigned-char-to-Mat"><a href="#unsigned-char-to-Mat" class="headerlink" title="unsigned char* to Mat"></a>unsigned char* to Mat</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs c++">cv::Mat src;<br><span class="hljs-keyword">if</span> (image_channel == <span class="hljs-number">1</span>)<br>&#123;<br>    src = cv::<span class="hljs-built_in">Mat</span>(cv::<span class="hljs-built_in">Size</span>(image_width, image_height), CV_8UC1);<br>    <span class="hljs-built_in">memcpy</span>(src.data, in_data, image_width * image_height * image_channel);<br>&#125;<br><span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (image_channel == <span class="hljs-number">3</span>)<br>&#123;<br>    src = cv::<span class="hljs-built_in">Mat</span>(cv::<span class="hljs-built_in">Size</span>(image_width, image_height), CV_8UC3);<br>    <span class="hljs-built_in">memcpy</span>(src.data, in_data, image_width * image_height * image_channel);<br>&#125;<br><span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (image_channel == <span class="hljs-number">4</span>)<br>&#123;<br>    src = cv::<span class="hljs-built_in">Mat</span>(cv::<span class="hljs-built_in">Size</span>(image_width, image_height), CV_8UC4);<br>    <span class="hljs-built_in">memcpy</span>(src.data, in_data, image_width * image_height * image_channel);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="Mat-to-unsigned-char"><a href="#Mat-to-unsigned-char" class="headerlink" title="Mat to unsigned char*"></a>Mat to unsigned char*</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs c++">cv::Mat dst; <span class="hljs-comment">///以在其它地方赋值</span><br><span class="hljs-keyword">if</span> (dst.<span class="hljs-built_in">isContinuous</span>())<br>&#123;<br>    <span class="hljs-built_in">memcpy</span>(out_data, dst.data, image_width * image_height * image_channel);<br>&#125;<br><span class="hljs-keyword">else</span><br>&#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> h = <span class="hljs-number">0</span>; h &lt; image_height; h++)<br>    &#123;<br>        uchar *p = dst.<span class="hljs-built_in">ptr</span>&lt;uchar&gt;(h);<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> w = <span class="hljs-number">0</span>; w &lt; image_width; w++)<br>        &#123;<br>            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> c = <span class="hljs-number">0</span>; c &lt; image_channel; c++)<br>            &#123;<br>                out_data[w * image_channel + c] = p[w * image_channel + c];<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="calcHist"><a href="#calcHist" class="headerlink" title="calcHist"></a>calcHist</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c++">cv::Mat hist;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> histSize[] = &#123; <span class="hljs-number">256</span> &#125;;<br><span class="hljs-type">float</span> pranges[] = &#123; <span class="hljs-number">0</span>,<span class="hljs-number">256</span> &#125;;<br><span class="hljs-type">const</span> <span class="hljs-type">float</span>* ranges[] = &#123; pranges &#125;;<br><br>cv::<span class="hljs-built_in">calcHist</span>(&amp;src, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, cv::<span class="hljs-built_in">Mat</span>(), hist, <span class="hljs-number">1</span>, histSize, ranges);<br><br><span class="hljs-type">float</span> *p = hist.<span class="hljs-built_in">ptr</span>&lt;<span class="hljs-type">float</span>&gt;(<span class="hljs-number">0</span>);<br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> y = <span class="hljs-number">0</span>; y &lt;= UCHAR_MAX; y++)<br>&#123;<br>    <span class="hljs-comment">/// p[y] 遍历hist</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="HObject-与-Mat互转"><a href="#HObject-与-Mat互转" class="headerlink" title="HObject 与 Mat互转"></a>HObject 与 Mat互转</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function">cv::Mat <span class="hljs-title">HObject2Mat</span><span class="hljs-params">(HObject&amp; ho_Image)</span></span><br><span class="hljs-function"></span>&#123;<br>    cv::Mat img;<br>    HTuple  hv_Channels;<br><br>    <span class="hljs-built_in">ConvertImageType</span>(ho_Image, &amp;ho_Image, <span class="hljs-string">&quot;byte&quot;</span>);<br>    <span class="hljs-built_in">CountChannels</span>(ho_Image, &amp;hv_Channels);<br>    <span class="hljs-keyword">if</span> (hv_Channels.<span class="hljs-built_in">I</span>() == <span class="hljs-number">1</span>)<br>    &#123;<br>        HTuple hv_Ptr, hv_Type, hv_Width, hv_Height;<br>        <span class="hljs-built_in">GetImagePointer1</span>(ho_Image, &amp;hv_Ptr, &amp;hv_Type, &amp;hv_Width, &amp;hv_Height);<br><br>        img = cv::<span class="hljs-built_in">Mat</span>(cv::<span class="hljs-built_in">Size</span>(hv_Width, hv_Height), CV_8UC1);<br>        <span class="hljs-type">unsigned</span> <span class="hljs-type">char</span>* pdata = (<span class="hljs-type">unsigned</span> <span class="hljs-type">char</span>*)hv_Ptr.<span class="hljs-built_in">L</span>();<br>        <span class="hljs-built_in">memcpy</span>(img.data, pdata, hv_Width.<span class="hljs-built_in">I</span>() * hv_Height.<span class="hljs-built_in">I</span>());<br>    &#125;<br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (hv_Channels.<span class="hljs-built_in">I</span>() == <span class="hljs-number">3</span>)<br>    &#123;<br>        HTuple  hv_PtrR, hv_PtrG, hv_PtrB, hv_Type, hv_Width, hv_Height;<br>        <span class="hljs-built_in">GetImagePointer3</span>(ho_Image, &amp;hv_PtrR, &amp;hv_PtrG, &amp;hv_PtrB, &amp;hv_Type, &amp;hv_Width, &amp;hv_Height);<br><br>        img = cv::<span class="hljs-built_in">Mat</span>(cv::<span class="hljs-built_in">Size</span>(hv_Width, hv_Height), CV_8UC3);<br><br>        <span class="hljs-function">std::vector&lt;cv::Mat&gt; <span class="hljs-title">vecM</span><span class="hljs-params">(<span class="hljs-number">3</span>)</span></span>;<br>        vecM[<span class="hljs-number">0</span>] = cv::<span class="hljs-built_in">Mat</span>(cv::<span class="hljs-built_in">Size</span>(hv_Width, hv_Height), CV_8UC1);<br>        vecM[<span class="hljs-number">1</span>] = cv::<span class="hljs-built_in">Mat</span>(cv::<span class="hljs-built_in">Size</span>(hv_Width, hv_Height), CV_8UC1);<br>        vecM[<span class="hljs-number">2</span>] = cv::<span class="hljs-built_in">Mat</span>(cv::<span class="hljs-built_in">Size</span>(hv_Width, hv_Height), CV_8UC1);<br>        <span class="hljs-type">unsigned</span> <span class="hljs-type">char</span>* R = (<span class="hljs-type">unsigned</span> <span class="hljs-type">char</span>*)hv_PtrR.<span class="hljs-built_in">L</span>();<br>        <span class="hljs-type">unsigned</span> <span class="hljs-type">char</span>* G = (<span class="hljs-type">unsigned</span> <span class="hljs-type">char</span>*)hv_PtrG.<span class="hljs-built_in">L</span>();<br>        <span class="hljs-type">unsigned</span> <span class="hljs-type">char</span>* B = (<span class="hljs-type">unsigned</span> <span class="hljs-type">char</span>*)hv_PtrB.<span class="hljs-built_in">L</span>();<br>        <span class="hljs-built_in">memcpy</span>(vecM[<span class="hljs-number">2</span>].data, R, hv_Width.<span class="hljs-built_in">I</span>() * hv_Height.<span class="hljs-built_in">I</span>());<br>        <span class="hljs-built_in">memcpy</span>(vecM[<span class="hljs-number">1</span>].data, G, hv_Width.<span class="hljs-built_in">I</span>() * hv_Height.<span class="hljs-built_in">I</span>());<br>        <span class="hljs-built_in">memcpy</span>(vecM[<span class="hljs-number">0</span>].data, B, hv_Width.<span class="hljs-built_in">I</span>() * hv_Height.<span class="hljs-built_in">I</span>());<br>        cv::<span class="hljs-built_in">merge</span>(vecM, img);<br>    &#125;<br>    <span class="hljs-keyword">return</span> img;<br>&#125;<br><br><span class="hljs-function">HObject <span class="hljs-title">Mat2HObject</span><span class="hljs-params">(cv::Mat&amp; img)</span></span><br><span class="hljs-function"></span>&#123;<br>    HObject ho_Image;<br>    <span class="hljs-keyword">if</span> (img.<span class="hljs-built_in">channels</span>() == <span class="hljs-number">4</span>)<br>    &#123;<br>        cv::<span class="hljs-built_in">cvtColor</span>(img, img, cv::COLOR_BGRA2BGR);<br>    &#125;<br>    <span class="hljs-keyword">if</span> (img.<span class="hljs-built_in">channels</span>() == <span class="hljs-number">1</span>)<br>    &#123;<br>        <span class="hljs-built_in">GenImage1</span>(&amp;ho_Image, <span class="hljs-string">&quot;byte&quot;</span>, img.cols, img.rows, (Hlong)img.data);<br>    &#125;<br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (img.<span class="hljs-built_in">channels</span>() == <span class="hljs-number">3</span>)<br>    &#123;<br>        std::vector&lt;cv::Mat&gt; vecM;<br>        cv::<span class="hljs-built_in">split</span>(img, vecM);<br>        cv::Mat imgB = vecM[<span class="hljs-number">0</span>];<br>        cv::Mat imgG = vecM[<span class="hljs-number">1</span>];<br>        cv::Mat imgR = vecM[<span class="hljs-number">2</span>];<br>        <span class="hljs-built_in">GenImage3</span>(&amp;ho_Image, <span class="hljs-string">&quot;byte&quot;</span>, img.cols, img.rows, (Hlong)imgR.data, (Hlong)imgG.data, (Hlong)imgB.data);<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> ho_Image;<br>&#125;	<br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/other/" class="category-chain-item">other</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>常用代码片段</div>
+      <div>https://njit-77.github.io/2022/01/13/常用代码片段/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>njit-77</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年1月13日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/06/10/CRC%E6%A0%A1%E9%AA%8C/" title="CRC校验">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">CRC校验</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/13/%E5%B8%B8%E7%94%A8%E6%89%B9%E5%A4%84%E7%90%86/" title="常用批处理">
+                        <span class="hidden-mobile">常用批处理</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

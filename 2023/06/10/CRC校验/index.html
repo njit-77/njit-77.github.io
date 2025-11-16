@@ -1,0 +1,846 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="njit-77">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="标准CRC生成多项式   名称 生成多项式 简记式 标准引用    CRC-4 $x^4 + x + 1$ 3 ITU G.704   CRC-8 $x^8 + x^5 + x^4 + 1$ 0x31    CRC-8 $x^8 + x^2 + x + 1$ 0x07    CRC-8 $x^8 + x^6 + x^4 + x^3 + x^2 + x$ 0x5E    CRC-12 $x^{12}">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CRC校验">
+<meta property="og:url" content="https://njit-77.github.io/2023/06/10/CRC%E6%A0%A1%E9%AA%8C/index.html">
+<meta property="og:site_name" content="njit-77&#39;s Blog">
+<meta property="og:description" content="标准CRC生成多项式   名称 生成多项式 简记式 标准引用    CRC-4 $x^4 + x + 1$ 3 ITU G.704   CRC-8 $x^8 + x^5 + x^4 + 1$ 0x31    CRC-8 $x^8 + x^2 + x + 1$ 0x07    CRC-8 $x^8 + x^6 + x^4 + x^3 + x^2 + x$ 0x5E    CRC-12 $x^{12}">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-06-09T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-16T13:35:24.385Z">
+<meta property="article:author" content="njit-77">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>CRC校验 - njit-77&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"njit-77.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2021-12-20T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Hello World</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="CRC校验"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-06-10 00:00" pubdate>
+          2023-06-10 00:00:00
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          31 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">CRC校验</h1>
+            
+              <p id="updated-time" class="note note-info" style="">
+                
+                  
+                    本文最后更新于 2025-11-16 21:35:24
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h5 id="标准CRC生成多项式"><a href="#标准CRC生成多项式" class="headerlink" title="标准CRC生成多项式"></a>标准CRC生成多项式</h5><table>
+<thead>
+<tr>
+<th align="left">名称</th>
+<th align="center">生成多项式</th>
+<th align="center">简记式</th>
+<th align="center">标准引用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">CRC-4</td>
+<td align="center">$x^4 + x + 1$</td>
+<td align="center">3</td>
+<td align="center">ITU G.704</td>
+</tr>
+<tr>
+<td align="left">CRC-8</td>
+<td align="center">$x^8 + x^5 + x^4 + 1$</td>
+<td align="center">0x31</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="left">CRC-8</td>
+<td align="center">$x^8 + x^2 + x + 1$</td>
+<td align="center">0x07</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="left">CRC-8</td>
+<td align="center">$x^8 + x^6 + x^4 + x^3 + x^2 + x$</td>
+<td align="center">0x5E</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="left">CRC-12</td>
+<td align="center">$x^{12} + x^{11} + x^3 + x + 1$</td>
+<td align="center">0x80F</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="left">CRC-16</td>
+<td align="center">$x^{16} + x^{15} + x^2 + 1$</td>
+<td align="center">0x8005</td>
+<td align="center">IBM SDLC</td>
+</tr>
+<tr>
+<td align="left">CRC16-CCITT</td>
+<td align="center">$x^{12} + x^{11} + x^3 + x + 1$</td>
+<td align="center">0x1021</td>
+<td align="center">ISO HDLC, ITU X.25,，V.34&#x2F;V.41&#x2F;V.42, PPP-FCS</td>
+</tr>
+<tr>
+<td align="left">CRC-32</td>
+<td align="center">$x^{32} + x^{26} + x^{23} + … + x^2 + x + 1$</td>
+<td align="center">0x04C11DB7</td>
+<td align="center">ZIP, RAR, IEEE 802 LAN&#x2F;FDDI, IEEE 1394, PPP-FCS</td>
+</tr>
+<tr>
+<td align="left">CRC-32c</td>
+<td align="center">$x^{32} + x^{28} + x^{27} + … + x^8 + x^6 + 1$</td>
+<td align="center">0x1EDC6F41</td>
+<td align="center">SCTP</td>
+</tr>
+</tbody></table>
+<h5 id="CRC计算方法"><a href="#CRC计算方法" class="headerlink" title="CRC计算方法"></a>CRC计算方法</h5><p>常用查表法和计算法。</p>
+<p>计算法步骤如下：</p>
+<blockquote>
+<p><strong>计算法</strong></p>
+<p>（1）、预置1个16位的寄存器为十六进制FFFF（即全为1），称此寄存器为CRC寄存器；<br>（2）、把第一个8位二进制数据（既通讯信息帧的第一个字节）与16位的CRC寄存器的低8位相异或，把结果放于CRC寄存器，高八位数据不变；<br>（3）、把CRC寄存器的内容右移一位（朝低位）用0填补最高位，并检查右移后的移出位；<br>（4）、如果移出位为0：重复第3步（再次右移一位）；如果移出位为1，CRC寄存器与多项式A001（1010 0000 0000 0001）进行异或；<br>（5）、重复步骤3和4，直到右移8次，这样整个8位数据全部进行了处理；<br>（6）、重复步骤2到步骤5，进行通讯信息帧下一个字节的处理；<br>（7）、将该通讯信息帧所有字节按上述步骤计算完成后，得到的16位CRC寄存器的高、低字节进行交换；<br>（8）、最后得到的CRC寄存器内容即为：CRC码。</p>
+<p><strong>以上计算步骤中的多项式A001是8005按位翻转后的结果。</strong></p>
+</blockquote>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-comment"><span class="hljs-doctag">///</span> byte[] data = Encoding.Unicode.GetBytes(&quot;今天天气很好&quot;);</span><br><br><span class="hljs-comment"><span class="hljs-doctag">///</span> GetCrc16(data, 0x1021, true) -- CRC-16/MCRF4XX</span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> GetCrc16(data, 0x1021, false) -- CRC-16/XMODEM</span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> GetCrc16(data, 0x8005, true) -- CRC-16/MODBUS</span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> GetCrc16(data, 0x8005, false) -- CRC-16/BUYPASS</span><br><br><span class="hljs-comment"><span class="hljs-doctag">///</span> Console.WriteLine($&quot;crc1 = 0x&#123;GetCrc16(data, 0x1021, false):X4&#125;, crc2 = 0x&#123;NewLife.SecurityHelper.Crc16(data):X4&#125;&quot;); crc1 = 0x5DC1, crc2 = 0x5DC1</span><br><br><span class="hljs-comment"><span class="hljs-doctag">///</span> Console.WriteLine($&quot;crc1 = 0x&#123;GetCrc16(data, 0x8005, true):X4&#125;, crc2 = 0x&#123;NewLife.Security.Crc16.Compute(stream, -1):X4&#125;&quot;); crc1 = 0xD63B, crc2 = 0xD63B</span><br><br><br><span class="hljs-comment"><span class="hljs-doctag">///</span> CRC-16</span><br><span class="hljs-function">UInt16 <span class="hljs-title">GetCrc16</span>(<span class="hljs-params"><span class="hljs-built_in">byte</span>[] data, UInt16 Poly<span class="hljs-comment">/*多项式*/</span>, <span class="hljs-built_in">bool</span> isReverse<span class="hljs-comment">/*true:逆序 低位在左，高位在右，false:正序 高位在左，低位在右*/</span></span>)</span><br>&#123;<br>    UInt16 crc = <span class="hljs-number">0xFFFF</span>;<br>    <span class="hljs-keyword">if</span> (isReverse)<br>    &#123;<br>        <span class="hljs-comment"><span class="hljs-doctag">///</span> 逆序多项式</span><br>        BitVector32 bits = <span class="hljs-keyword">new</span> BitVector32((Int32)Poly);<br>        BitVector32 reverse_bits = <span class="hljs-keyword">new</span> BitVector32();<br>        <span class="hljs-keyword">for</span> (<span class="hljs-built_in">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">32</span>; i++)<br>        &#123;<br>            reverse_bits[<span class="hljs-number">1</span> &lt;&lt; (<span class="hljs-number">31</span> - i)] = bits[<span class="hljs-number">1</span> &lt;&lt; i];<br>        &#125;<br>        Poly = (UInt16)((reverse_bits.Data &gt;&gt; <span class="hljs-number">16</span>) &amp; <span class="hljs-number">0xffff</span>);<br><br><br>        crc = <span class="hljs-number">0xFFFF</span>;<br>        <span class="hljs-keyword">for</span> (UInt16 i = <span class="hljs-number">0</span>; i &lt; data.Length; i++)<br>        &#123;<br>            crc ^= data[i];<br>            <span class="hljs-keyword">for</span> (UInt16 j = <span class="hljs-number">0</span>; j &lt; <span class="hljs-number">8</span>; j++)<br>            &#123;<br>                <span class="hljs-keyword">if</span> ((crc &amp; <span class="hljs-number">0x1</span>) != <span class="hljs-number">0</span>)<br>                &#123;<br>                    crc = (UInt16)((crc &gt;&gt; <span class="hljs-number">1</span>) ^ Poly);<br>                &#125;<br>                <span class="hljs-keyword">else</span><br>                &#123;<br>                    crc = (UInt16)(crc &gt;&gt; <span class="hljs-number">1</span>);<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">else</span><br>    &#123;<br>        crc ^= crc;<br>        <span class="hljs-keyword">for</span> (UInt16 i = <span class="hljs-number">0</span>; i &lt; data.Length; i++)<br>        &#123;<br>            crc ^= (UInt16)(data[i] &lt;&lt; <span class="hljs-number">8</span>);<br>            <span class="hljs-keyword">for</span> (UInt16 j = <span class="hljs-number">0</span>; j &lt; <span class="hljs-number">8</span>; j++)<br>            &#123;<br>                <span class="hljs-keyword">if</span> ((crc &amp; <span class="hljs-number">0x8000</span>) != <span class="hljs-number">0</span>)<br>                &#123;<br>                    crc = (UInt16)((crc &lt;&lt; <span class="hljs-number">1</span>) ^ Poly);<br>                &#125;<br>                <span class="hljs-keyword">else</span><br>                &#123;<br>                    crc = (UInt16)(crc &lt;&lt; <span class="hljs-number">1</span>);<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> crc;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-comment"><span class="hljs-doctag">///</span> byte[] data = Encoding.Unicode.GetBytes(&quot;今天天气很好&quot;);</span><br><br><span class="hljs-comment"><span class="hljs-doctag">///</span> GetCrc32(data, 0x04C11DB7, true) -- CRC-32</span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> GetCrc32(data, 0x04C11DB7, false) -- CRC-32/POSIX</span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> GetCrc32(data, 0x1EDC6F41, true) -- CRC-32C</span><br><br><span class="hljs-comment"><span class="hljs-doctag">///</span> Console.WriteLine($&quot;crc1 = 0x&#123;GetCrc32(data, 0x04C11DB7, true):X8&#125;, crc2 = 0x&#123;NewLife.Security.Crc32.Compute(data):X8&#125;&quot;); crc1 = 0x7B1B0DAA, crc2 = 0x7B1B0DAA</span><br><br><br><span class="hljs-comment"><span class="hljs-doctag">///</span> crc32</span><br><span class="hljs-function">UInt32 <span class="hljs-title">GetCrc32</span>(<span class="hljs-params"><span class="hljs-built_in">byte</span>[] data, UInt32 Poly<span class="hljs-comment">/*多项式*/</span>, <span class="hljs-built_in">bool</span> isReverse<span class="hljs-comment">/*true:逆序 低位在左，高位在右，false:正序 高位在左，低位在右*/</span></span>)</span><br>&#123;<br>    UInt32 crc = <span class="hljs-number">0xFFFFFFFF</span>;<br>    <span class="hljs-keyword">if</span> (isReverse)<br>    &#123;<br>        <span class="hljs-comment"><span class="hljs-doctag">///</span> 逆序多项式</span><br>        BitVector32 bits = <span class="hljs-keyword">new</span> BitVector32((Int32)Poly);<br>        BitVector32 reverse_bits = <span class="hljs-keyword">new</span> BitVector32();<br>        <span class="hljs-keyword">for</span> (<span class="hljs-built_in">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">32</span>; i++)<br>        &#123;<br>            reverse_bits[<span class="hljs-number">1</span> &lt;&lt; (<span class="hljs-number">31</span> - i)] = bits[<span class="hljs-number">1</span> &lt;&lt; i];<br>        &#125;<br>        Poly = (UInt32)reverse_bits.Data;<br><br>        crc = <span class="hljs-number">0xFFFFFFFF</span>;<br>        <span class="hljs-keyword">for</span> (UInt32 i = <span class="hljs-number">0</span>; i &lt; data.Length; i++)<br>        &#123;<br>            crc ^= data[i];<br>            <span class="hljs-keyword">for</span> (UInt32 j = <span class="hljs-number">0</span>; j &lt; <span class="hljs-number">8</span>; j++)<br>            &#123;<br>                <span class="hljs-keyword">if</span> ((crc &amp; <span class="hljs-number">0x1</span>) != <span class="hljs-number">0</span>)<br>                &#123;<br>                    crc = (UInt32)((crc &gt;&gt; <span class="hljs-number">1</span>) ^ Poly);<br>                &#125;<br>                <span class="hljs-keyword">else</span><br>                &#123;<br>                    crc = (UInt32)(crc &gt;&gt; <span class="hljs-number">1</span>);<br>                &#125;<br>            &#125;<br>        &#125;        <br>    &#125;<br>    <span class="hljs-keyword">else</span><br>    &#123;<br>        crc ^= crc;<br>        <span class="hljs-keyword">for</span> (UInt32 i = <span class="hljs-number">0</span>; i &lt; data.Length; i++)<br>        &#123;<br>            crc ^= (UInt32)(data[i] &lt;&lt; <span class="hljs-number">24</span>);<br>            <span class="hljs-keyword">for</span> (UInt32 j = <span class="hljs-number">0</span>; j &lt; <span class="hljs-number">8</span>; j++)<br>            &#123;<br>                <span class="hljs-keyword">if</span> ((crc &amp; <span class="hljs-number">0x80000000</span>) != <span class="hljs-number">0</span>)<br>                &#123;<br>                    crc = (UInt32)((crc &lt;&lt; <span class="hljs-number">1</span>) ^ Poly);<br>                &#125;<br>                <span class="hljs-keyword">else</span><br>                &#123;<br>                    crc = (UInt32)(crc &lt;&lt; <span class="hljs-number">1</span>);<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> crc ^ <span class="hljs-number">0xFFFFFFFF</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>查表法步骤：</p>
+<blockquote>
+<p><strong>查表法</strong><br>查表法是将移位异或的计算结果做成了一个表，就是将0~256放入一个长度为16位的寄存器中的低八位，高八位填充0，然后将该寄存器与多项式0XA001按照上述3、4步骤，直到八位全部移出，最后寄存器中的值就是表格中的数据，高八位、低八位分别单独一个表。</p>
+</blockquote>
+<blockquote>
+<p><strong>CRC-16</strong><br>0x8005 &#x3D; 1000 0000 0000 0101B</p>
+<p>0xA001 &#x3D; 1010 0000 0000 0001B</p>
+<p>1、对比两个二进制高低位正好是完全倒序的，CRC校验分为正向校验与反向校验。正向校验高位在左，反向校验低位在左。<br>2、比如正向CRC校验的数据为0xAF5D&#x3D;1010 1111 0101 1101B与0x8005异或时应该是0xAF5D^0x8005，而要使用0xA001与数据进行校验也应该使0xAF5D高低位换顺序为0xBAF5&#x3D;1011 1010 1111 0101B。<br>3正向校验使用左移位，反向校验使用右移位，其实原理是一样的，得看校验的数据高低位顺序</p>
+</blockquote>
+<h5 id="CRC生成表方法"><a href="#CRC生成表方法" class="headerlink" title="CRC生成表方法"></a>CRC生成表方法</h5><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-comment"><span class="hljs-doctag">///</span> crc16</span><br><span class="hljs-function">UInt16[] <span class="hljs-title">GenerateCRC16Table</span>(<span class="hljs-params">UInt16 Poly<span class="hljs-comment">/*多项式*/</span>, <span class="hljs-built_in">bool</span> isReverse<span class="hljs-comment">/*true:逆序 低位在左，高位在右，false:正序 高位在左，低位在右*/</span></span>)</span><br>&#123;<br>    UInt16[] crc_table = <span class="hljs-keyword">new</span> UInt16[<span class="hljs-number">256</span>];<br><br><br>    <span class="hljs-keyword">if</span> (isReverse)<br>    &#123;<br>        <span class="hljs-comment"><span class="hljs-doctag">///</span> 逆序多项式</span><br>        BitVector32 bits = <span class="hljs-keyword">new</span> BitVector32((Int32)Poly);<br>        BitVector32 reverse_bits = <span class="hljs-keyword">new</span> BitVector32();<br>        <span class="hljs-keyword">for</span> (<span class="hljs-built_in">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">32</span>; i++)<br>        &#123;<br>            reverse_bits[<span class="hljs-number">1</span> &lt;&lt; (<span class="hljs-number">31</span> - i)] = bits[<span class="hljs-number">1</span> &lt;&lt; i];<br>        &#125;<br>        Poly = (UInt16)((reverse_bits.Data &gt;&gt; <span class="hljs-number">16</span>) &amp; <span class="hljs-number">0xffff</span>);<br>    &#125;<br><br>    Parallel.For(<span class="hljs-number">0</span>, <span class="hljs-number">256</span>, number =&gt;<br>                 &#123;<br>                     UInt16 crc;<br><br>                     <span class="hljs-keyword">if</span> (isReverse)<br>                     &#123;<br>                         crc = (UInt16)number;<br>                         <span class="hljs-keyword">for</span> (UInt16 i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">8</span>; i++)<br>                         &#123;<br>                             <span class="hljs-keyword">if</span> ((crc &amp; <span class="hljs-number">0x1</span>) != <span class="hljs-number">0</span>)<br>                             &#123;<br>                                 crc = (UInt16)((crc &gt;&gt; <span class="hljs-number">1</span>) ^ Poly);<br>                             &#125;<br>                             <span class="hljs-keyword">else</span><br>                             &#123;<br>                                 crc = (UInt16)(crc &gt;&gt; <span class="hljs-number">1</span>);<br>                             &#125;<br>                         &#125;<br>                     &#125;<br>                     <span class="hljs-keyword">else</span><br>                     &#123;<br>                         crc = (UInt16)(number &lt;&lt; <span class="hljs-number">8</span>);<br>                         <span class="hljs-keyword">for</span> (UInt16 i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">8</span>; i++)<br>                         &#123;<br>                             <span class="hljs-keyword">if</span> ((crc &amp; <span class="hljs-number">0x8000</span>) != <span class="hljs-number">0</span>)<br>                             &#123;<br>                                 crc = (UInt16)((crc &lt;&lt; <span class="hljs-number">1</span>) ^ Poly);<br>                             &#125;<br>                             <span class="hljs-keyword">else</span><br>                             &#123;<br>                                 crc = (UInt16)(crc &lt;&lt; <span class="hljs-number">1</span>);<br>                             &#125;<br>                         &#125;<br>                     &#125;<br><br>                     crc_table[number] = crc;<br>                 &#125;);<br><br>    <span class="hljs-keyword">return</span> crc_table;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-comment"><span class="hljs-doctag">///</span> crc32</span><br><span class="hljs-function">UInt32[] <span class="hljs-title">GenerateCRC32Table</span>(<span class="hljs-params">UInt32 Poly<span class="hljs-comment">/*多项式*/</span>, <span class="hljs-built_in">bool</span> isReverse<span class="hljs-comment">/*true:逆序 低位在左，高位在右，false:正序 高位在左，低位在右*/</span></span>)</span><br>&#123;<br>    UInt32[] crc_table = <span class="hljs-keyword">new</span> UInt32[<span class="hljs-number">256</span>];<br><br>    <span class="hljs-keyword">if</span> (isReverse)<br>    &#123;<br>        <span class="hljs-comment"><span class="hljs-doctag">///</span> 逆序多项式</span><br>        BitVector32 bits = <span class="hljs-keyword">new</span> BitVector32((Int32)Poly);<br>        BitVector32 reverse_bits = <span class="hljs-keyword">new</span> BitVector32();<br>        <span class="hljs-keyword">for</span> (<span class="hljs-built_in">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">32</span>; i++)<br>        &#123;<br>            reverse_bits[<span class="hljs-number">1</span> &lt;&lt; (<span class="hljs-number">31</span> - i)] = bits[<span class="hljs-number">1</span> &lt;&lt; i];<br>        &#125;<br>        Poly = (UInt32)reverse_bits.Data;<br>    &#125;<br><br>    Parallel.For(<span class="hljs-number">0</span>, <span class="hljs-number">256</span>, number =&gt;<br>                 &#123;<br>                     UInt32 crc;<br><br>                     <span class="hljs-keyword">if</span> (isReverse)<br>                     &#123;<br>                         crc = (UInt32)number;<br>                         <span class="hljs-keyword">for</span> (UInt32 i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">8</span>; i++)<br>                         &#123;<br>                             <span class="hljs-keyword">if</span> ((crc &amp; <span class="hljs-number">0x1</span>) != <span class="hljs-number">0</span>)<br>                             &#123;<br>                                 crc = (UInt32)((crc &gt;&gt; <span class="hljs-number">1</span>) ^ Poly);<br>                             &#125;<br>                             <span class="hljs-keyword">else</span><br>                             &#123;<br>                                 crc = (UInt32)(crc &gt;&gt; <span class="hljs-number">1</span>);<br>                             &#125;<br>                         &#125;<br>                     &#125;<br>                     <span class="hljs-keyword">else</span><br>                     &#123;<br>                         crc = (UInt32)(number &lt;&lt; <span class="hljs-number">24</span>);<br>                         <span class="hljs-keyword">for</span> (UInt32 i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">8</span>; i++)<br>                         &#123;<br>                             <span class="hljs-keyword">if</span> ((crc &amp; <span class="hljs-number">0x80000000</span>) != <span class="hljs-number">0</span>)<br>                             &#123;<br>                                 crc = (UInt32)((crc &lt;&lt; <span class="hljs-number">1</span>) ^ Poly);<br>                             &#125;<br>                             <span class="hljs-keyword">else</span><br>                             &#123;<br>                                 crc = (UInt32)(crc &lt;&lt; <span class="hljs-number">1</span>);<br>                             &#125;<br>                         &#125;<br>                     &#125;<br><br>                     crc_table[number] = crc;<br>                 &#125;);<br><br>    <span class="hljs-keyword">return</span> crc_table;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-comment"><span class="hljs-doctag">///</span> 测试代码</span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> byte[] data = Encoding.Unicode.GetBytes(&quot;今天天气很好&quot;);</span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> Stream stream = new MemoryStream(data);</span><br><br><span class="hljs-comment"><span class="hljs-doctag">///</span> Console.WriteLine($&quot;GetCrc16(data, 0x1021, false) = 0x&#123;GetCrc16(data, 0x1021, false):X4&#125;.&quot;);</span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> Console.WriteLine($&quot;GetCrc16_Table(data, crc_2, false) = 0x&#123;GetCrc16_Table(data, crc_2, false):X4&#125;.&quot;);</span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> Console.WriteLine($&quot;NewLife.SecurityHelper.Crc16(data) = 0x&#123;NewLife.SecurityHelper.Crc16(data):X4&#125;.&quot;);</span><br><br><span class="hljs-comment"><span class="hljs-doctag">///</span> Console.WriteLine($&quot;GetCrc16(data, 0x8005, true) = 0x&#123;GetCrc16(data, 0x8005, true):X4&#125;.&quot;);</span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> Console.WriteLine($&quot;GetCrc16_Table(data, crc_3, true) = 0x&#123;GetCrc16_Table(data, crc_3, true):X4&#125;.&quot;);</span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> Console.WriteLine($&quot;NewLife.Security.Crc16.ComputeModbus(data, 0, data.Length) = 0x&#123;NewLife.Security.Crc16.ComputeModbus(data, 0, data.Length):X4&#125;.&quot;);</span><br><br><span class="hljs-comment"><span class="hljs-doctag">///</span> 输出结果</span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> GetCrc16(data, 0x1021, false) = 0x5DC1.</span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> GetCrc16_Table(data, crc_2, false) = 0x5DC1.</span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> NewLife.SecurityHelper.Crc16(data) = 0x5DC1.</span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> GetCrc16(data, 0x8005, true) = 0xD63B.</span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> GetCrc16_Table(data, crc_3, true) = 0xD63B.</span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> NewLife.Security.Crc16.ComputeModbus(data, 0, data.Length) = 0xD63B.</span><br><br><span class="hljs-function">UInt16 <span class="hljs-title">GetCrc16_Table</span>(<span class="hljs-params"><span class="hljs-built_in">byte</span>[] data, UInt16[] crc_table, <span class="hljs-built_in">bool</span> isReverse<span class="hljs-comment">/*true:逆序 低位在左，高位在右，false:正序 高位在左，低位在右*/</span></span>)</span><br>&#123;<br>    <span class="hljs-comment"><span class="hljs-doctag">///</span> https://blog.csdn.net/weixin_44256803/article/details/111794445</span><br>    <span class="hljs-comment"><span class="hljs-doctag">///</span> https://blog.csdn.net/qq_25814297/article/details/109402108</span><br>    UInt16 crc = <span class="hljs-number">0xFFFF</span>;<br><br>    <span class="hljs-keyword">if</span> (isReverse)<br>    &#123;<br>        <span class="hljs-keyword">for</span> (UInt16 i = <span class="hljs-number">0</span>; i &lt; data.Length; i++)<br>        &#123;<br>            crc = (UInt16)((crc &gt;&gt; <span class="hljs-number">8</span>) ^ crc_table[(crc ^ data[i]) &amp; <span class="hljs-number">0xFF</span>]);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">else</span><br>    &#123;<br>        crc ^= crc;<br>        <span class="hljs-keyword">for</span> (UInt16 i = <span class="hljs-number">0</span>; i &lt; data.Length; i++)<br>        &#123;<br>            crc = (UInt16)((crc &lt;&lt; <span class="hljs-number">8</span>) ^ crc_table[(crc &gt;&gt; <span class="hljs-number">8</span> ^ data[i]) &amp; <span class="hljs-number">0xFF</span>]);<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> crc;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-comment"><span class="hljs-doctag">///</span> 测试代码</span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> byte[] data = Encoding.Unicode.GetBytes(&quot;今天天气很好&quot;);</span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> Stream stream = new MemoryStream(data);</span><br><br><span class="hljs-comment"><span class="hljs-doctag">///</span> UInt32[] crc32_1 = GenerateCRC32Table(0x04C11DB7, true);</span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> Console.WriteLine($&quot;GetCrc32(data, 0x04C11DB7, true) = 0x&#123;GetCrc32(data, 0x04C11DB7, true):X4&#125;.&quot;);</span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> Console.WriteLine($&quot;GetCrc32_Table(data, crc32_1, false) = 0x&#123;GetCrc32_Table(data, crc32_1, true):X4&#125;.&quot;);</span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> Console.WriteLine($&quot;NewLife.Security.Crc32.Compute(data, 0, data.Length) = 0x&#123;NewLife.Security.Crc32.Compute(data, 0, data.Length):X4&#125;.&quot;);</span><br><br><span class="hljs-comment"><span class="hljs-doctag">///</span> 输出结果</span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> GetCrc32(data, 0x04C11DB7, true) = 0x7B1B0DAA.</span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> GetCrc32_Table(data, crc32_1, false) = 0x7B1B0DAA.</span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> NewLife.Security.Crc32.Compute(data, 0, data.Length) = 0x7B1B0DAA.</span><br><br><span class="hljs-function">UInt32 <span class="hljs-title">GetCrc32_Table</span>(<span class="hljs-params"><span class="hljs-built_in">byte</span>[] data, UInt32[] crc_table, <span class="hljs-built_in">bool</span> isReverse<span class="hljs-comment">/*true:逆序 低位在左，高位在右，false:正序 高位在左，低位在右*/</span></span>)</span><br>&#123;<br>    UInt32 crc = <span class="hljs-number">0xFFFFFFFF</span>;<br><br>    <span class="hljs-keyword">if</span> (isReverse)<br>    &#123;<br>        <span class="hljs-keyword">for</span> (UInt16 i = <span class="hljs-number">0</span>; i &lt; data.Length; i++)<br>        &#123;<br>            crc = (UInt32)((crc &gt;&gt; <span class="hljs-number">8</span>) ^ crc_table[(crc ^ data[i]) &amp; <span class="hljs-number">0xFF</span>]);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">else</span><br>    &#123;<br>        crc ^= crc;<br>        <span class="hljs-keyword">for</span> (UInt16 i = <span class="hljs-number">0</span>; i &lt; data.Length; i++)<br>        &#123;<br>            crc = (UInt32)((crc &lt;&lt; <span class="hljs-number">8</span>) ^ crc_table[(crc &gt;&gt; <span class="hljs-number">24</span> ^ data[i]) &amp; <span class="hljs-number">0xFF</span>]);<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> crc ^ <span class="hljs-number">0xFFFFFFFF</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>crc算法可灵活设置Init初始化值、Poly多项式值、RefIn&#x2F;RefOut是否倒序、XorOut结果异或等参数计算出不同结果。后期如需计算其它类型crc，可参照<a target="_blank" rel="noopener" href="https://crccalc.com/">CRC在线计算</a></p>
+<h5 id="CRC全套校验码生成函数源码-非查表-逐位运算法"><a href="#CRC全套校验码生成函数源码-非查表-逐位运算法" class="headerlink" title="CRC全套校验码生成函数源码(非查表)逐位运算法"></a>CRC全套校验码生成函数源码(非查表)逐位运算法</h5><p><a target="_blank" rel="noopener" href="https://www.amobbs.com/thread-5639122-1-1.html?_dsign=e98ea738">CRC全套校验码生成函数源码(非查表)逐位运算法</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br><span class="line">493</span><br><span class="line">494</span><br><span class="line">495</span><br><span class="line">496</span><br><span class="line">497</span><br><span class="line">498</span><br><span class="line">499</span><br><span class="line">500</span><br><span class="line">501</span><br><span class="line">502</span><br><span class="line">503</span><br><span class="line">504</span><br><span class="line">505</span><br><span class="line">506</span><br><span class="line">507</span><br><span class="line">508</span><br><span class="line">509</span><br><span class="line">510</span><br><span class="line">511</span><br><span class="line">512</span><br><span class="line">513</span><br><span class="line">514</span><br><span class="line">515</span><br><span class="line">516</span><br><span class="line">517</span><br><span class="line">518</span><br><span class="line">519</span><br><span class="line">520</span><br><span class="line">521</span><br><span class="line">522</span><br><span class="line">523</span><br><span class="line">524</span><br><span class="line">525</span><br><span class="line">526</span><br><span class="line">527</span><br><span class="line">528</span><br><span class="line">529</span><br><span class="line">530</span><br><span class="line">531</span><br><span class="line">532</span><br><span class="line">533</span><br><span class="line">534</span><br><span class="line">535</span><br><span class="line">536</span><br><span class="line">537</span><br><span class="line">538</span><br><span class="line">539</span><br><span class="line">540</span><br><span class="line">541</span><br><span class="line">542</span><br><span class="line">543</span><br><span class="line">544</span><br><span class="line">545</span><br><span class="line">546</span><br><span class="line">547</span><br><span class="line">548</span><br><span class="line">549</span><br><span class="line">550</span><br><span class="line">551</span><br><span class="line">552</span><br><span class="line">553</span><br><span class="line">554</span><br><span class="line">555</span><br><span class="line">556</span><br><span class="line">557</span><br><span class="line">558</span><br><span class="line">559</span><br><span class="line">560</span><br><span class="line">561</span><br><span class="line">562</span><br><span class="line">563</span><br><span class="line">564</span><br><span class="line">565</span><br><span class="line">566</span><br><span class="line">567</span><br><span class="line">568</span><br><span class="line">569</span><br><span class="line">570</span><br><span class="line">571</span><br><span class="line">572</span><br><span class="line">573</span><br><span class="line">574</span><br><span class="line">575</span><br><span class="line">576</span><br><span class="line">577</span><br><span class="line">578</span><br><span class="line">579</span><br><span class="line">580</span><br><span class="line">581</span><br><span class="line">582</span><br><span class="line">583</span><br><span class="line">584</span><br><span class="line">585</span><br><span class="line">586</span><br><span class="line">587</span><br><span class="line">588</span><br><span class="line">589</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">uint8_t</span> <span class="hljs-title function_">crc4_itu</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span>;<br><span class="hljs-type">uint8_t</span> <span class="hljs-title function_">crc5_epc</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span>;<br><span class="hljs-type">uint8_t</span> <span class="hljs-title function_">crc5_itu</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span>;<br><span class="hljs-type">uint8_t</span> <span class="hljs-title function_">crc5_usb</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span>;<br><span class="hljs-type">uint8_t</span> <span class="hljs-title function_">crc6_itu</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span>;<br><span class="hljs-type">uint8_t</span> <span class="hljs-title function_">crc7_mmc</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span>;<br><span class="hljs-type">uint8_t</span> <span class="hljs-title function_">crc8</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span>;<br><span class="hljs-type">uint8_t</span> <span class="hljs-title function_">crc8_itu</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span>;<br><span class="hljs-type">uint8_t</span> <span class="hljs-title function_">crc8_rohc</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span>;<br><span class="hljs-type">uint8_t</span> <span class="hljs-title function_">crc8_maxim</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span>;<br><span class="hljs-type">uint16_t</span> <span class="hljs-title function_">crc16_ibm</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span>;<br><span class="hljs-type">uint16_t</span> <span class="hljs-title function_">crc16_maxim</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span>;<br><span class="hljs-type">uint16_t</span> <span class="hljs-title function_">crc16_usb</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span>;<br><span class="hljs-type">uint16_t</span> <span class="hljs-title function_">crc16_modbus</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span>;<br><span class="hljs-type">uint16_t</span> <span class="hljs-title function_">crc16_ccitt</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span>;<br><span class="hljs-type">uint16_t</span> <span class="hljs-title function_">crc16_ccitt_false</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span>;<br><span class="hljs-type">uint16_t</span> <span class="hljs-title function_">crc16_x25</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span>;<br><span class="hljs-type">uint16_t</span> <span class="hljs-title function_">crc16_xmodem</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span>;<br><span class="hljs-type">uint16_t</span> <span class="hljs-title function_">crc16_dnp</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span>;<br><span class="hljs-type">uint32_t</span> <span class="hljs-title function_">crc32</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span>;<br><span class="hljs-type">uint32_t</span> <span class="hljs-title function_">crc32_mpeg_2</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span>;<br><span class="hljs-comment">/******************************************************************************</span><br><span class="hljs-comment"> * Name:    CRC-4/ITU           x4+x+1</span><br><span class="hljs-comment"> * Poly:    0x03</span><br><span class="hljs-comment"> * Init:    0x00</span><br><span class="hljs-comment"> * Refin:   True</span><br><span class="hljs-comment"> * Refout:  True</span><br><span class="hljs-comment"> * Xorout:  0x00</span><br><span class="hljs-comment"> * Note:</span><br><span class="hljs-comment"> *****************************************************************************/</span><br><span class="hljs-type">uint8_t</span> <span class="hljs-title function_">crc4_itu</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span><br>&#123;<br>    <span class="hljs-type">uint8_t</span> i;<br>    <span class="hljs-type">uint8_t</span> crc = <span class="hljs-number">0</span>;                <span class="hljs-comment">// Initial value</span><br>    <span class="hljs-keyword">while</span>(length--)<br>    &#123;<br>        crc ^= *data++;                 <span class="hljs-comment">// crc ^= *data; data++;</span><br>        <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">8</span>; ++i)<br>        &#123;<br>            <span class="hljs-keyword">if</span> (crc &amp; <span class="hljs-number">1</span>)<br>                crc = (crc &gt;&gt; <span class="hljs-number">1</span>) ^ <span class="hljs-number">0x0C</span>;<span class="hljs-comment">// 0x0C = (reverse 0x03)&gt;&gt;(8-4)</span><br>            <span class="hljs-keyword">else</span><br>                crc = (crc &gt;&gt; <span class="hljs-number">1</span>);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> crc;<br>&#125;<br><br><span class="hljs-comment">/******************************************************************************</span><br><span class="hljs-comment"> * Name:    CRC-5/EPC           x5+x3+1</span><br><span class="hljs-comment"> * Poly:    0x09</span><br><span class="hljs-comment"> * Init:    0x09</span><br><span class="hljs-comment"> * Refin:   False</span><br><span class="hljs-comment"> * Refout:  False</span><br><span class="hljs-comment"> * Xorout:  0x00</span><br><span class="hljs-comment"> * Note:</span><br><span class="hljs-comment"> *****************************************************************************/</span><br><span class="hljs-type">uint8_t</span> <span class="hljs-title function_">crc5_epc</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span><br>&#123;<br>    <span class="hljs-type">uint8_t</span> i;<br>    <span class="hljs-type">uint8_t</span> crc = <span class="hljs-number">0x48</span>;        <span class="hljs-comment">// Initial value: 0x48 = 0x09&lt;&lt;(8-5)</span><br>    <span class="hljs-keyword">while</span>(length--)<br>    &#123;<br>        crc ^= *data++;        <span class="hljs-comment">// crc ^= *data; data++;</span><br>        <span class="hljs-keyword">for</span> ( i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">8</span>; i++ )<br>        &#123;<br>            <span class="hljs-keyword">if</span> ( crc &amp; <span class="hljs-number">0x80</span> )<br>                crc = (crc &lt;&lt; <span class="hljs-number">1</span>) ^ <span class="hljs-number">0x48</span>;        <span class="hljs-comment">// 0x48 = 0x09&lt;&lt;(8-5)</span><br>            <span class="hljs-keyword">else</span><br>                crc &lt;&lt;= <span class="hljs-number">1</span>;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> crc &gt;&gt; <span class="hljs-number">3</span>;<br>&#125;<br><br><span class="hljs-comment">/******************************************************************************</span><br><span class="hljs-comment"> * Name:    CRC-5/ITU           x5+x4+x2+1</span><br><span class="hljs-comment"> * Poly:    0x15</span><br><span class="hljs-comment"> * Init:    0x00</span><br><span class="hljs-comment"> * Refin:   True</span><br><span class="hljs-comment"> * Refout:  True</span><br><span class="hljs-comment"> * Xorout:  0x00</span><br><span class="hljs-comment"> * Note:</span><br><span class="hljs-comment"> *****************************************************************************/</span><br><span class="hljs-type">uint8_t</span> <span class="hljs-title function_">crc5_itu</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span><br>&#123;<br>    <span class="hljs-type">uint8_t</span> i;<br>    <span class="hljs-type">uint8_t</span> crc = <span class="hljs-number">0</span>;                <span class="hljs-comment">// Initial value</span><br>    <span class="hljs-keyword">while</span>(length--)<br>    &#123;<br>        crc ^= *data++;                 <span class="hljs-comment">// crc ^= *data; data++;</span><br>        <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">8</span>; ++i)<br>        &#123;<br>            <span class="hljs-keyword">if</span> (crc &amp; <span class="hljs-number">1</span>)<br>                crc = (crc &gt;&gt; <span class="hljs-number">1</span>) ^ <span class="hljs-number">0x15</span>;<span class="hljs-comment">// 0x15 = (reverse 0x15)&gt;&gt;(8-5)</span><br>            <span class="hljs-keyword">else</span><br>                crc = (crc &gt;&gt; <span class="hljs-number">1</span>);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> crc;<br>&#125;<br><br><span class="hljs-comment">/******************************************************************************</span><br><span class="hljs-comment"> * Name:    CRC-5/USB           x5+x2+1</span><br><span class="hljs-comment"> * Poly:    0x05</span><br><span class="hljs-comment"> * Init:    0x1F</span><br><span class="hljs-comment"> * Refin:   True</span><br><span class="hljs-comment"> * Refout:  True</span><br><span class="hljs-comment"> * Xorout:  0x1F</span><br><span class="hljs-comment"> * Note:</span><br><span class="hljs-comment"> *****************************************************************************/</span><br><span class="hljs-type">uint8_t</span> <span class="hljs-title function_">crc5_usb</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span><br>&#123;<br>    <span class="hljs-type">uint8_t</span> i;<br>    <span class="hljs-type">uint8_t</span> crc = <span class="hljs-number">0x1F</span>;                <span class="hljs-comment">// Initial value</span><br>    <span class="hljs-keyword">while</span>(length--)<br>    &#123;<br>        crc ^= *data++;                 <span class="hljs-comment">// crc ^= *data; data++;</span><br>        <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">8</span>; ++i)<br>        &#123;<br>            <span class="hljs-keyword">if</span> (crc &amp; <span class="hljs-number">1</span>)<br>                crc = (crc &gt;&gt; <span class="hljs-number">1</span>) ^ <span class="hljs-number">0x14</span>;<span class="hljs-comment">// 0x14 = (reverse 0x05)&gt;&gt;(8-5)</span><br>            <span class="hljs-keyword">else</span><br>                crc = (crc &gt;&gt; <span class="hljs-number">1</span>);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> crc ^ <span class="hljs-number">0x1F</span>;<br>&#125;<br><br><span class="hljs-comment">/******************************************************************************</span><br><span class="hljs-comment"> * Name:    CRC-6/ITU           x6+x+1</span><br><span class="hljs-comment"> * Poly:    0x03</span><br><span class="hljs-comment"> * Init:    0x00</span><br><span class="hljs-comment"> * Refin:   True</span><br><span class="hljs-comment"> * Refout:  True</span><br><span class="hljs-comment"> * Xorout:  0x00</span><br><span class="hljs-comment"> * Note:</span><br><span class="hljs-comment"> *****************************************************************************/</span><br><span class="hljs-type">uint8_t</span> <span class="hljs-title function_">crc6_itu</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span><br>&#123;<br>    <span class="hljs-type">uint8_t</span> i;<br>    <span class="hljs-type">uint8_t</span> crc = <span class="hljs-number">0</span>;         <span class="hljs-comment">// Initial value</span><br>    <span class="hljs-keyword">while</span>(length--)<br>    &#123;<br>        crc ^= *data++;        <span class="hljs-comment">// crc ^= *data; data++;</span><br>        <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">8</span>; ++i)<br>        &#123;<br>            <span class="hljs-keyword">if</span> (crc &amp; <span class="hljs-number">1</span>)<br>                crc = (crc &gt;&gt; <span class="hljs-number">1</span>) ^ <span class="hljs-number">0x30</span>;<span class="hljs-comment">// 0x30 = (reverse 0x03)&gt;&gt;(8-6)</span><br>            <span class="hljs-keyword">else</span><br>                crc = (crc &gt;&gt; <span class="hljs-number">1</span>);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> crc;<br>&#125;<br><br><span class="hljs-comment">/******************************************************************************</span><br><span class="hljs-comment"> * Name:    CRC-7/MMC           x7+x3+1</span><br><span class="hljs-comment"> * Poly:    0x09</span><br><span class="hljs-comment"> * Init:    0x00</span><br><span class="hljs-comment"> * Refin:   False</span><br><span class="hljs-comment"> * Refout:  False</span><br><span class="hljs-comment"> * Xorout:  0x00</span><br><span class="hljs-comment"> * Use:     MultiMediaCard,SD,ect.</span><br><span class="hljs-comment"> *****************************************************************************/</span><br><span class="hljs-type">uint8_t</span> <span class="hljs-title function_">crc7_mmc</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span><br>&#123;<br>    <span class="hljs-type">uint8_t</span> i;<br>    <span class="hljs-type">uint8_t</span> crc = <span class="hljs-number">0</span>;        <span class="hljs-comment">// Initial value</span><br>    <span class="hljs-keyword">while</span>(length--)<br>    &#123;<br>        crc ^= *data++;        <span class="hljs-comment">// crc ^= *data; data++;</span><br>        <span class="hljs-keyword">for</span> ( i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">8</span>; i++ )<br>        &#123;<br>            <span class="hljs-keyword">if</span> ( crc &amp; <span class="hljs-number">0x80</span> )<br>                crc = (crc &lt;&lt; <span class="hljs-number">1</span>) ^ <span class="hljs-number">0x12</span>;        <span class="hljs-comment">// 0x12 = 0x09&lt;&lt;(8-7)</span><br>            <span class="hljs-keyword">else</span><br>                crc &lt;&lt;= <span class="hljs-number">1</span>;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> crc &gt;&gt; <span class="hljs-number">1</span>;<br>&#125;<br><br><span class="hljs-comment">/******************************************************************************</span><br><span class="hljs-comment"> * Name:    CRC-8               x8+x2+x+1</span><br><span class="hljs-comment"> * Poly:    0x07</span><br><span class="hljs-comment"> * Init:    0x00</span><br><span class="hljs-comment"> * Refin:   False</span><br><span class="hljs-comment"> * Refout:  False</span><br><span class="hljs-comment"> * Xorout:  0x00</span><br><span class="hljs-comment"> * Note:</span><br><span class="hljs-comment"> *****************************************************************************/</span><br><span class="hljs-type">uint8_t</span> <span class="hljs-title function_">crc8</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span><br>&#123;<br>    <span class="hljs-type">uint8_t</span> i;<br>    <span class="hljs-type">uint8_t</span> crc = <span class="hljs-number">0</span>;        <span class="hljs-comment">// Initial value</span><br>    <span class="hljs-keyword">while</span>(length--)<br>    &#123;<br>        crc ^= *data++;        <span class="hljs-comment">// crc ^= *data; data++;</span><br>        <span class="hljs-keyword">for</span> ( i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">8</span>; i++ )<br>        &#123;<br>            <span class="hljs-keyword">if</span> ( crc &amp; <span class="hljs-number">0x80</span> )<br>                crc = (crc &lt;&lt; <span class="hljs-number">1</span>) ^ <span class="hljs-number">0x07</span>;<br>            <span class="hljs-keyword">else</span><br>                crc &lt;&lt;= <span class="hljs-number">1</span>;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> crc;<br>&#125;<br><br><span class="hljs-comment">/******************************************************************************</span><br><span class="hljs-comment"> * Name:    CRC-8/ITU           x8+x2+x+1</span><br><span class="hljs-comment"> * Poly:    0x07</span><br><span class="hljs-comment"> * Init:    0x00</span><br><span class="hljs-comment"> * Refin:   False</span><br><span class="hljs-comment"> * Refout:  False</span><br><span class="hljs-comment"> * Xorout:  0x55</span><br><span class="hljs-comment"> * Alias:   CRC-8/ATM</span><br><span class="hljs-comment"> *****************************************************************************/</span><br><span class="hljs-type">uint8_t</span> <span class="hljs-title function_">crc8_itu</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span><br>&#123;<br>    <span class="hljs-type">uint8_t</span> i;<br>    <span class="hljs-type">uint8_t</span> crc = <span class="hljs-number">0</span>;        <span class="hljs-comment">// Initial value</span><br>    <span class="hljs-keyword">while</span>(length--)<br>    &#123;<br>        crc ^= *data++;        <span class="hljs-comment">// crc ^= *data; data++;</span><br>        <span class="hljs-keyword">for</span> ( i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">8</span>; i++ )<br>        &#123;<br>            <span class="hljs-keyword">if</span> ( crc &amp; <span class="hljs-number">0x80</span> )<br>                crc = (crc &lt;&lt; <span class="hljs-number">1</span>) ^ <span class="hljs-number">0x07</span>;<br>            <span class="hljs-keyword">else</span><br>                crc &lt;&lt;= <span class="hljs-number">1</span>;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> crc ^ <span class="hljs-number">0x55</span>;<br>&#125;<br><br><span class="hljs-comment">/******************************************************************************</span><br><span class="hljs-comment"> * Name:    CRC-8/ROHC          x8+x2+x+1</span><br><span class="hljs-comment"> * Poly:    0x07</span><br><span class="hljs-comment"> * Init:    0xFF</span><br><span class="hljs-comment"> * Refin:   True</span><br><span class="hljs-comment"> * Refout:  True</span><br><span class="hljs-comment"> * Xorout:  0x00</span><br><span class="hljs-comment"> * Note:</span><br><span class="hljs-comment"> *****************************************************************************/</span><br><span class="hljs-type">uint8_t</span> <span class="hljs-title function_">crc8_rohc</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span><br>&#123;<br>    <span class="hljs-type">uint8_t</span> i;<br>    <span class="hljs-type">uint8_t</span> crc = <span class="hljs-number">0xFF</span>;         <span class="hljs-comment">// Initial value</span><br>    <span class="hljs-keyword">while</span>(length--)<br>    &#123;<br>        crc ^= *data++;            <span class="hljs-comment">// crc ^= *data; data++;</span><br>        <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">8</span>; ++i)<br>        &#123;<br>            <span class="hljs-keyword">if</span> (crc &amp; <span class="hljs-number">1</span>)<br>                crc = (crc &gt;&gt; <span class="hljs-number">1</span>) ^ <span class="hljs-number">0xE0</span>;        <span class="hljs-comment">// 0xE0 = reverse 0x07</span><br>            <span class="hljs-keyword">else</span><br>                crc = (crc &gt;&gt; <span class="hljs-number">1</span>);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> crc;<br>&#125;<br><br><span class="hljs-comment">/******************************************************************************</span><br><span class="hljs-comment"> * Name:    CRC-8/MAXIM         x8+x5+x4+1</span><br><span class="hljs-comment"> * Poly:    0x31</span><br><span class="hljs-comment"> * Init:    0x00</span><br><span class="hljs-comment"> * Refin:   True</span><br><span class="hljs-comment"> * Refout:  True</span><br><span class="hljs-comment"> * Xorout:  0x00</span><br><span class="hljs-comment"> * Alias:   DOW-CRC,CRC-8/IBUTTON</span><br><span class="hljs-comment"> * Use:     Maxim(Dallas)&#x27;s some devices,e.g. DS18B20</span><br><span class="hljs-comment"> *****************************************************************************/</span><br><span class="hljs-type">uint8_t</span> <span class="hljs-title function_">crc8_maxim</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span><br>&#123;<br>    <span class="hljs-type">uint8_t</span> i;<br>    <span class="hljs-type">uint8_t</span> crc = <span class="hljs-number">0</span>;         <span class="hljs-comment">// Initial value</span><br>    <span class="hljs-keyword">while</span>(length--)<br>    &#123;<br>        crc ^= *data++;        <span class="hljs-comment">// crc ^= *data; data++;</span><br>        <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">8</span>; i++)<br>        &#123;<br>            <span class="hljs-keyword">if</span> (crc &amp; <span class="hljs-number">1</span>)<br>                crc = (crc &gt;&gt; <span class="hljs-number">1</span>) ^ <span class="hljs-number">0x8C</span>;        <span class="hljs-comment">// 0x8C = reverse 0x31</span><br>            <span class="hljs-keyword">else</span><br>                crc &gt;&gt;= <span class="hljs-number">1</span>;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> crc;<br>&#125;<br><br><span class="hljs-comment">/******************************************************************************</span><br><span class="hljs-comment"> * Name:    CRC-16/IBM          x16+x15+x2+1</span><br><span class="hljs-comment"> * Poly:    0x8005</span><br><span class="hljs-comment"> * Init:    0x0000</span><br><span class="hljs-comment"> * Refin:   True</span><br><span class="hljs-comment"> * Refout:  True</span><br><span class="hljs-comment"> * Xorout:  0x0000</span><br><span class="hljs-comment"> * Alias:   CRC-16,CRC-16/ARC,CRC-16/LHA</span><br><span class="hljs-comment"> *****************************************************************************/</span><br><span class="hljs-type">uint16_t</span> <span class="hljs-title function_">crc16_ibm</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span><br>&#123;<br>    <span class="hljs-type">uint8_t</span> i;<br>    <span class="hljs-type">uint16_t</span> crc = <span class="hljs-number">0</span>;        <span class="hljs-comment">// Initial value</span><br>    <span class="hljs-keyword">while</span>(length--)<br>    &#123;<br>        crc ^= *data++;        <span class="hljs-comment">// crc ^= *data; data++;</span><br>        <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">8</span>; ++i)<br>        &#123;<br>            <span class="hljs-keyword">if</span> (crc &amp; <span class="hljs-number">1</span>)<br>                crc = (crc &gt;&gt; <span class="hljs-number">1</span>) ^ <span class="hljs-number">0xA001</span>;        <span class="hljs-comment">// 0xA001 = reverse 0x8005</span><br>            <span class="hljs-keyword">else</span><br>                crc = (crc &gt;&gt; <span class="hljs-number">1</span>);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> crc;<br>&#125;<br><br><span class="hljs-comment">/******************************************************************************</span><br><span class="hljs-comment"> * Name:    CRC-16/MAXIM        x16+x15+x2+1</span><br><span class="hljs-comment"> * Poly:    0x8005</span><br><span class="hljs-comment"> * Init:    0x0000</span><br><span class="hljs-comment"> * Refin:   True</span><br><span class="hljs-comment"> * Refout:  True</span><br><span class="hljs-comment"> * Xorout:  0xFFFF</span><br><span class="hljs-comment"> * Note:</span><br><span class="hljs-comment"> *****************************************************************************/</span><br><span class="hljs-type">uint16_t</span> <span class="hljs-title function_">crc16_maxim</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span><br>&#123;<br>    <span class="hljs-type">uint8_t</span> i;<br>    <span class="hljs-type">uint16_t</span> crc = <span class="hljs-number">0</span>;        <span class="hljs-comment">// Initial value</span><br>    <span class="hljs-keyword">while</span>(length--)<br>    &#123;<br>        crc ^= *data++;        <span class="hljs-comment">// crc ^= *data; data++;</span><br>        <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">8</span>; ++i)<br>        &#123;<br>            <span class="hljs-keyword">if</span> (crc &amp; <span class="hljs-number">1</span>)<br>                crc = (crc &gt;&gt; <span class="hljs-number">1</span>) ^ <span class="hljs-number">0xA001</span>;        <span class="hljs-comment">// 0xA001 = reverse 0x8005</span><br>            <span class="hljs-keyword">else</span><br>                crc = (crc &gt;&gt; <span class="hljs-number">1</span>);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> ~crc;    <span class="hljs-comment">// crc^0xffff</span><br>&#125;<br><br><span class="hljs-comment">/******************************************************************************</span><br><span class="hljs-comment"> * Name:    CRC-16/USB          x16+x15+x2+1</span><br><span class="hljs-comment"> * Poly:    0x8005</span><br><span class="hljs-comment"> * Init:    0xFFFF</span><br><span class="hljs-comment"> * Refin:   True</span><br><span class="hljs-comment"> * Refout:  True</span><br><span class="hljs-comment"> * Xorout:  0xFFFF</span><br><span class="hljs-comment"> * Note:</span><br><span class="hljs-comment"> *****************************************************************************/</span><br><span class="hljs-type">uint16_t</span> <span class="hljs-title function_">crc16_usb</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span><br>&#123;<br>    <span class="hljs-type">uint8_t</span> i;<br>    <span class="hljs-type">uint16_t</span> crc = <span class="hljs-number">0xffff</span>;        <span class="hljs-comment">// Initial value</span><br>    <span class="hljs-keyword">while</span>(length--)<br>    &#123;<br>        crc ^= *data++;            <span class="hljs-comment">// crc ^= *data; data++;</span><br>        <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">8</span>; ++i)<br>        &#123;<br>            <span class="hljs-keyword">if</span> (crc &amp; <span class="hljs-number">1</span>)<br>                crc = (crc &gt;&gt; <span class="hljs-number">1</span>) ^ <span class="hljs-number">0xA001</span>;        <span class="hljs-comment">// 0xA001 = reverse 0x8005</span><br>            <span class="hljs-keyword">else</span><br>                crc = (crc &gt;&gt; <span class="hljs-number">1</span>);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> ~crc;    <span class="hljs-comment">// crc^0xffff</span><br>&#125;<br><br><span class="hljs-comment">/******************************************************************************</span><br><span class="hljs-comment"> * Name:    CRC-16/MODBUS       x16+x15+x2+1</span><br><span class="hljs-comment"> * Poly:    0x8005</span><br><span class="hljs-comment"> * Init:    0xFFFF</span><br><span class="hljs-comment"> * Refin:   True</span><br><span class="hljs-comment"> * Refout:  True</span><br><span class="hljs-comment"> * Xorout:  0x0000</span><br><span class="hljs-comment"> * Note:</span><br><span class="hljs-comment"> *****************************************************************************/</span><br><span class="hljs-type">uint16_t</span> <span class="hljs-title function_">crc16_modbus</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span><br>&#123;<br>    <span class="hljs-type">uint8_t</span> i;<br>    <span class="hljs-type">uint16_t</span> crc = <span class="hljs-number">0xffff</span>;        <span class="hljs-comment">// Initial value</span><br>    <span class="hljs-keyword">while</span>(length--)<br>    &#123;<br>        crc ^= *data++;            <span class="hljs-comment">// crc ^= *data; data++;</span><br>        <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">8</span>; ++i)<br>        &#123;<br>            <span class="hljs-keyword">if</span> (crc &amp; <span class="hljs-number">1</span>)<br>                crc = (crc &gt;&gt; <span class="hljs-number">1</span>) ^ <span class="hljs-number">0xA001</span>;        <span class="hljs-comment">// 0xA001 = reverse 0x8005</span><br>            <span class="hljs-keyword">else</span><br>                crc = (crc &gt;&gt; <span class="hljs-number">1</span>);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> crc;<br>&#125;<br><br><span class="hljs-comment">/******************************************************************************</span><br><span class="hljs-comment"> * Name:    CRC-16/CCITT        x16+x12+x5+1</span><br><span class="hljs-comment"> * Poly:    0x1021</span><br><span class="hljs-comment"> * Init:    0x0000</span><br><span class="hljs-comment"> * Refin:   True</span><br><span class="hljs-comment"> * Refout:  True</span><br><span class="hljs-comment"> * Xorout:  0x0000</span><br><span class="hljs-comment"> * Alias:   CRC-CCITT,CRC-16/CCITT-TRUE,CRC-16/KERMIT</span><br><span class="hljs-comment"> *****************************************************************************/</span><br><span class="hljs-type">uint16_t</span> <span class="hljs-title function_">crc16_ccitt</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span><br>&#123;<br>    <span class="hljs-type">uint8_t</span> i;<br>    <span class="hljs-type">uint16_t</span> crc = <span class="hljs-number">0</span>;        <span class="hljs-comment">// Initial value</span><br>    <span class="hljs-keyword">while</span>(length--)<br>    &#123;<br>        crc ^= *data++;        <span class="hljs-comment">// crc ^= *data; data++;</span><br>        <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">8</span>; ++i)<br>        &#123;<br>            <span class="hljs-keyword">if</span> (crc &amp; <span class="hljs-number">1</span>)<br>                crc = (crc &gt;&gt; <span class="hljs-number">1</span>) ^ <span class="hljs-number">0x8408</span>;        <span class="hljs-comment">// 0x8408 = reverse 0x1021</span><br>            <span class="hljs-keyword">else</span><br>                crc = (crc &gt;&gt; <span class="hljs-number">1</span>);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> crc;<br>&#125;<br><br><span class="hljs-comment">/******************************************************************************</span><br><span class="hljs-comment"> * Name:    CRC-16/CCITT-FALSE   x16+x12+x5+1</span><br><span class="hljs-comment"> * Poly:    0x1021</span><br><span class="hljs-comment"> * Init:    0xFFFF</span><br><span class="hljs-comment"> * Refin:   False</span><br><span class="hljs-comment"> * Refout:  False</span><br><span class="hljs-comment"> * Xorout:  0x0000</span><br><span class="hljs-comment"> * Note:</span><br><span class="hljs-comment"> *****************************************************************************/</span><br><span class="hljs-type">uint16_t</span> <span class="hljs-title function_">crc16_ccitt_false</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span><br>&#123;<br>    <span class="hljs-type">uint8_t</span> i;<br>    <span class="hljs-type">uint16_t</span> crc = <span class="hljs-number">0xffff</span>;        <span class="hljs-comment">//Initial value</span><br>    <span class="hljs-keyword">while</span>(length--)<br>    &#123;<br>        crc ^= (<span class="hljs-type">uint16_t</span>)(*data++) &lt;&lt; <span class="hljs-number">8</span>; <span class="hljs-comment">// crc ^= (uint6_t)(*data)&lt;&lt;8; data++;</span><br>        <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">8</span>; ++i)<br>        &#123;<br>            <span class="hljs-keyword">if</span> ( crc &amp; <span class="hljs-number">0x8000</span> )<br>                crc = (crc &lt;&lt; <span class="hljs-number">1</span>) ^ <span class="hljs-number">0x1021</span>;<br>            <span class="hljs-keyword">else</span><br>                crc &lt;&lt;= <span class="hljs-number">1</span>;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> crc;<br>&#125;<br><br><span class="hljs-comment">/******************************************************************************</span><br><span class="hljs-comment"> * Name:    CRC-16/X25          x16+x12+x5+1</span><br><span class="hljs-comment"> * Poly:    0x1021</span><br><span class="hljs-comment"> * Init:    0xFFFF</span><br><span class="hljs-comment"> * Refin:   True</span><br><span class="hljs-comment"> * Refout:  True</span><br><span class="hljs-comment"> * Xorout:  0XFFFF</span><br><span class="hljs-comment"> * Note:</span><br><span class="hljs-comment"> *****************************************************************************/</span><br><span class="hljs-type">uint16_t</span> <span class="hljs-title function_">crc16_x25</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span><br>&#123;<br>    <span class="hljs-type">uint8_t</span> i;<br>    <span class="hljs-type">uint16_t</span> crc = <span class="hljs-number">0xffff</span>;        <span class="hljs-comment">// Initial value</span><br>    <span class="hljs-keyword">while</span>(length--)<br>    &#123;<br>        crc ^= *data++;            <span class="hljs-comment">// crc ^= *data; data++;</span><br>        <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">8</span>; ++i)<br>        &#123;<br>            <span class="hljs-keyword">if</span> (crc &amp; <span class="hljs-number">1</span>)<br>                crc = (crc &gt;&gt; <span class="hljs-number">1</span>) ^ <span class="hljs-number">0x8408</span>;        <span class="hljs-comment">// 0x8408 = reverse 0x1021</span><br>            <span class="hljs-keyword">else</span><br>                crc = (crc &gt;&gt; <span class="hljs-number">1</span>);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> ~crc;                <span class="hljs-comment">// crc^Xorout</span><br>&#125;<br><br><span class="hljs-comment">/******************************************************************************</span><br><span class="hljs-comment"> * Name:    CRC-16/XMODEM       x16+x12+x5+1</span><br><span class="hljs-comment"> * Poly:    0x1021</span><br><span class="hljs-comment"> * Init:    0x0000</span><br><span class="hljs-comment"> * Refin:   False</span><br><span class="hljs-comment"> * Refout:  False</span><br><span class="hljs-comment"> * Xorout:  0x0000</span><br><span class="hljs-comment"> * Alias:   CRC-16/ZMODEM,CRC-16/ACORN</span><br><span class="hljs-comment"> *****************************************************************************/</span><br><span class="hljs-type">uint16_t</span> <span class="hljs-title function_">crc16_xmodem</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span><br>&#123;<br>    <span class="hljs-type">uint8_t</span> i;<br>    <span class="hljs-type">uint16_t</span> crc = <span class="hljs-number">0</span>;            <span class="hljs-comment">// Initial value</span><br>    <span class="hljs-keyword">while</span>(length--)<br>    &#123;<br>        crc ^= (<span class="hljs-type">uint16_t</span>)(*data++) &lt;&lt; <span class="hljs-number">8</span>; <span class="hljs-comment">// crc ^= (uint16_t)(*data)&lt;&lt;8; data++;</span><br>        <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">8</span>; ++i)<br>        &#123;<br>            <span class="hljs-keyword">if</span> ( crc &amp; <span class="hljs-number">0x8000</span> )<br>                crc = (crc &lt;&lt; <span class="hljs-number">1</span>) ^ <span class="hljs-number">0x1021</span>;<br>            <span class="hljs-keyword">else</span><br>                crc &lt;&lt;= <span class="hljs-number">1</span>;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> crc;<br>&#125;<br><br><span class="hljs-comment">/******************************************************************************</span><br><span class="hljs-comment"> * Name:    CRC-16/DNP          x16+x13+x12+x11+x10+x8+x6+x5+x2+1</span><br><span class="hljs-comment"> * Poly:    0x3D65</span><br><span class="hljs-comment"> * Init:    0x0000</span><br><span class="hljs-comment"> * Refin:   True</span><br><span class="hljs-comment"> * Refout:  True</span><br><span class="hljs-comment"> * Xorout:  0xFFFF</span><br><span class="hljs-comment"> * Use:     M-Bus,ect.</span><br><span class="hljs-comment"> *****************************************************************************/</span><br><span class="hljs-type">uint16_t</span> <span class="hljs-title function_">crc16_dnp</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span><br>&#123;<br>    <span class="hljs-type">uint8_t</span> i;<br>    <span class="hljs-type">uint16_t</span> crc = <span class="hljs-number">0</span>;            <span class="hljs-comment">// Initial value</span><br>    <span class="hljs-keyword">while</span>(length--)<br>    &#123;<br>        crc ^= *data++;            <span class="hljs-comment">// crc ^= *data; data++;</span><br>        <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">8</span>; ++i)<br>        &#123;<br>            <span class="hljs-keyword">if</span> (crc &amp; <span class="hljs-number">1</span>)<br>                crc = (crc &gt;&gt; <span class="hljs-number">1</span>) ^ <span class="hljs-number">0xA6BC</span>;        <span class="hljs-comment">// 0xA6BC = reverse 0x3D65</span><br>            <span class="hljs-keyword">else</span><br>                crc = (crc &gt;&gt; <span class="hljs-number">1</span>);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> ~crc;                <span class="hljs-comment">// crc^Xorout</span><br>&#125;<br><br><span class="hljs-comment">/******************************************************************************</span><br><span class="hljs-comment"> * Name:    CRC-32  x32+x26+x23+x22+x16+x12+x11+x10+x8+x7+x5+x4+x2+x+1</span><br><span class="hljs-comment"> * Poly:    0x4C11DB7</span><br><span class="hljs-comment"> * Init:    0xFFFFFFF</span><br><span class="hljs-comment"> * Refin:   True</span><br><span class="hljs-comment"> * Refout:  True</span><br><span class="hljs-comment"> * Xorout:  0xFFFFFFF</span><br><span class="hljs-comment"> * Alias:   CRC_32/ADCCP</span><br><span class="hljs-comment"> * Use:     WinRAR,ect.</span><br><span class="hljs-comment"> *****************************************************************************/</span><br><span class="hljs-type">uint32_t</span> <span class="hljs-title function_">crc32</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span><br>&#123;<br>    <span class="hljs-type">uint8_t</span> i;<br>    <span class="hljs-type">uint32_t</span> crc = <span class="hljs-number">0xffffffff</span>;        <span class="hljs-comment">// Initial value</span><br>    <span class="hljs-keyword">while</span>(length--)<br>    &#123;<br>        crc ^= *data++;                <span class="hljs-comment">// crc ^= *data; data++;</span><br>        <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">8</span>; ++i)<br>        &#123;<br>            <span class="hljs-keyword">if</span> (crc &amp; <span class="hljs-number">1</span>)<br>                crc = (crc &gt;&gt; <span class="hljs-number">1</span>) ^ <span class="hljs-number">0xEDB88320</span>;<span class="hljs-comment">// 0xEDB88320= reverse 0x04C11DB7</span><br>            <span class="hljs-keyword">else</span><br>                crc = (crc &gt;&gt; <span class="hljs-number">1</span>);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> ~crc;<br>&#125;<br><br><span class="hljs-comment">/******************************************************************************</span><br><span class="hljs-comment"> * Name:    CRC-32/MPEG-2  x32+x26+x23+x22+x16+x12+x11+x10+x8+x7+x5+x4+x2+x+1</span><br><span class="hljs-comment"> * Poly:    0x4C11DB7</span><br><span class="hljs-comment"> * Init:    0xFFFFFFF</span><br><span class="hljs-comment"> * Refin:   False</span><br><span class="hljs-comment"> * Refout:  False</span><br><span class="hljs-comment"> * Xorout:  0x0000000</span><br><span class="hljs-comment"> * Note:</span><br><span class="hljs-comment"> *****************************************************************************/</span><br><span class="hljs-type">uint32_t</span> <span class="hljs-title function_">crc32_mpeg_2</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> *data, uint_len length)</span><br>&#123;<br>    <span class="hljs-type">uint8_t</span> i;<br>    <span class="hljs-type">uint32_t</span> crc = <span class="hljs-number">0xffffffff</span>;  <span class="hljs-comment">// Initial value</span><br>    <span class="hljs-keyword">while</span>(length--)<br>    &#123;<br>        crc ^= (<span class="hljs-type">uint32_t</span>)(*data++) &lt;&lt; <span class="hljs-number">24</span>;<span class="hljs-comment">// crc ^=(uint32_t)(*data)&lt;&lt;24; data++;</span><br>        <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">8</span>; ++i)<br>        &#123;<br>            <span class="hljs-keyword">if</span> ( crc &amp; <span class="hljs-number">0x80000000</span> )<br>                crc = (crc &lt;&lt; <span class="hljs-number">1</span>) ^ <span class="hljs-number">0x04C11DB7</span>;<br>            <span class="hljs-keyword">else</span><br>                crc &lt;&lt;= <span class="hljs-number">1</span>;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> crc;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%AE%97%E6%B3%95/" class="category-chain-item">算法</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>CRC校验</div>
+      <div>https://njit-77.github.io/2023/06/10/CRC校验/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>njit-77</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年6月10日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/06/16/Csharp%E7%AE%80%E5%8D%95%E6%93%8D%E4%BD%9CSqlite%E3%80%81Mysql%E6%95%B0%E6%8D%AE%E5%BA%93/" title="C#简单操作Sqlite、Mysql数据库">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">C#简单操作Sqlite、Mysql数据库</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/13/%E5%B8%B8%E7%94%A8%E4%BB%A3%E7%A0%81%E7%89%87%E6%AE%B5/" title="常用代码片段">
+                        <span class="hidden-mobile">常用代码片段</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

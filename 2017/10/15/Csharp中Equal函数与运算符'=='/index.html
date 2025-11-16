@@ -1,0 +1,815 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="njit-77">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="&#x3D;&#x3D;、!&#x3D;、&lt;、&gt;、&lt;&#x3D; 和&gt;&#x3D; 运算符为比较运算符(comparison operator)。C#语言规范5.0中文版中比较运算符的描述如下：  通用类型系统 值类型Equal函数 and 运算符’&#x3D;&#x3D;’常见类型 int、float、double、decimal等虽然继承自ValueType，但其结构体">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Csharp中Equal函数与运算符&#39;&#x3D;&#x3D;&#39;">
+<meta property="og:url" content="https://njit-77.github.io/2017/10/15/Csharp%E4%B8%ADEqual%E5%87%BD%E6%95%B0%E4%B8%8E%E8%BF%90%E7%AE%97%E7%AC%A6'=='/index.html">
+<meta property="og:site_name" content="njit-77&#39;s Blog">
+<meta property="og:description" content="&#x3D;&#x3D;、!&#x3D;、&lt;、&gt;、&lt;&#x3D; 和&gt;&#x3D; 运算符为比较运算符(comparison operator)。C#语言规范5.0中文版中比较运算符的描述如下：  通用类型系统 值类型Equal函数 and 运算符’&#x3D;&#x3D;’常见类型 int、float、double、decimal等虽然继承自ValueType，但其结构体">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://njit-77.github.io/images/Csharp%E4%B8%ADEqual%E5%87%BD%E6%95%B0%E4%B8%8E%E8%BF%90%E7%AE%97%E7%AC%A6">
+<meta property="og:image" content="https://njit-77.github.io/images/Csharp%E4%B8%ADEqual%E5%87%BD%E6%95%B0%E4%B8%8E%E8%BF%90%E7%AE%97%E7%AC%A6">
+<meta property="og:image" content="https://njit-77.github.io/images/Csharp%E4%B8%ADEqual%E5%87%BD%E6%95%B0%E4%B8%8E%E8%BF%90%E7%AE%97%E7%AC%A6">
+<meta property="og:image" content="https://njit-77.github.io/images/Csharp%E4%B8%ADEqual%E5%87%BD%E6%95%B0%E4%B8%8E%E8%BF%90%E7%AE%97%E7%AC%A6">
+<meta property="og:image" content="https://njit-77.github.io/images/Csharp%E4%B8%ADEqual%E5%87%BD%E6%95%B0%E4%B8%8E%E8%BF%90%E7%AE%97%E7%AC%A6">
+<meta property="og:image" content="https://njit-77.github.io/images/Csharp%E4%B8%ADEqual%E5%87%BD%E6%95%B0%E4%B8%8E%E8%BF%90%E7%AE%97%E7%AC%A6">
+<meta property="article:published_time" content="2017-10-14T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-16T08:29:00.883Z">
+<meta property="article:author" content="njit-77">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://njit-77.github.io/images/Csharp%E4%B8%ADEqual%E5%87%BD%E6%95%B0%E4%B8%8E%E8%BF%90%E7%AE%97%E7%AC%A6">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Csharp中Equal函数与运算符&#39;==&#39; - njit-77&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"njit-77.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2021-12-20T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Hello World</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Csharp中Equal函数与运算符&#39;==&#39;"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2017-10-15 00:00" pubdate>
+          2017-10-15 00:00:00
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          26 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Csharp中Equal函数与运算符&#39;==&#39;</h1>
+            
+              <p id="updated-time" class="note note-info" style="">
+                
+                  
+                    本文最后更新于 2025-11-16 16:29:00
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <p>&#x3D;&#x3D;、!&#x3D;、&lt;、&gt;、&lt;&#x3D; 和&gt;&#x3D; 运算符为比较运算符(comparison operator)。C#语言规范5.0中文版中比较运算符的描述如下：</p>
+<p><img src="/images/Csharp%E4%B8%ADEqual%E5%87%BD%E6%95%B0%E4%B8%8E%E8%BF%90%E7%AE%97%E7%AC%A6'=='/1.PNG" srcset="/img/loading.gif" lazyload alt="1"></p>
+<h3 id="通用类型系统"><a href="#通用类型系统" class="headerlink" title="通用类型系统"></a>通用类型系统</h3><p><img src="/images/Csharp%E4%B8%ADEqual%E5%87%BD%E6%95%B0%E4%B8%8E%E8%BF%90%E7%AE%97%E7%AC%A6'=='/2.PNG" srcset="/img/loading.gif" lazyload alt="2"></p>
+<h3 id="值类型Equal函数-and-运算符’-’"><a href="#值类型Equal函数-and-运算符’-’" class="headerlink" title="值类型Equal函数 and 运算符’&#x3D;&#x3D;’"></a>值类型Equal函数 and 运算符’&#x3D;&#x3D;’</h3><h4 id="常见类型-int、float、double、decimal等虽然继承自ValueType，但其结构体内部重写了Equal。"><a href="#常见类型-int、float、double、decimal等虽然继承自ValueType，但其结构体内部重写了Equal。" class="headerlink" title="常见类型 int、float、double、decimal等虽然继承自ValueType，但其结构体内部重写了Equal。"></a>常见类型 int、float、double、decimal等虽然继承自ValueType，但其结构体内部重写了Equal。</h4><h5 id="int，float，double，decimal内部的Equal函数和-‘-’重载符函数。"><a href="#int，float，double，decimal内部的Equal函数和-‘-’重载符函数。" class="headerlink" title="int，float，double，decimal内部的Equal函数和 ‘&#x3D;&#x3D;’重载符函数。"></a>int，float，double，decimal内部的Equal函数和 ‘&#x3D;&#x3D;’重载符函数。</h5><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br></pre></td><td class="code"><pre><code class="hljs c#">Int32<br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">Equals</span>(<span class="hljs-params">Object obj</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">if</span> (!(obj <span class="hljs-keyword">is</span> Int32)) <br>        &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> m_value == ((Int32)obj).m_value;<br>    &#125;<br><br>    [<span class="hljs-meta">System.Runtime.Versioning.NonVersionable</span>]<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">Equals</span>(<span class="hljs-params">Int32 obj</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> m_value == obj;<br>    &#125;<br>&#125;<br><br>Double<br>&#123;<br>    <span class="hljs-comment">// True if obj is another Double with the same value as the current instance.  This is a method of object equality, that only returns true if obj is also a double.</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">Equals</span>(<span class="hljs-params">Object obj</span>)</span> <br>    &#123;<br>        <span class="hljs-keyword">if</span> (!(obj <span class="hljs-keyword">is</span> Double)) <br>        &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        &#125;<br>        <span class="hljs-built_in">double</span> temp = ((Double)obj).m_value;<br><br>        <span class="hljs-comment">// This code below is written this way for performance reasons i.e the != and == check is intentional.</span><br>        <span class="hljs-keyword">if</span> (temp == m_value) <br>        &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> IsNaN(temp) &amp;&amp; IsNaN(m_value);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">Equals</span>(<span class="hljs-params">Double obj</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">if</span> (obj == m_value) <br>        &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> IsNaN(obj) &amp;&amp; IsNaN(m_value);<br>    &#125;<br><br>    [<span class="hljs-meta">System.Runtime.Versioning.NonVersionable</span>]<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">bool</span> <span class="hljs-keyword">operator</span> ==(Double left, Double right) <br>    &#123;<br>        <span class="hljs-keyword">return</span> left == right;<br>    &#125;<br>&#125;<br><br>Single<br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">Equals</span>(<span class="hljs-params">Object obj</span>)</span> <br>    &#123;<br>        <span class="hljs-keyword">if</span> (!(obj <span class="hljs-keyword">is</span> Single)) <br>        &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        &#125;<br>        <span class="hljs-built_in">float</span> temp = ((Single)obj).m_value;<br>        <span class="hljs-keyword">if</span> (temp == m_value) <br>        &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> IsNaN(temp) &amp;&amp; IsNaN(m_value);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">Equals</span>(<span class="hljs-params">Single obj</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">if</span> (obj == m_value) <br>        &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> IsNaN(obj) &amp;&amp; IsNaN(m_value);<br>    &#125;<br><br>    [<span class="hljs-meta">System.Runtime.Versioning.NonVersionable</span>]<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">bool</span> <span class="hljs-keyword">operator</span> ==(Single left, Single right) <br>    &#123;<br>        <span class="hljs-keyword">return</span> left == right;<br>    &#125;		<br>&#125;<br><br>Decimal<br>&#123;<br>    <span class="hljs-comment">// Checks if this Decimal is equal to a given object. Returns true if the given object is a boxed Decimal and its value is equal to the value of this Decimal. Returns false otherwise.</span><br>    [<span class="hljs-meta">System.Security.SecuritySafeCritical</span>]  <span class="hljs-comment">// auto-generated</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">Equals</span>(<span class="hljs-params">Object <span class="hljs-keyword">value</span></span>)</span> <br>    &#123;<br>        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">value</span> <span class="hljs-keyword">is</span> Decimal) <br>        &#123;<br>            Decimal other = (Decimal)<span class="hljs-keyword">value</span>;<br>            <span class="hljs-keyword">return</span> FCallCompare(<span class="hljs-keyword">ref</span> <span class="hljs-keyword">this</span>, <span class="hljs-keyword">ref</span> other) == <span class="hljs-number">0</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;<br><br>    [<span class="hljs-meta">System.Security.SecuritySafeCritical</span>]  <span class="hljs-comment">// auto-generated</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">Equals</span>(<span class="hljs-params">Decimal <span class="hljs-keyword">value</span></span>)</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> FCallCompare(<span class="hljs-keyword">ref</span> <span class="hljs-keyword">this</span>, <span class="hljs-keyword">ref</span> <span class="hljs-keyword">value</span>) == <span class="hljs-number">0</span>;<br>    &#125;<br><br>    [<span class="hljs-meta">System.Security.SecuritySafeCritical</span>]  <span class="hljs-comment">// auto-generated</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">bool</span> <span class="hljs-keyword">operator</span> ==(Decimal d1, Decimal d2) <br>    &#123;<br>        <span class="hljs-keyword">return</span> FCallCompare(<span class="hljs-keyword">ref</span> d1, <span class="hljs-keyword">ref</span> d2) == <span class="hljs-number">0</span>;<br>    &#125;<br><br>    <span class="hljs-comment">//暂时不知道此函数内部代码，如有知道还望告知。根据测试结果，推测如果两个decimal数相等，返回0</span><br>    [<span class="hljs-meta">System.Security.SecurityCritical</span>]  <span class="hljs-comment">// auto-generated</span><br>    [<span class="hljs-meta">ResourceExposure(ResourceScope.None)</span>]<br>    [<span class="hljs-meta">MethodImplAttribute(MethodImplOptions.InternalCall)</span>]<br>    [<span class="hljs-meta">ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)</span>]<br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">extern</span> <span class="hljs-built_in">int</span> <span class="hljs-title">FCallCompare</span>(<span class="hljs-params"><span class="hljs-keyword">ref</span> Decimal d1, <span class="hljs-keyword">ref</span> Decimal d2</span>)</span>;	<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="感兴趣的可去Reference-Source-查看全部代码。"><a href="#感兴趣的可去Reference-Source-查看全部代码。" class="headerlink" title="感兴趣的可去Reference Source 查看全部代码。"></a>感兴趣的可去<a target="_blank" rel="noopener" href="http://referencesource.microsoft.com/#mscorlib">Reference Source </a>查看全部代码。</h5><h5 id="测试代码："><a href="#测试代码：" class="headerlink" title="测试代码："></a>测试代码：</h5><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-comment">//T is int 、float、double、decimal、byte、char</span><br>T a = <span class="hljs-number">1234567890</span>;<span class="hljs-comment">//0.1234567890f、0.123456789、1234567890M、(byte)11、&#x27;a&#x27;</span><br>T b = <span class="hljs-number">1234567890</span>;<span class="hljs-comment">//0.1234567890f、0.123456789、1234567890M、(byte)11、&#x27;a&#x27;</span><br><br>Console.WriteLine(a == b);<span class="hljs-comment">//返回true</span><br>Console.WriteLine(a.Equals(b));<span class="hljs-comment">//返回true</span><br>Console.WriteLine(a.Equals((<span class="hljs-built_in">object</span>)b));<span class="hljs-comment">//返回true</span><br><br><span class="hljs-comment">/*</span><br><span class="hljs-comment">    Console.WriteLine((object)a == b);//编译错误：运算符‘==’无法应用与‘object’和‘T’类型操作数</span><br><span class="hljs-comment">    Console.WriteLine(a == (object)b);//编译错误：运算符‘==’无法应用与‘object’和‘T’类型操作数</span><br><span class="hljs-comment">    //Console.WriteLine((object)a == (object)b);//返回false，下面解释为什么是false。这个是引用类型&#x27;==&#x27;，放到下文介绍</span><br><span class="hljs-comment">*/</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="结论：对于简单常见值类型-int、float、double、decimal等，Equal函数-and-运算符’-’，如果其值相等，返回true；否则，返回false。"><a href="#结论：对于简单常见值类型-int、float、double、decimal等，Equal函数-and-运算符’-’，如果其值相等，返回true；否则，返回false。" class="headerlink" title="结论：对于简单常见值类型 int、float、double、decimal等，Equal函数 and 运算符’&#x3D;&#x3D;’，如果其值相等，返回true；否则，返回false。"></a>结论：对于简单常见值类型 int、float、double、decimal等，Equal函数 and 运算符’&#x3D;&#x3D;’，如果其值相等，返回true；否则，返回false。</h5><h4 id="结构体struct"><a href="#结构体struct" class="headerlink" title="结构体struct"></a>结构体struct</h4><h4 id="ValueType内部的Equals函数"><a href="#ValueType内部的Equals函数" class="headerlink" title="ValueType内部的Equals函数"></a>ValueType内部的Equals函数</h4><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><code class="hljs c#">ValueType<br>&#123;<br>    [<span class="hljs-meta">System.Security.SecuritySafeCritical</span>]<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">Equals</span> (<span class="hljs-params">Object obj</span>)</span> &#123;<br>        BCLDebug.Perf(<span class="hljs-literal">false</span>, <span class="hljs-string">&quot;ValueType::Equals is not fast.  &quot;</span>+<span class="hljs-keyword">this</span>.GetType().FullName+<span class="hljs-string">&quot; should override Equals(Object)&quot;</span>);<br>        <span class="hljs-keyword">if</span> (<span class="hljs-literal">null</span>==obj) &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        &#125;<br>        RuntimeType thisType = (RuntimeType)<span class="hljs-keyword">this</span>.GetType();<br>        RuntimeType thatType = (RuntimeType)obj.GetType();<br><br>        <span class="hljs-keyword">if</span> (thatType!=thisType) &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        &#125;<br><br>        Object thisObj = (Object)<span class="hljs-keyword">this</span>;<br>        Object thisResult, thatResult;<br><br>        <span class="hljs-comment">// if there are no GC references in this object we can avoid reflection </span><br>        <span class="hljs-comment">// and do a fast memcmp</span><br>        <span class="hljs-keyword">if</span> (CanCompareBits(<span class="hljs-keyword">this</span>))<br>            <span class="hljs-keyword">return</span> FastEqualsCheck(thisObj, obj);<br><br>        FieldInfo[] thisFields = thisType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);<br><br>        <span class="hljs-keyword">for</span> (<span class="hljs-built_in">int</span> i=<span class="hljs-number">0</span>; i&lt;thisFields.Length; i++) &#123;<br>            thisResult = ((RtFieldInfo)thisFields[i]).UnsafeGetValue(thisObj);<br>            thatResult = ((RtFieldInfo)thisFields[i]).UnsafeGetValue(obj);<br><br>            <span class="hljs-keyword">if</span> (thisResult == <span class="hljs-literal">null</span>) &#123;<br>                <span class="hljs-keyword">if</span> (thatResult != <span class="hljs-literal">null</span>)<br>                    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>            &#125;<br>            <span class="hljs-keyword">else</span><br>                <span class="hljs-keyword">if</span> (!thisResult.Equals(thatResult)) &#123;<br>                    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>                &#125;<br>        &#125;<br><br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    &#125;<br><br>    [<span class="hljs-meta">System.Security.SecuritySafeCritical</span>]  <span class="hljs-comment">// auto-generated</span><br>    [<span class="hljs-meta">ResourceExposure(ResourceScope.None)</span>]<br>    [<span class="hljs-meta">MethodImplAttribute(MethodImplOptions.InternalCall)</span>]<br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">extern</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">CanCompareBits</span>(<span class="hljs-params">Object obj</span>)</span>;<br><br>    [<span class="hljs-meta">System.Security.SecuritySafeCritical</span>]  <span class="hljs-comment">// auto-generated</span><br>    [<span class="hljs-meta">ResourceExposure(ResourceScope.None)</span>]<br>    [<span class="hljs-meta">MethodImplAttribute(MethodImplOptions.InternalCall)</span>]<br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">extern</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">FastEqualsCheck</span>(<span class="hljs-params">Object a, Object b</span>)</span>;			<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="结构体-只有值类型，重写Equal函数-and-运算符’-’"><a href="#结构体-只有值类型，重写Equal函数-and-运算符’-’" class="headerlink" title="结构体(只有值类型，重写Equal函数 and 运算符’&#x3D;&#x3D;’)"></a>结构体(只有值类型，重写Equal函数 and 运算符’&#x3D;&#x3D;’)</h4><p>测试代码：</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-keyword">struct</span> Point<br>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">double</span> x;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">double</span> y;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">double</span> z;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Point</span>(<span class="hljs-params"><span class="hljs-built_in">double</span> X, <span class="hljs-built_in">double</span> Y, <span class="hljs-built_in">double</span> Z</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">this</span>.x = X;<br>        <span class="hljs-keyword">this</span>.y = Y;<br>        <span class="hljs-keyword">this</span>.z = Z;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">Equals</span>(<span class="hljs-params">Object obj</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">if</span> (!(obj <span class="hljs-keyword">is</span> Point))<br>        &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        &#125;<br><br>        <span class="hljs-keyword">if</span> (((Point)obj).x == <span class="hljs-keyword">this</span>.x)<br>        &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>        &#125;<br><br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">Equals</span>(<span class="hljs-params">Point obj</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">if</span> (obj.x == <span class="hljs-keyword">this</span>.x)<br>        &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>        &#125;<br><br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;<br><br>    <span class="hljs-comment">//运算符“Point.operator ==(Point, Point)”要求也要定义匹配的运算符“!=”</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">bool</span> <span class="hljs-keyword">operator</span> ==(Point left, Point right)<br>    &#123;<br>        <span class="hljs-keyword">return</span> left.x == right.x;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">bool</span> <span class="hljs-keyword">operator</span> !=(Point left, Point right)<br>    &#123;<br>        <span class="hljs-keyword">return</span> left.x != right.x;<br>    &#125;<br>&#125;<br><br>Point p1 = <span class="hljs-keyword">new</span> Point(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>);<br>Point p2 = p1;<br><br>p1.y = <span class="hljs-number">100</span>;<br>Console.WriteLine(p1 == p2);<span class="hljs-comment">//返回true</span><br>Console.WriteLine(p1.Equals(p2)); <span class="hljs-comment">// 返回true</span><br>Console.WriteLine(p1.Equals((<span class="hljs-built_in">object</span>)p2)); <span class="hljs-comment">// 返回true</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="结论：此时程序执行我们重写的Equal函数-and-运算符’-’。"><a href="#结论：此时程序执行我们重写的Equal函数-and-运算符’-’。" class="headerlink" title="结论：此时程序执行我们重写的Equal函数 and 运算符’&#x3D;&#x3D;’。"></a>结论：此时程序执行我们重写的Equal函数 and 运算符’&#x3D;&#x3D;’。</h5><h4 id="结构体-只有值类型，不重写Equal函数-and-运算符’-’"><a href="#结构体-只有值类型，不重写Equal函数-and-运算符’-’" class="headerlink" title="结构体(只有值类型，不重写Equal函数 and 运算符’&#x3D;&#x3D;’)"></a>结构体(只有值类型，不重写Equal函数 and 运算符’&#x3D;&#x3D;’)</h4><p>测试代码：</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-keyword">struct</span> Point<br>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">double</span> x;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">double</span> y;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">double</span> z;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Point</span>(<span class="hljs-params"><span class="hljs-built_in">double</span> X, <span class="hljs-built_in">double</span> Y, <span class="hljs-built_in">double</span> Z</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">this</span>.x = X;<br>        <span class="hljs-keyword">this</span>.y = Y;<br>        <span class="hljs-keyword">this</span>.z = Z;<br>    &#125;<br>&#125;<br><br>Point p1 = <span class="hljs-keyword">new</span> Point(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>);<br>Point p2 = p1;<br><br>Console.WriteLine(p1 == p2);<span class="hljs-comment">//编译错误：运算符&quot;==&quot;无法应用于&quot;Point&quot;和&quot;Point&quot;类型的操作数</span><br>Console.WriteLine(p1.Equals(p2)); <span class="hljs-comment">// 返回true</span><br>Console.WriteLine(p1.Equals((<span class="hljs-built_in">object</span>)p2)); <span class="hljs-comment">// 返回true</span><br>p1.y = <span class="hljs-number">100</span>;<br>Console.WriteLine(p1.Equals(p2)); <span class="hljs-comment">// 返回false</span><br>Console.WriteLine(p1.Equals((<span class="hljs-built_in">object</span>)p2)); <span class="hljs-comment">// 返回false</span><br></code></pre></td></tr></table></figure>
+
+<p>程序执行时，CanCompareBits(this)返回true，代码执行return FastEqualsCheck(thisObj, obj);</p>
+<h5 id="结论：程序判断struct里面所有字段的值，如果全部相等，返回true；否则，返回false。"><a href="#结论：程序判断struct里面所有字段的值，如果全部相等，返回true；否则，返回false。" class="headerlink" title="结论：程序判断struct里面所有字段的值，如果全部相等，返回true；否则，返回false。"></a>结论：程序判断struct里面所有字段的值，如果全部相等，返回true；否则，返回false。</h5><h4 id="复杂结构体-有值类型、引用类型，重写Equal函数-and-运算符’-’"><a href="#复杂结构体-有值类型、引用类型，重写Equal函数-and-运算符’-’" class="headerlink" title="复杂结构体(有值类型、引用类型，重写Equal函数 and 运算符’&#x3D;&#x3D;’)"></a>复杂结构体(有值类型、引用类型，重写Equal函数 and 运算符’&#x3D;&#x3D;’)</h4><p>测试代码：</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-keyword">public</span> <span class="hljs-keyword">struct</span> ValPoint<br>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">double</span> x;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">double</span> y;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">double</span> z;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ValPoint</span>(<span class="hljs-params"><span class="hljs-built_in">double</span> X, <span class="hljs-built_in">double</span> Y, <span class="hljs-built_in">double</span> Z</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">this</span>.x = X;<br>        <span class="hljs-keyword">this</span>.y = Y;<br>        <span class="hljs-keyword">this</span>.z = Z;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">bool</span> <span class="hljs-keyword">operator</span> ==(ValPoint left, ValPoint right)<br>    &#123;<br>        <span class="hljs-keyword">return</span> left.x == right.x;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">bool</span> <span class="hljs-keyword">operator</span> !=(ValPoint left, ValPoint right)<br>    &#123;<br>        <span class="hljs-keyword">return</span> left.x != right.x;<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">RefPoint</span><br>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">double</span> x;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">double</span> y;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">double</span> z;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">RefPoint</span>(<span class="hljs-params"><span class="hljs-built_in">double</span> X, <span class="hljs-built_in">double</span> Y, <span class="hljs-built_in">double</span> Z</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">this</span>.x = X;<br>        <span class="hljs-keyword">this</span>.y = Y;<br>        <span class="hljs-keyword">this</span>.z = Z;<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">struct</span> ValLine<br>&#123;<br>    <span class="hljs-keyword">public</span> ValPoint vPoint;       <span class="hljs-comment">// 值类型成员</span><br><br>    <span class="hljs-keyword">public</span> RefPoint rPoint;       <span class="hljs-comment">// 引用类型成员</span><br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ValLine</span>(<span class="hljs-params">ValPoint vPoint, RefPoint rPoint</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">this</span>.vPoint = vPoint;<br>        <span class="hljs-keyword">this</span>.rPoint = rPoint;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">Equals</span>(<span class="hljs-params">Object obj</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">if</span> (!(obj <span class="hljs-keyword">is</span> ValLine))<br>        &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        &#125;<br><br>        <span class="hljs-keyword">if</span> (((ValLine)obj).vPoint == <span class="hljs-keyword">this</span>.vPoint)<br>        &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>        &#125;<br><br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">Equals</span>(<span class="hljs-params">ValLine obj</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">if</span> (obj.vPoint == <span class="hljs-keyword">this</span>.vPoint)<br>        &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>        &#125;<br><br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">bool</span> <span class="hljs-keyword">operator</span> ==(ValLine left, ValLine right)<br>    &#123;<br>        <span class="hljs-keyword">return</span> left.vPoint == right.vPoint;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">bool</span> <span class="hljs-keyword">operator</span> !=(ValLine left, ValLine right)<br>    &#123;<br>        <span class="hljs-keyword">return</span> left.vPoint != right.vPoint;<br>    &#125;<br>&#125;<br><br><br>ValPoint vPoint = <span class="hljs-keyword">new</span> ValPoint(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>);<br>ValPoint vPoint2 = <span class="hljs-keyword">new</span> ValPoint(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>);<br>ValPoint vPoint3 = <span class="hljs-keyword">new</span> ValPoint(<span class="hljs-number">10</span>, <span class="hljs-number">20</span>, <span class="hljs-number">30</span>);<br>RefPoint rPoint = <span class="hljs-keyword">new</span> RefPoint(<span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>);<br>RefPoint rPoint2 = <span class="hljs-keyword">new</span> RefPoint(<span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br><br>ValLine p1 = <span class="hljs-keyword">new</span> ValLine(vPoint, rPoint);<br>ValLine p2 = p1;<br><br>p2.vPoint = vPoint2;<br>Console.WriteLine(p1 == p2); <span class="hljs-comment">//返回true</span><br>Console.WriteLine(p1.Equals(p2)); <span class="hljs-comment">//返回true</span><br>Console.WriteLine(p1.Equals((<span class="hljs-built_in">object</span>)p2)); <span class="hljs-comment">//返回true</span><br><br>p2 = p1;<br>p2.vPoint = vPoint3;<br>Console.WriteLine(p1 == p2); <span class="hljs-comment">//返回true</span><br>Console.WriteLine(p1.Equals(p2)); <span class="hljs-comment">//返回false</span><br>Console.WriteLine(p1.Equals((<span class="hljs-built_in">object</span>)p2)); <span class="hljs-comment">//返回false</span><br><br>p2 = p1;<br>p2.rPoint = rPoint2;<br>Console.WriteLine(p1 == p2); <span class="hljs-comment">//返回true</span><br>Console.WriteLine(p1.Equals(p2)); <span class="hljs-comment">//返回true</span><br>Console.WriteLine(p1.Equals((<span class="hljs-built_in">object</span>)p2)); <span class="hljs-comment">//返回true</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="结论：此时程序执行我们重写的Equal函数-and-运算符’-’。-1"><a href="#结论：此时程序执行我们重写的Equal函数-and-运算符’-’。-1" class="headerlink" title="结论：此时程序执行我们重写的Equal函数 and 运算符’&#x3D;&#x3D;’。"></a>结论：此时程序执行我们重写的Equal函数 and 运算符’&#x3D;&#x3D;’。</h5><h4 id="复杂结构体-内部值类型、引用类型，不重写Equal函数-and-运算符’-’"><a href="#复杂结构体-内部值类型、引用类型，不重写Equal函数-and-运算符’-’" class="headerlink" title="复杂结构体(内部值类型、引用类型，不重写Equal函数 and 运算符’&#x3D;&#x3D;’)"></a>复杂结构体(内部值类型、引用类型，不重写Equal函数 and 运算符’&#x3D;&#x3D;’)</h4><p>测试代码：</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-keyword">public</span> <span class="hljs-keyword">struct</span> ValPoint<br>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">double</span> x;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">double</span> y;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">double</span> z;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ValPoint</span>(<span class="hljs-params"><span class="hljs-built_in">double</span> X, <span class="hljs-built_in">double</span> Y, <span class="hljs-built_in">double</span> Z</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">this</span>.x = X;<br>        <span class="hljs-keyword">this</span>.y = Y;<br>        <span class="hljs-keyword">this</span>.z = Z;<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">RefPoint</span><br>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">double</span> x;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">double</span> y;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">double</span> z;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">RefPoint</span>(<span class="hljs-params"><span class="hljs-built_in">double</span> X, <span class="hljs-built_in">double</span> Y, <span class="hljs-built_in">double</span> Z</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">this</span>.x = X;<br>        <span class="hljs-keyword">this</span>.y = Y;<br>        <span class="hljs-keyword">this</span>.z = Z;<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">struct</span> ValLine<br>&#123;<br>    <span class="hljs-keyword">public</span> ValPoint vPoint;       <span class="hljs-comment">// 值类型成员</span><br><br>    <span class="hljs-keyword">public</span> RefPoint rPoint;       <span class="hljs-comment">// 引用类型成员</span><br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ValLine</span>(<span class="hljs-params">ValPoint vPoint, RefPoint rPoint</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">this</span>.vPoint = vPoint;<br>        <span class="hljs-keyword">this</span>.rPoint = rPoint;<br>    &#125;<br>&#125;<br><br><br>ValPoint vPoint = <span class="hljs-keyword">new</span> ValPoint(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>);<br>ValPoint vPoint2 = <span class="hljs-keyword">new</span> ValPoint(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>);<br>ValPoint vPoint3 = <span class="hljs-keyword">new</span> ValPoint(<span class="hljs-number">10</span>, <span class="hljs-number">20</span>, <span class="hljs-number">30</span>);<br>RefPoint rPoint = <span class="hljs-keyword">new</span> RefPoint(<span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>);<br>RefPoint rPoint2 = <span class="hljs-keyword">new</span> RefPoint(<span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br><br>ValLine p1 = <span class="hljs-keyword">new</span> ValLine(vPoint, rPoint);<br>ValLine p2 = p1;<br><br>Console.WriteLine(p1 == p2);<span class="hljs-comment">//编译错误：运算符&quot;==&quot;无法应用于&quot;Point&quot;和&quot;Point&quot;类型的操作数</span><br><br>p2.vPoint = vPoint2;<br>Console.WriteLine(p1.Equals(p2)); <span class="hljs-comment">//返回true</span><br>Console.WriteLine(p1.Equals((<span class="hljs-built_in">object</span>)p2)); <span class="hljs-comment">//返回true</span><br><br>p2 = p1;<br>p2.vPoint = vPoint3;<br>Console.WriteLine(p1.Equals(p2)); <span class="hljs-comment">//返回false</span><br>Console.WriteLine(p1.Equals((<span class="hljs-built_in">object</span>)p2)); <span class="hljs-comment">//返回false</span><br><br>p2 = p1;<br>p2.rPoint = rPoint2;<br>Console.WriteLine(p1.Equals(p2)); <span class="hljs-comment">//返回false</span><br>Console.WriteLine(p1.Equals((<span class="hljs-built_in">object</span>)p2)); <span class="hljs-comment">//返回false</span><br></code></pre></td></tr></table></figure>
+
+<p>程序执行时，CanCompareBits(this)返回false，代码执行ValueType类Equal函数的下面语句</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs c#">FieldInfo[] thisFields = thisType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);<br><br><span class="hljs-keyword">for</span> (<span class="hljs-built_in">int</span> i=<span class="hljs-number">0</span>; i&lt;thisFields.Length; i++) &#123;<br>    thisResult = ((RtFieldInfo)thisFields[i]).UnsafeGetValue(thisObj);<br>    thatResult = ((RtFieldInfo)thisFields[i]).UnsafeGetValue(obj);<br><br>    <span class="hljs-keyword">if</span> (thisResult == <span class="hljs-literal">null</span>) &#123;<br>        <span class="hljs-keyword">if</span> (thatResult != <span class="hljs-literal">null</span>)<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;<br>    <span class="hljs-keyword">else</span><br>        <span class="hljs-keyword">if</span> (!thisResult.Equals(thatResult)) &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        &#125;<br>&#125;<br><br><span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br></code></pre></td></tr></table></figure>
+
+<h5 id="结论：程序判断struct里面所有字段-值类型就判断值是否相等；引用类型就判断是否引用相等。"><a href="#结论：程序判断struct里面所有字段-值类型就判断值是否相等；引用类型就判断是否引用相等。" class="headerlink" title="结论：程序判断struct里面所有字段,值类型就判断值是否相等；引用类型就判断是否引用相等。"></a>结论：程序判断struct里面所有字段,值类型就判断值是否相等；引用类型就判断是否引用相等。</h5><h3 id="引用类型Equal函数-and-运算符’-’"><a href="#引用类型Equal函数-and-运算符’-’" class="headerlink" title="引用类型Equal函数 and 运算符’&#x3D;&#x3D;’"></a>引用类型Equal函数 and 运算符’&#x3D;&#x3D;’</h3><h4 id="字符串string"><a href="#字符串string" class="headerlink" title="字符串string"></a>字符串string</h4><p>C#语言规范5.0中文版中的字符串相等运算符介绍<br><img src="/images/Csharp%E4%B8%ADEqual%E5%87%BD%E6%95%B0%E4%B8%8E%E8%BF%90%E7%AE%97%E7%AC%A6'=='/3.PNG" srcset="/img/loading.gif" lazyload alt="3"><br>string的Equal函数和’&#x3D;&#x3D;’重载运算符函数代码</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br></pre></td><td class="code"><pre><code class="hljs c#">String<br>&#123;<br>    <span class="hljs-comment">// Determines whether two strings match.</span><br>    [<span class="hljs-meta">ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)</span>]<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">Equals</span>(<span class="hljs-params">Object obj</span>)</span> &#123;<br>        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span> == <span class="hljs-literal">null</span>)                        <span class="hljs-comment">//this is necessary to guard against reverse-pinvokes and</span><br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> NullReferenceException();  <span class="hljs-comment">//other callers who do not use the callvirt instruction</span><br><br>        String str = obj <span class="hljs-keyword">as</span> String;<br>        <span class="hljs-keyword">if</span> (str == <span class="hljs-literal">null</span>)<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br><br>        <span class="hljs-keyword">if</span> (Object.ReferenceEquals(<span class="hljs-keyword">this</span>, obj))<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br><br>        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.Length != str.Length)<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br><br>        <span class="hljs-keyword">return</span> EqualsHelper(<span class="hljs-keyword">this</span>, str);<br>    &#125;<br><br>    <span class="hljs-comment">// Determines whether two strings match.</span><br>    [<span class="hljs-meta">Pure</span>]<br>    [<span class="hljs-meta">ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)</span>]<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">Equals</span>(<span class="hljs-params">String <span class="hljs-keyword">value</span></span>)</span> &#123;<br>        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span> == <span class="hljs-literal">null</span>)                        <span class="hljs-comment">//this is necessary to guard against reverse-pinvokes and</span><br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> NullReferenceException();  <span class="hljs-comment">//other callers who do not use the callvirt instruction</span><br><br>        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">value</span> == <span class="hljs-literal">null</span>)<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br><br>        <span class="hljs-keyword">if</span> (Object.ReferenceEquals(<span class="hljs-keyword">this</span>, <span class="hljs-keyword">value</span>))<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br><br>        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.Length != <span class="hljs-keyword">value</span>.Length)<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br><br>        <span class="hljs-keyword">return</span> EqualsHelper(<span class="hljs-keyword">this</span>, <span class="hljs-keyword">value</span>);<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">bool</span> <span class="hljs-keyword">operator</span> == (String a, String b) &#123;<br>        <span class="hljs-keyword">return</span> String.Equals(a, b);<br>    &#125;<br><br>    <span class="hljs-comment">// Determines whether two Strings match.</span><br>    [<span class="hljs-meta">Pure</span>]<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">Equals</span>(<span class="hljs-params">String a, String b</span>)</span> &#123;<br>        <span class="hljs-keyword">if</span> ((Object)a==(Object)b) &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>        &#125;<br><br>        <span class="hljs-keyword">if</span> ((Object)a==<span class="hljs-literal">null</span> || (Object)b==<span class="hljs-literal">null</span>) &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        &#125;<br><br>        <span class="hljs-keyword">if</span> (a.Length != b.Length)<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br><br>        <span class="hljs-keyword">return</span> EqualsHelper(a, b);<br>    &#125;<br><br>    [<span class="hljs-meta">System.Security.SecuritySafeCritical</span>]  <span class="hljs-comment">// auto-generated</span><br>    [<span class="hljs-meta">ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)</span>]<br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">unsafe</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">EqualsHelper</span>(<span class="hljs-params">String strA, String strB</span>)</span><br>    &#123;<br>        Contract.Requires(strA != <span class="hljs-literal">null</span>);<br>        Contract.Requires(strB != <span class="hljs-literal">null</span>);<br>        Contract.Requires(strA.Length == strB.Length);<br><br>        <span class="hljs-built_in">int</span> length = strA.Length;<br><br>        <span class="hljs-keyword">fixed</span> (<span class="hljs-built_in">char</span>* ap = &amp;strA.m_firstChar) <span class="hljs-keyword">fixed</span> (<span class="hljs-built_in">char</span>* bp = &amp;strB.m_firstChar)<br>        &#123;<br>            <span class="hljs-built_in">char</span>* a = ap;<br>            <span class="hljs-built_in">char</span>* b = bp;<br><br>            <span class="hljs-comment">// unroll the loop</span><br>            <span class="hljs-meta">#<span class="hljs-keyword">if</span> AMD64</span><br>                <span class="hljs-comment">// for AMD64 bit platform we unroll by 12 and</span><br>                <span class="hljs-comment">// check 3 qword at a time. This is less code</span><br>                <span class="hljs-comment">// than the 32 bit case and is shorter</span><br>                <span class="hljs-comment">// pathlength</span><br><br>                <span class="hljs-keyword">while</span> (length &gt;= <span class="hljs-number">12</span>)<br>                &#123;<br>                    <span class="hljs-keyword">if</span> (*(<span class="hljs-built_in">long</span>*)a     != *(<span class="hljs-built_in">long</span>*)b) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>                    <span class="hljs-keyword">if</span> (*(<span class="hljs-built_in">long</span>*)(a+<span class="hljs-number">4</span>) != *(<span class="hljs-built_in">long</span>*)(b+<span class="hljs-number">4</span>)) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>                    <span class="hljs-keyword">if</span> (*(<span class="hljs-built_in">long</span>*)(a+<span class="hljs-number">8</span>) != *(<span class="hljs-built_in">long</span>*)(b+<span class="hljs-number">8</span>)) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>                    a += <span class="hljs-number">12</span>; b += <span class="hljs-number">12</span>; length -= <span class="hljs-number">12</span>;<br>                &#125;<br>            <span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br>                <span class="hljs-keyword">while</span> (length &gt;= <span class="hljs-number">10</span>)<br>                &#123;<br>                    <span class="hljs-keyword">if</span> (*(<span class="hljs-built_in">int</span>*)a != *(<span class="hljs-built_in">int</span>*)b) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>                    <span class="hljs-keyword">if</span> (*(<span class="hljs-built_in">int</span>*)(a+<span class="hljs-number">2</span>) != *(<span class="hljs-built_in">int</span>*)(b+<span class="hljs-number">2</span>)) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>                    <span class="hljs-keyword">if</span> (*(<span class="hljs-built_in">int</span>*)(a+<span class="hljs-number">4</span>) != *(<span class="hljs-built_in">int</span>*)(b+<span class="hljs-number">4</span>)) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>                    <span class="hljs-keyword">if</span> (*(<span class="hljs-built_in">int</span>*)(a+<span class="hljs-number">6</span>) != *(<span class="hljs-built_in">int</span>*)(b+<span class="hljs-number">6</span>)) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>                    <span class="hljs-keyword">if</span> (*(<span class="hljs-built_in">int</span>*)(a+<span class="hljs-number">8</span>) != *(<span class="hljs-built_in">int</span>*)(b+<span class="hljs-number">8</span>)) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>                    a += <span class="hljs-number">10</span>; b += <span class="hljs-number">10</span>; length -= <span class="hljs-number">10</span>;<br>                &#125;<br>            <span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br>                <span class="hljs-comment">// This depends on the fact that the String objects are</span><br>                <span class="hljs-comment">// always zero terminated and that the terminating zero is not included</span><br>                <span class="hljs-comment">// in the length. For odd string sizes, the last compare will include</span><br>                <span class="hljs-comment">// the zero terminator.</span><br>                <span class="hljs-keyword">while</span> (length &gt; <span class="hljs-number">0</span>) <br>                &#123;<br>                    <span class="hljs-keyword">if</span> (*(<span class="hljs-built_in">int</span>*)a != *(<span class="hljs-built_in">int</span>*)b) <span class="hljs-keyword">break</span>;<br>                    a += <span class="hljs-number">2</span>; b += <span class="hljs-number">2</span>; length -= <span class="hljs-number">2</span>;<br>                &#125;<br><br>            <span class="hljs-keyword">return</span> (length &lt;= <span class="hljs-number">0</span>);<br>        &#125;<br>    &#125;	        <br><br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>Object.ReferenceEquals(this, value)如果this、value是同一个引用，返回true；否则，返回false。</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs c#">&#123;<br>    <span class="hljs-built_in">string</span> a = <span class="hljs-string">&quot;a1!&quot;</span>;<br>    <span class="hljs-built_in">string</span> b = <span class="hljs-string">&quot;a1!&quot;</span>;<br>    Console.WriteLine(Object.ReferenceEquals(a, b));<span class="hljs-comment">//返回true,可以判断编译器将a与b所指向的&quot;a1!&quot;优化成一个地方。</span><br>&#125;<br><br>&#123;<br>    <span class="hljs-built_in">string</span> a = <span class="hljs-string">&quot;Test&quot;</span>;<br>    <span class="hljs-built_in">string</span> b = <span class="hljs-built_in">string</span>.Copy(a);<br>    Console.WriteLine(Object.ReferenceEquals(a, b));<span class="hljs-comment">//返回false</span><br>&#125;<br><br>&#123;<br>    <span class="hljs-built_in">string</span> a = <span class="hljs-string">&quot;Test&quot;</span>;<br>    <span class="hljs-built_in">string</span> b = (<span class="hljs-built_in">string</span>)a.Clone();<br>    Console.WriteLine(Object.ReferenceEquals(a, b));<span class="hljs-comment">//返回true</span><br>&#125;<br><br>&#123;<br>    <span class="hljs-built_in">char</span>[] ch = <span class="hljs-keyword">new</span> <span class="hljs-built_in">char</span>[] &#123; <span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-string">&#x27;A&#x27;</span>, <span class="hljs-string">&#x27;@&#x27;</span> &#125;;<br>    <span class="hljs-built_in">string</span> a = <span class="hljs-string">&quot;aA@&quot;</span>;<br>    <span class="hljs-built_in">string</span> b = <span class="hljs-keyword">new</span> <span class="hljs-built_in">string</span>(ch);<br>    Console.WriteLine(Object.ReferenceEquals(a, b));<span class="hljs-comment">//返回false</span><br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>学习EqualsHelper(String strA, String strB)函数之前，我们先看一段代码</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-keyword">unsafe</span><br>&#123;<br>    <span class="hljs-built_in">char</span>[] firstCharA = <span class="hljs-string">&quot;abc&quot;</span>.ToCharArray();<br>    <span class="hljs-built_in">int</span> length = firstCharA.Length;<br>    <span class="hljs-keyword">fixed</span> (<span class="hljs-built_in">char</span>* ap = firstCharA)<br>    &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-built_in">int</span> i = <span class="hljs-number">0</span>; i &lt; length; i++)<br>        &#123;<br>            Console.WriteLine(*(<span class="hljs-built_in">char</span>*)(ap + i));<br>        &#125;<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">unsafe</span><br>&#123;<br>    <span class="hljs-built_in">int</span>[] firstCharA = <span class="hljs-keyword">new</span> <span class="hljs-built_in">int</span>[] &#123; <span class="hljs-number">1</span>, <span class="hljs-number">20</span>, <span class="hljs-number">300</span> &#125;;<br>    <span class="hljs-built_in">int</span> length = firstCharA.Length;<br>    <span class="hljs-keyword">fixed</span> (<span class="hljs-built_in">int</span>* ap = firstCharA)<br>    &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-built_in">int</span> i = <span class="hljs-number">0</span>; i &lt; length; i++)<br>        &#123;<br>            Console.WriteLine(*(<span class="hljs-built_in">int</span>*)(ap + i));<br>        &#125;<br>    &#125;<br>&#125;            <br><br></code></pre></td></tr></table></figure>
+
+<p><img src="/images/Csharp%E4%B8%ADEqual%E5%87%BD%E6%95%B0%E4%B8%8E%E8%BF%90%E7%AE%97%E7%AC%A6'=='/4.PNG" srcset="/img/loading.gif" lazyload alt="4"></p>
+<p>修改后EqualsHelper(String strA, String strB)函数</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">unsafe</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">EqualsHelper</span>(<span class="hljs-params">String strA, String strB</span>)</span><br>&#123;<br>    Contract.Requires(strA != <span class="hljs-literal">null</span>);<br>    Contract.Requires(strB != <span class="hljs-literal">null</span>);<br>    Contract.Requires(strA.Length == strB.Length);<br><br>    <span class="hljs-built_in">int</span> length = strA.Length;<br><br>    <span class="hljs-built_in">char</span>[] firstCharA = strA.ToCharArray();<br>    <span class="hljs-built_in">char</span>[] firstCharB = strB.ToCharArray();<br><br>    <span class="hljs-keyword">fixed</span> (<span class="hljs-built_in">char</span>* ap = &amp;firstCharA[<span class="hljs-number">0</span>]) <span class="hljs-keyword">fixed</span> (<span class="hljs-built_in">char</span>* bp = &amp;firstCharB[<span class="hljs-number">0</span>])<span class="hljs-comment">//因无法使用m_firstChar，此处是我自行修改。ps：个人认为m_firstChar是指字符串的第一字符，但是无法证明。</span><br>        <span class="hljs-comment">//fixed (char* ap = &amp;strA.m_firstChar) fixed (char* bp = &amp;strB.m_firstChar)</span><br>    &#123;<br>        <span class="hljs-built_in">char</span>* a = ap;<br>        <span class="hljs-built_in">char</span>* b = bp;<br><br>        <span class="hljs-keyword">while</span> (length &gt;= <span class="hljs-number">10</span>)<br>        &#123;<br>            <span class="hljs-keyword">if</span> (*(<span class="hljs-built_in">int</span>*)a != *(<span class="hljs-built_in">int</span>*)b) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>            <span class="hljs-keyword">if</span> (*(<span class="hljs-built_in">int</span>*)(a + <span class="hljs-number">2</span>) != *(<span class="hljs-built_in">int</span>*)(b + <span class="hljs-number">2</span>)) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>            <span class="hljs-keyword">if</span> (*(<span class="hljs-built_in">int</span>*)(a + <span class="hljs-number">4</span>) != *(<span class="hljs-built_in">int</span>*)(b + <span class="hljs-number">4</span>)) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>            <span class="hljs-keyword">if</span> (*(<span class="hljs-built_in">int</span>*)(a + <span class="hljs-number">6</span>) != *(<span class="hljs-built_in">int</span>*)(b + <span class="hljs-number">6</span>)) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>            <span class="hljs-keyword">if</span> (*(<span class="hljs-built_in">int</span>*)(a + <span class="hljs-number">8</span>) != *(<span class="hljs-built_in">int</span>*)(b + <span class="hljs-number">8</span>)) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>            a += <span class="hljs-number">10</span>; b += <span class="hljs-number">10</span>; length -= <span class="hljs-number">10</span>;<br>        &#125;<br><br>        <span class="hljs-comment">// This depends on the fact that the String objects are</span><br>        <span class="hljs-comment">// always zero terminated and that the terminating zero is not included</span><br>        <span class="hljs-comment">// in the length. For odd string sizes, the last compare will include</span><br>        <span class="hljs-comment">// the zero terminator.</span><br>        <span class="hljs-keyword">while</span> (length &gt; <span class="hljs-number">0</span>)<br>        &#123;<br>            <span class="hljs-keyword">if</span> (*(<span class="hljs-built_in">int</span>*)a != *(<span class="hljs-built_in">int</span>*)b) <span class="hljs-keyword">break</span>;<br>            a += <span class="hljs-number">2</span>; b += <span class="hljs-number">2</span>; length -= <span class="hljs-number">2</span>;<br>        &#125;<br><br>        <span class="hljs-keyword">return</span> (length &lt;= <span class="hljs-number">0</span>);<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>修改说明</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs apl">1、fixed (char* ap = &amp;strA.m_firstChar) fixed (char* bp = &amp;strB.m_firstChar)-&gt; fixed (char* ap = &amp;firstCharA[0]) fixed (char* bp = &amp;firstCharB[0])<br>2、(*(int*)a-&gt;获取的数据是两个char值（低位ASCII*65536+高位ASCII）[低位在前，高位在后]。 [char两个字节,范围U+0000到U+FFFF]<br>3、(*(char*)a-&gt;获取的数据是一个char值[见上面测试例子]<br></code></pre></td></tr></table></figure>
+
+<p>测试EqualsHelper(String strA, String strB)函数</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs c#">&#123;<br>    <span class="hljs-built_in">string</span> a = <span class="hljs-string">&quot;abcd&quot;</span>;<br>    <span class="hljs-built_in">string</span> b = <span class="hljs-string">&quot;abcd&quot;</span>;<br>    Console.WriteLine(EqualsHelper(a,b));<span class="hljs-comment">//返回true</span><br>&#125;<br><br>&#123;<br>    <span class="hljs-built_in">string</span> a = <span class="hljs-string">&quot;Test&quot;</span>;<br>    <span class="hljs-built_in">string</span> b = <span class="hljs-built_in">string</span>.Copy(a);<br>    Console.WriteLine(EqualsHelper(a, b));<span class="hljs-comment">//返回true</span><br>&#125;<br><br>&#123;<br>    <span class="hljs-built_in">string</span> a = <span class="hljs-string">&quot;Test&quot;</span>;<br>    <span class="hljs-built_in">string</span> b = (<span class="hljs-built_in">string</span>)a.Clone();<br>    Console.WriteLine(EqualsHelper(a, b));<span class="hljs-comment">//返回true</span><br>&#125;<br><br>&#123;<br>    <span class="hljs-built_in">char</span>[] ch = <span class="hljs-keyword">new</span> <span class="hljs-built_in">char</span>[] &#123; <span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-string">&#x27;A&#x27;</span>, <span class="hljs-string">&#x27;@&#x27;</span> &#125;;<br>    <span class="hljs-built_in">string</span> a = <span class="hljs-string">&quot;aA@&quot;</span>;<br>    <span class="hljs-built_in">string</span> b = <span class="hljs-keyword">new</span> <span class="hljs-built_in">string</span>(ch);<br>    Console.WriteLine(EqualsHelper(a, b));<span class="hljs-comment">//返回true</span><br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>结论：string类型 a &#x3D;&#x3D; b、string.Equals(a, b)、a.Equals(b)、a.Equals((object)b)，如果 a 的值与 b 的值相同，则为 true；否则为 false。</p>
+<h4 id="类class"><a href="#类class" class="headerlink" title="类class"></a>类class</h4><p>C#语言规范5.0中文版中的引用类型相等运算符介绍<br><img src="/images/Csharp%E4%B8%ADEqual%E5%87%BD%E6%95%B0%E4%B8%8E%E8%BF%90%E7%AE%97%E7%AC%A6'=='/5.PNG" srcset="/img/loading.gif" lazyload alt="5"><br><img src="/images/Csharp%E4%B8%ADEqual%E5%87%BD%E6%95%B0%E4%B8%8E%E8%BF%90%E7%AE%97%E7%AC%A6'=='/6.PNG" srcset="/img/loading.gif" lazyload alt="6"></p>
+<p>Object内部的Equals函数</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs c#">Object<br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">virtual</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">Equals</span>(<span class="hljs-params">Object obj</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> RuntimeHelpers.Equals(<span class="hljs-keyword">this</span>, obj);<span class="hljs-comment">//无法查到详细代码</span><br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">Equals</span>(<span class="hljs-params">Object objA, Object objB</span>)</span> <br>    &#123;<br>        <span class="hljs-keyword">if</span> (objA==objB) &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>        &#125;<br>        <span class="hljs-keyword">if</span> (objA==<span class="hljs-literal">null</span> || objB==<span class="hljs-literal">null</span>) &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> objA.Equals(objB);<br>    &#125;<br><br>    [<span class="hljs-meta">ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)</span>]<br>    [<span class="hljs-meta">System.Runtime.Versioning.NonVersionable</span>]<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">ReferenceEquals</span> (<span class="hljs-params">Object objA, Object objB</span>)</span> &#123;<br>        <span class="hljs-keyword">return</span> objA == objB;<br>    &#125;<br>&#125; <br><br></code></pre></td></tr></table></figure>
+
+<p>类(不重写Equal函数 and 运算符’&#x3D;&#x3D;’)</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">RefPoint</span><br>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">double</span> x;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">double</span> y;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">double</span> z;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">RefPoint</span>(<span class="hljs-params"><span class="hljs-built_in">double</span> X, <span class="hljs-built_in">double</span> Y, <span class="hljs-built_in">double</span> Z</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">this</span>.x = X;<br>        <span class="hljs-keyword">this</span>.y = Y;<br>        <span class="hljs-keyword">this</span>.z = Z;<br>    &#125;<br>&#125;<br><br>RefPoint p1 = <span class="hljs-keyword">new</span> RefPoint(<span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>);<br>RefPoint p2 = p1;<br>Console.WriteLine(p1.Equals(p2));<span class="hljs-comment">//返回true</span><br>Console.WriteLine(<span class="hljs-built_in">object</span>.Equals(p1, p2));<span class="hljs-comment">//返回true</span><br>Console.WriteLine(<span class="hljs-built_in">object</span>.ReferenceEquals(p1, p2));<span class="hljs-comment">//返回true</span><br>Console.WriteLine(p1 == p2);<span class="hljs-comment">//返回true</span><br><br>p2 = <span class="hljs-keyword">new</span> RefPoint(<span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>);<span class="hljs-comment">//虽然值一样，但是引用对象不一样</span><br>Console.WriteLine(p1.Equals(p2));<span class="hljs-comment">//返回false</span><br>Console.WriteLine(<span class="hljs-built_in">object</span>.Equals(p1, p2));<span class="hljs-comment">//返回false</span><br>Console.WriteLine(<span class="hljs-built_in">object</span>.ReferenceEquals(p1, p2));<span class="hljs-comment">//返回false</span><br>Console.WriteLine(p1 == p2);<span class="hljs-comment">//返回false</span><br><br></code></pre></td></tr></table></figure>
+
+<p>类(重写Equal函数 and 运算符’&#x3D;&#x3D;’)</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">RefPoint</span><br>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">double</span> x;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">double</span> y;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">double</span> z;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">RefPoint</span>(<span class="hljs-params"><span class="hljs-built_in">double</span> X, <span class="hljs-built_in">double</span> Y, <span class="hljs-built_in">double</span> Z</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">this</span>.x = X;<br>        <span class="hljs-keyword">this</span>.y = Y;<br>        <span class="hljs-keyword">this</span>.z = Z;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">Equals</span>(<span class="hljs-params">Object obj</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">if</span> (!(obj <span class="hljs-keyword">is</span> RefPoint))<br>        &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        &#125;<br><br>        <span class="hljs-keyword">if</span> (((RefPoint)obj).x == <span class="hljs-keyword">this</span>.x)<br>        &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>        &#125;<br><br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">Equals</span>(<span class="hljs-params">RefPoint obj</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">if</span> (obj.x == <span class="hljs-keyword">this</span>.x)<br>        &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>        &#125;<br><br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">bool</span> <span class="hljs-keyword">operator</span> ==(RefPoint left, RefPoint right)<br>    &#123;<br>        <span class="hljs-keyword">return</span> left.x == right.x;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">bool</span> <span class="hljs-keyword">operator</span> !=(RefPoint left, RefPoint right)<br>    &#123;<br>        <span class="hljs-keyword">return</span> left.x != right.x;<br>    &#125;<br>&#125;<br><br>RefPoint p1 = <span class="hljs-keyword">new</span> RefPoint(<span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>);<br>RefPoint p2 = p1;<br>Console.WriteLine(p1.Equals(p2));<span class="hljs-comment">//返回true</span><br>Console.WriteLine(<span class="hljs-built_in">object</span>.Equals(p1, p2));<span class="hljs-comment">//返回true</span><br>Console.WriteLine(<span class="hljs-built_in">object</span>.ReferenceEquals(p1, p2));<span class="hljs-comment">//返回true</span><br>Console.WriteLine(p1 == p2);<span class="hljs-comment">//返回true</span><br><br>p2 = <span class="hljs-keyword">new</span> RefPoint(<span class="hljs-number">4</span>, <span class="hljs-number">50</span>, <span class="hljs-number">60</span>);<br>Console.WriteLine(p1.Equals(p2));<span class="hljs-comment">//返回true</span><br>Console.WriteLine(<span class="hljs-built_in">object</span>.Equals(p1, p2));<span class="hljs-comment">//返回true</span><br>Console.WriteLine(<span class="hljs-built_in">object</span>.ReferenceEquals(p1, p2));<span class="hljs-comment">//返回false</span><br>Console.WriteLine(p1 == p2);<span class="hljs-comment">//返回true</span><br><br></code></pre></td></tr></table></figure>
+
+<p>ReferenceEquals (Object objA, Object objB)返回objA &#x3D;&#x3D; objB。如果objA、 objB引用同一个对象(只判断是否引用同一个对象，即使我们自行重载了’&#x3D;&#x3D;’运算符，也没用)，返回true；否则，返回false。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>先介绍简单值类型，再到结构体，字符串，类。把每个类型Equal和’&#x3D;&#x3D;’用法做个总结，加深自己记忆的同时，也希望能帮助到你。另：本文只代表本人观点，如果有误，还望告知。</p>
+<p>参考<br><a target="_blank" rel="noopener" href="http://www.cnblogs.com/JimmyZhang/archive/2008/01/31/1059383.html">C#类型基础</a><br>C#语言规范5.0中文版<br><a target="_blank" rel="noopener" href="http://referencesource.microsoft.com/#mscorlib">Reference Source </a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Csharp/" class="category-chain-item">Csharp</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Csharp中Equal函数与运算符&#39;==&#39;</div>
+      <div>https://njit-77.github.io/2017/10/15/Csharp中Equal函数与运算符&#39;==&#39;/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>njit-77</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2017年10月15日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/09/21/datalab/" title="datalab笔记">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">datalab笔记</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2017/10/07/Csharp%E4%B8%ADAs%E4%B8%8EIs%E6%95%88%E7%8E%87/" title="Csharp中As与Is效率">
+                        <span class="hidden-mobile">Csharp中As与Is效率</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

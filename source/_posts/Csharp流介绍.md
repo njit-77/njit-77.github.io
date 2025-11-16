@@ -1,7 +1,8 @@
 ---
 title: Csharp流介绍
 date: 2017-09-25
-categories: Csharp
+categories: c#
+tags: c#
 ---
 
 ### FileStream

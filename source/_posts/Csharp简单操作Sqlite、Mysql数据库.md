@@ -1,7 +1,8 @@
 ---
 title: C#简单操作Sqlite、Mysql数据库
 date: 2023-06-16
-categories: wpf
+categories: c#
+tags: c#
 ---
 
 ####  准备工作

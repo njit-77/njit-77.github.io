@@ -1,7 +1,8 @@
 ---
 title: Csharp中Equal函数与运算符'=='
 date: 2017-10-15
-categories: Csharp
+categories: c#
+tags: c#
 ---
 
 ==、!=、<、>、<= 和>= 运算符为比较运算符(comparison operator)。C#语言规范5.0中文版中比较运算符的描述如下：

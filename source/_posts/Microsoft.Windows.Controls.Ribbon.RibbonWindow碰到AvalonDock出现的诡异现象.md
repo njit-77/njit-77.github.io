@@ -2,6 +2,7 @@
 title: Microsoft.Windows.Controls.Ribbon.RibbonWindow 碰到 AvalonDock出现的诡异现象
 date: 2019-09-06
 categories: wpf
+tags: wpf
 ---
 
 ### 部分一

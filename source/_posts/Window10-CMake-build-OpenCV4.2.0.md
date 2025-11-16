@@ -1,7 +1,8 @@
 ---
 title: Window10 CMake 配置OpenCV源码
 date: 2020-05-10
-categories: config
+categories: 配置
+tags: 配置
 ---
 
 #### 下载opencv-4.2.0-vc14_vc15.exe 和 opencv_contrib-4.2.0.zip 并解压

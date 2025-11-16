@@ -2,6 +2,7 @@
 title: wpf当DataGrid列模版是ComboBox时显示信息
 date: 2019-09-13
 categories: wpf
+tags: wpf
 ---
 
 > 实际工作中，有时DataGrid控件某一列显示数据是从Enum集合里面选择出来的，那这时候设置列模版为ComboBox就能满足需求。而关于显示的实际内容，直接是Enum的string()返回值可能不太适合，这时候采用System.ComponentModel.Description是一个很好用的方法。

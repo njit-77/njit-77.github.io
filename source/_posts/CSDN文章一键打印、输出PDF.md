@@ -1,7 +1,7 @@
 ---
 title: CSDN文章一键打印、输出PDF（自动阅读全文、全清爽模式）
 date: 2022-01-12
-categories: config
+categories: other
 ---
 
 按“F12”进入开发者工具，将以下js复制到 console，回车即可一键打印

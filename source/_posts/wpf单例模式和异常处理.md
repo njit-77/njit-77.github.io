@@ -2,6 +2,7 @@
 title: wpf 单例模式和异常处理
 date: 2017-04-12
 categories: wpf
+tags: wpf
 ---
 
 ###   单例模式

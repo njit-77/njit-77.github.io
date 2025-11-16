@@ -2,6 +2,7 @@
 title: wpf DispatcherTimer一些个人看法
 date: 2017-04-25
 categories: wpf
+tags: wpf
 ---
 
 wpf中的DispatcherTimer基本用法，本文不在叙述。主要写一些不同的，来提醒自己不要再犯同样错误。

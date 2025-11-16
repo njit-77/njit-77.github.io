@@ -2,6 +2,7 @@
 title: wpf 启动页面
 date: 2017-06-26
 categories: wpf
+tags: wpf
 ---
 
 wpf软件启动时，加载启动页面。软件初始化完成之后关闭页面。

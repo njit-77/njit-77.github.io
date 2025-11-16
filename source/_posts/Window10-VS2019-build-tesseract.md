@@ -1,7 +1,8 @@
 ---
 title: Window10 VS2019配置tesseract源码
 date: 2020-05-11
-categories: config
+categories: 配置
+tags: 配置
 ---
 
 1、配置tessract源码，折腾了好久[2020.5.5-2020.5.11]，今晚终于配置成功了。

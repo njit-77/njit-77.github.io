@@ -1,7 +1,8 @@
 ---
 title: 重装系统后配置git
 date: 2023-08-30
-categories: config
+categories: 配置
+tags: 配置
 ---
 
 ### 重装系统后配置git

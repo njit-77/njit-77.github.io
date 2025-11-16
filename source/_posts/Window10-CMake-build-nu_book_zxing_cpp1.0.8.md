@@ -1,7 +1,8 @@
 ---
 title: Window 10 CMake build nu-book_zxing-cpp 1.0.8
 date: 2020-05-10
-categories: config
+categories: 配置
+tags: 配置
 ---
 
 #### 打开CMake，设置代码路径，生成路径。

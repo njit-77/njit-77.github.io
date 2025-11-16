@@ -1,7 +1,8 @@
 ---
 title:  vs创建Qt dll，并使用Qt控制台测试
 date: 2020-05-12
-categories: c++
+categories: c/c++
+tags: c/c++
 ---
 
 ### 创建qt dll项目

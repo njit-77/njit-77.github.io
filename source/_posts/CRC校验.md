@@ -2,6 +2,7 @@
 title: CRC校验
 date: 2023-06-10
 categories: 算法
+tags: 算法
 ---
 
 #####  标准CRC生成多项式

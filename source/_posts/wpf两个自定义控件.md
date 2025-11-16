@@ -2,6 +2,7 @@
 title: wpf两个自定义控件
 date: 2019-11-10
 categories: wpf
+tags: wpf
 ---
 
 wpf 两个自定义控件

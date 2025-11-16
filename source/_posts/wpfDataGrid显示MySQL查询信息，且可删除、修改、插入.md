@@ -2,6 +2,7 @@
 title: wpfDataGrid显示MySQL查询信息，且可删除、修改、插入
 date: 2018-10-13
 categories: wpf
+tags: wpf
 ---
 
 1、入行好几年了，工作中使用数据库几率很小(传统行业)。借着十一假期回家机会，学习下数据库。

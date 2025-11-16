@@ -1,7 +1,8 @@
 ---
 title: datalab笔记
 date: 2018-09-21
-categories: c
+categories: c/c++
+tags: c/c++
 ---
 
 首先声明datalab本人未完成，有4道题目没有做出来。本文博客记录下自己的解析，以便以后回忆。如果能帮助到你就更好了，如果觉得本文没啥技术含量，也望多多包涵。

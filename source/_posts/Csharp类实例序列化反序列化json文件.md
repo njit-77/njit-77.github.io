@@ -1,7 +1,8 @@
 ---
 title: Csharp类实例序列化反序列化json文件
 date: 2017-10-01
-categories: Csharp
+categories: c#
+tags: c#
 ---
 
 前言

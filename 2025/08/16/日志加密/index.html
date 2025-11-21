@@ -19,23 +19,24 @@
   <meta name="author" content="njit-77">
   <meta name="keywords" content="">
   
-    <meta name="description" content="博客于2025-11-16-22-23-30，修改搭建方式。">
+    <meta name="description" content="Serilog、NLog 日志加密采用AES方式加密Serilog 日志加密通过继承ITextFormatter，重新定义日志内部逻辑； 12345678910111213141516171819202122232425262728293031323334public class EncryptTextFormatter : Serilog.Formatting.ITextFormatter&amp;#1">
 <meta property="og:type" content="article">
-<meta property="og:title" content="通知">
-<meta property="og:url" content="https://njit-77.github.io/2025/11/16/%E9%80%9A%E7%9F%A5/index.html">
+<meta property="og:title" content="Serilog、NLog 日志加密">
+<meta property="og:url" content="https://njit-77.github.io/2025/08/16/%E6%97%A5%E5%BF%97%E5%8A%A0%E5%AF%86/index.html">
 <meta property="og:site_name" content="njit-77&#39;s Blog">
-<meta property="og:description" content="博客于2025-11-16-22-23-30，修改搭建方式。">
+<meta property="og:description" content="Serilog、NLog 日志加密采用AES方式加密Serilog 日志加密通过继承ITextFormatter，重新定义日志内部逻辑； 12345678910111213141516171819202122232425262728293031323334public class EncryptTextFormatter : Serilog.Formatting.ITextFormatter&amp;#1">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2025-11-16T14:22:27.646Z">
-<meta property="article:modified_time" content="2025-11-16T14:23:56.347Z">
+<meta property="article:published_time" content="2025-08-16T03:26:00.000Z">
+<meta property="article:modified_time" content="2025-11-21T12:31:45.365Z">
 <meta property="article:author" content="njit-77">
+<meta property="article:tag" content="c#">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>通知 - njit-77&#39;s Blog</title>
+  <title>Serilog、NLog 日志加密 - njit-77&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -201,7 +202,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="通知"></span>
+            <span id="subtitle" data-typed-text="Serilog、NLog 日志加密"></span>
           
         </div>
 
@@ -212,8 +213,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-11-16 22:22" pubdate>
-          2025-11-16 22:22:27
+        <time datetime="2025-08-16 11:26" pubdate>
+          2025-08-16 11:26:00
         </time>
       </span>
     
@@ -224,7 +225,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          15 字
+          371 字
         
       </span>
     
@@ -235,7 +236,7 @@
         
         
         
-          1 分钟
+          4 分钟
         
       </span>
     
@@ -281,12 +282,12 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">通知</h1>
+            <h1 id="seo-header">Serilog、NLog 日志加密</h1>
             
               <p id="updated-time" class="note note-info" style="">
                 
                   
-                    本文最后更新于 2025-11-16 22:23:56
+                    本文最后更新于 2025-11-21 20:31:45
                   
                 
               </p>
@@ -294,7 +295,18 @@
             
               <div class="markdown-body">
                 
-                <p>   博客于2025-11-16-22-23-30，修改搭建方式。</p>
+                <h2 id="Serilog、NLog-日志加密"><a href="#Serilog、NLog-日志加密" class="headerlink" title="Serilog、NLog 日志加密"></a>Serilog、NLog 日志加密</h2><h3 id="采用AES方式加密"><a href="#采用AES方式加密" class="headerlink" title="采用AES方式加密"></a>采用AES方式加密</h3><h4 id="Serilog-日志加密"><a href="#Serilog-日志加密" class="headerlink" title="Serilog 日志加密"></a>Serilog 日志加密</h4><p>通过继承ITextFormatter，重新定义日志内部逻辑；</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">EncryptTextFormatter</span> : <span class="hljs-title">Serilog.Formatting.ITextFormatter</span><br>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">byte</span>[] Key = Encoding.UTF8.GetBytes(<span class="hljs-string">&quot;xxx&quot;</span>);<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">byte</span>[] IV = Encoding.UTF8.GetBytes(<span class="hljs-string">&quot;xxx&quot;</span>);<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Format</span>(<span class="hljs-params">LogEvent logEvent, TextWriter output</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">var</span> logMessage =<br>            <span class="hljs-string">$&quot;<span class="hljs-subst">&#123;logEvent.Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz&#125;</span> [<span class="hljs-subst">&#123;logEvent.Level&#125;</span>] <span class="hljs-subst">&#123;logEvent.RenderMessage()&#125;</span><span class="hljs-subst">&#123;logEvent.Exception&#125;</span>&quot;</span>;<br>        <span class="hljs-keyword">var</span> encryptedMessage = Encrypt(logMessage);<br>        output.WriteLine(encryptedMessage);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-built_in">string</span> <span class="hljs-title">Encrypt</span>(<span class="hljs-params"><span class="hljs-built_in">string</span> text</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">using</span> (<span class="hljs-keyword">var</span> aes = Aes.Create())<br>        &#123;<br>            aes.Key = Key;<br>            aes.IV = IV;<br><br>            <span class="hljs-keyword">using</span> (<span class="hljs-keyword">var</span> encryptor = aes.CreateEncryptor(aes.Key, aes.IV))<br>                <span class="hljs-keyword">using</span> (<span class="hljs-keyword">var</span> ms = <span class="hljs-keyword">new</span> MemoryStream())<br>            &#123;<br>                <span class="hljs-keyword">using</span> (<span class="hljs-keyword">var</span> cs = <span class="hljs-keyword">new</span> CryptoStream(ms, encryptor, CryptoStreamMode.Write))<br>                    <span class="hljs-keyword">using</span> (<span class="hljs-keyword">var</span> sw = <span class="hljs-keyword">new</span> StreamWriter(cs))<br>                &#123;<br>                    sw.Write(text);<br>                &#125;<br>                <span class="hljs-keyword">return</span> Convert.ToBase64String(ms.ToArray());<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>注册</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">AddLogger</span>(<span class="hljs-params"><span class="hljs-keyword">this</span> IServiceCollection serviceCollection</span>)</span><br>&#123;<br>    serviceCollection.AddSingleton&lt;Serilog.ILogger&gt;(_ =&gt;<br>                                                    &#123;<br>                                                        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Serilog.LoggerConfiguration()<br>                                                            .Enrich.WithThreadId()<br>                                                            .MinimumLevel.Verbose()<br>                                                            .WriteTo.File(<br>                                                            formatter: <span class="hljs-keyword">new</span> EncryptTextFormatter(),<br>                                                            path: <span class="hljs-string">&quot;./log/log.txt&quot;</span>,<br>                                                            rollingInterval: Serilog.RollingInterval.Day<br>                                                        )<br>                                                            .CreateLogger();<br>                                                    &#125;);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="NLog-日志加密"><a href="#NLog-日志加密" class="headerlink" title="NLog 日志加密"></a>NLog 日志加密</h4><p>通过继承LayoutRenderer，重新定义日志内部逻辑；</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs c#">[<span class="hljs-meta">NLog.LayoutRenderers.LayoutRenderer(<span class="hljs-string">&quot;message&quot;</span>)</span>]<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">sealed</span> <span class="hljs-keyword">class</span> <span class="hljs-title">EncryptedMessage</span> : <span class="hljs-title">NLog.LayoutRenderers.LayoutRenderer</span><br>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">byte</span>[] Key = System.Text.Encoding.UTF8.GetBytes(<br>        <span class="hljs-string">&quot;xxx&quot;</span><br>    );<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">byte</span>[] IV = System.Text.Encoding.UTF8.GetBytes(<span class="hljs-string">&quot;xxx&quot;</span>);<br><br>    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Append</span>(<span class="hljs-params">System.Text.StringBuilder builder, LogEventInfo logEvent</span>)</span><br>    &#123;<br>        <span class="hljs-comment"><span class="hljs-doctag">///</span> 此处加密包含时间、其它属性、消息等所有信息</span><br>        <span class="hljs-comment"><span class="hljs-doctag">///</span> 若只加密消息，自行修改</span><br>        builder.Append(logEvent.Message);<br><br>        <span class="hljs-built_in">string</span> logMessage = builder.ToString();<br><br>        <span class="hljs-built_in">string</span> encryptedMessage = Encrypt(logMessage);<br><br>        builder.Clear();<br><br>        builder.Append(encryptedMessage);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-built_in">string</span> <span class="hljs-title">Encrypt</span>(<span class="hljs-params"><span class="hljs-built_in">string</span> text</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">using</span> (<span class="hljs-keyword">var</span> aes = System.Security.Cryptography.Aes.Create())<br>        &#123;<br>            aes.Key = Key;<br>            aes.IV = IV;<br><br>            <span class="hljs-keyword">using</span> (<span class="hljs-keyword">var</span> encryptor = aes.CreateEncryptor(aes.Key, aes.IV))<br>                <span class="hljs-keyword">using</span> (<span class="hljs-keyword">var</span> ms = <span class="hljs-keyword">new</span> System.IO.MemoryStream())<br>            &#123;<br>                <span class="hljs-keyword">using</span> (<br>                    <span class="hljs-keyword">var</span> cs = <span class="hljs-keyword">new</span> System.Security.Cryptography.CryptoStream(<br>                        ms,<br>                        encryptor,<br>                        System.Security.Cryptography.CryptoStreamMode.Write<br>                    )<br>                )<br>                    <span class="hljs-keyword">using</span> (<span class="hljs-keyword">var</span> sw = <span class="hljs-keyword">new</span> System.IO.StreamWriter(cs))<br>                &#123;<br>                    sw.Write(text);<br>                &#125;<br>                <span class="hljs-keyword">return</span> Convert.ToBase64String(ms.ToArray());<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>注册 EncryptedMessage</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">AddLogger</span>(<span class="hljs-params"><span class="hljs-keyword">this</span> IServiceCollection serviceCollection</span>)</span><br>&#123;<br>    NLog.LogManager.Setup()<br>        .SetupExtensions(s =&gt;<br>                         s.RegisterLayoutRenderer(<span class="hljs-string">&quot;message&quot;</span>, <span class="hljs-keyword">typeof</span>(EncryptedMessage))<br>                        );<br><br>    serviceCollection.AddSingleton&lt;NLog.ILogger&gt;(_ =&gt;<br>                                                 &#123;<br>                                                     <span class="hljs-keyword">return</span> NLog.LogManager.GetCurrentClassLogger();<br>                                                 &#125;);<br>&#125;<br></code></pre></td></tr></table></figure>
+
 
                 
               </div>
@@ -303,6 +315,34 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/c/" class="category-chain-item">c#</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/c/" class="print-no-link">#c#</a>
+      
+    </div>
   
 </div>
 
@@ -312,8 +352,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>通知</div>
-      <div>https://njit-77.github.io/2025/11/16/通知/</div>
+      <div>Serilog、NLog 日志加密</div>
+      <div>https://njit-77.github.io/2025/08/16/日志加密/</div>
     </div>
     <div class="license-meta">
       
@@ -325,7 +365,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年11月16日</div>
+          <div>2025年8月16日</div>
         </div>
       
       
@@ -357,12 +397,18 @@
                   <article class="post-prev col-6">
                     
                     
+                      <a href="/2025/11/16/%E9%80%9A%E7%9F%A5/" title="通知">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">通知</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/08/16/%E6%97%A5%E5%BF%97%E5%8A%A0%E5%AF%86/" title="Serilog、NLog 日志加密">
-                        <span class="hidden-mobile">Serilog、NLog 日志加密</span>
+                      <a href="/2025/05/23/MQTT/" title="MQTT">
+                        <span class="hidden-mobile">MQTT</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

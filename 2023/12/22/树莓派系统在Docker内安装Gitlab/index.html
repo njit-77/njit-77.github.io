@@ -19,24 +19,26 @@
   <meta name="author" content="njit-77">
   <meta name="keywords" content="">
   
-    <meta name="description" content="重装系统后配置SSH123456789101112# 1、备份C:\Users\xxx目录下.ssh文件夹，复制到新系统C:\Users\xxx目录下# 2、设置姓名和邮箱地址git config --global user.name  &quot;FirstName LastName&quot;git config --global user.email &quot;your_email@exa">
+    <meta name="description" content="原文发表在公众号  环境配置树莓派：Raspberry Pi 4B 树莓派系统：1234567891011121314151617181920212223242526272829303132333435363738394041424344454647xxx@ubuntu:&#x2F;gitlab$xxx@ubuntu:&#x2F;gitlab$ uname -aLinux ubuntu 5.15.0-1044-ra">
 <meta property="og:type" content="article">
-<meta property="og:title" content="重装系统后配置git">
-<meta property="og:url" content="https://njit-77.github.io/2023/08/30/%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E5%90%8E%E9%85%8D%E7%BD%AEgit/index.html">
+<meta property="og:title" content="树莓派系统在Docker内安装Gitlab">
+<meta property="og:url" content="https://njit-77.github.io/2023/12/22/%E6%A0%91%E8%8E%93%E6%B4%BE%E7%B3%BB%E7%BB%9F%E5%9C%A8Docker%E5%86%85%E5%AE%89%E8%A3%85Gitlab/index.html">
 <meta property="og:site_name" content="njit-77&#39;s Blog">
-<meta property="og:description" content="重装系统后配置SSH123456789101112# 1、备份C:\Users\xxx目录下.ssh文件夹，复制到新系统C:\Users\xxx目录下# 2、设置姓名和邮箱地址git config --global user.name  &quot;FirstName LastName&quot;git config --global user.email &quot;your_email@exa">
+<meta property="og:description" content="原文发表在公众号  环境配置树莓派：Raspberry Pi 4B 树莓派系统：1234567891011121314151617181920212223242526272829303132333435363738394041424344454647xxx@ubuntu:&#x2F;gitlab$xxx@ubuntu:&#x2F;gitlab$ uname -aLinux ubuntu 5.15.0-1044-ra">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-08-29T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-11-21T12:54:19.604Z">
+<meta property="og:image" content="https://njit-77.github.io/images/%E6%A0%91%E8%8E%93%E6%B4%BE%E7%B3%BB%E7%BB%9F%E5%9C%A8Docker%E5%86%85%E5%AE%89%E8%A3%85Gitlab/1.png">
+<meta property="article:published_time" content="2023-12-22T03:25:00.000Z">
+<meta property="article:modified_time" content="2025-11-21T12:54:28.484Z">
 <meta property="article:author" content="njit-77">
 <meta property="article:tag" content="配置">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://njit-77.github.io/images/%E6%A0%91%E8%8E%93%E6%B4%BE%E7%B3%BB%E7%BB%9F%E5%9C%A8Docker%E5%86%85%E5%AE%89%E8%A3%85Gitlab/1.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>重装系统后配置git - njit-77&#39;s Blog</title>
+  <title>树莓派系统在Docker内安装Gitlab - njit-77&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -202,7 +204,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="重装系统后配置git"></span>
+            <span id="subtitle" data-typed-text="树莓派系统在Docker内安装Gitlab"></span>
           
         </div>
 
@@ -213,8 +215,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-08-30 00:00" pubdate>
-          2023-08-30 00:00:00
+        <time datetime="2023-12-22 11:25" pubdate>
+          2023-12-22 11:25:00
         </time>
       </span>
     
@@ -225,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          153 字
+          636 字
         
       </span>
     
@@ -236,7 +238,7 @@
         
         
         
-          2 分钟
+          6 分钟
         
       </span>
     
@@ -282,12 +284,12 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">重装系统后配置git</h1>
+            <h1 id="seo-header">树莓派系统在Docker内安装Gitlab</h1>
             
               <p id="updated-time" class="note note-info" style="">
                 
                   
-                    本文最后更新于 2025-11-21 20:54:19
+                    本文最后更新于 2025-11-21 20:54:28
                   
                 
               </p>
@@ -295,12 +297,15 @@
             
               <div class="markdown-body">
                 
-                <h4 id="重装系统后配置SSH"><a href="#重装系统后配置SSH" class="headerlink" title="重装系统后配置SSH"></a>重装系统后配置SSH</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs apl"># 1、备份C:\Users\xxx目录下.ssh文件夹，复制到新系统C:\Users\xxx目录下<br><br># 2、设置姓名和邮箱地址<br>git config --global user.name  &quot;FirstName LastName&quot;<br>git config --global user.email &quot;your_email@example.com&quot;<br><br># 3、添加ssh公钥到github （如已添加，跳过）<br># 复制公钥<br>clip &lt; ~/.ssh/id_rsa.pub<br><br># 4、测试<br>ssh -T git@github.com<br></code></pre></td></tr></table></figure>
+                <blockquote>
+<p>原文发表在<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/u9Vmt2imLYYJ5HlicyyY-g">公众号</a></p>
+</blockquote>
+<h4 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h4><h5 id="树莓派：Raspberry-Pi-4B"><a href="#树莓派：Raspberry-Pi-4B" class="headerlink" title="树莓派：Raspberry Pi 4B"></a>树莓派：Raspberry Pi 4B</h5><p><img src="/images/%E6%A0%91%E8%8E%93%E6%B4%BE%E7%B3%BB%E7%BB%9F%E5%9C%A8Docker%E5%86%85%E5%AE%89%E8%A3%85Gitlab/1.png" srcset="/img/loading.gif" lazyload alt="图片"></p>
+<h5 id="树莓派系统："><a href="#树莓派系统：" class="headerlink" title="树莓派系统："></a>树莓派系统：</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><code class="hljs shell">xxx@ubuntu:/gitlab$<br>xxx@ubuntu:/gitlab$ uname -a<br>Linux ubuntu 5.15.0-1044-raspi #47-Ubuntu SMP PREEMPT Tue Nov 21 11:33:46 UTC 2023 aarch64 aarch64 aarch64 GNU/Linux<br>xxx@ubuntu:/gitlab$ cat /proc/version<br>Linux version 5.15.0-1044-raspi (buildd@bos02-arm64-022) (gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0, GNU ld (GNU Binutils for Ubuntu) 2.38) #47-Ubuntu SMP PREEMPT Tue Nov 21 11:33:46 UTC 2023<br>xxx@ubuntu:/gitlab$ cat /proc/cpuinfo<br>processor       : 0<br>BogoMIPS       : 108.00<br>Features       : fp asimd evtstrm crc32 cpuid<br>CPU implementer : 0x41<br>CPU architecture: 8<br>CPU variant     : 0x0<br>CPU part       : 0xd08<br>CPU revision   : 3<br><br>processor       : 1<br>BogoMIPS       : 108.00<br>Features       : fp asimd evtstrm crc32 cpuid<br>CPU implementer : 0x41<br>CPU architecture: 8<br>CPU variant     : 0x0<br>CPU part       : 0xd08<br>CPU revision   : 3<br><br>processor       : 2<br>BogoMIPS       : 108.00<br>Features       : fp asimd evtstrm crc32 cpuid<br>CPU implementer : 0x41<br>CPU architecture: 8<br>CPU variant     : 0x0<br>CPU part       : 0xd08<br>CPU revision   : 3<br><br>processor       : 3<br>BogoMIPS       : 108.00<br>Features       : fp asimd evtstrm crc32 cpuid<br>CPU implementer : 0x41<br>CPU architecture: 8<br>CPU variant     : 0x0<br>CPU part       : 0xd08<br>CPU revision   : 3<br><br>Hardware       : BCM2835<br>Revision       : c03111<br>Serial         : 100000002bc432b4<br>Model           : Raspberry Pi 4 Model B Rev 1.1<br>xxx@ubuntu:/gitlab$<br></code></pre></td></tr></table></figure>
 
-<h4 id="重装系统后配置GPG"><a href="#重装系统后配置GPG" class="headerlink" title="重装系统后配置GPG"></a>重装系统后配置GPG</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apl"># 1、备份C:\Users\xxx目录下.gnupg文件夹，复制到新系统C:\Users\xxx目录下<br></code></pre></td></tr></table></figure>
+<h5 id="Docker系统"><a href="#Docker系统" class="headerlink" title="Docker系统"></a>Docker系统</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs shell">xxx@ubuntu:/gitlab$<br>xxx@ubuntu:/gitlab$ docker version<br>Client: Docker Engine - Community<br>Version:           24.0.5<br>API version:       1.43<br>Go version:       go1.20.6<br>Git commit:       ced0996<br>Built:             Fri Jul 21 20:35:54 2023<br>OS/Arch:           linux/arm64<br>Context:           default<br><br>Server: Docker Engine - Community<br>Engine:<br>Version:          24.0.5<br>API version:      1.43 (minimum version 1.12)<br>Go version:       go1.20.6<br>Git commit:       a61e2b4<br>Built:           Fri Jul 21 20:35:54 2023<br>OS/Arch:         linux/arm64<br>Experimental:     false<br>containerd:<br>Version:          1.6.22<br>GitCommit:       8165feabfdfe38c65b599c4993d227328c231fca<br>runc:<br>Version:          1.1.8<br>GitCommit:       v1.1.8-0-g82f18fe<br>docker-init:<br>Version:          0.19.0<br>GitCommit:       de40ad0<br>xxx@ubuntu:/gitlab$<br></code></pre></td></tr></table></figure>
 
-<h4 id="对提交签名"><a href="#对提交签名" class="headerlink" title="对提交签名"></a>对提交签名</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apl"># 1、要在计算机上的任何本地存储库中默认对所有提交进行签名<br>git config --global commit.gpgsign true<br></code></pre></td></tr></table></figure>
-
+<h4 id="通过docker-compose-yml安装Gitlab"><a href="#通过docker-compose-yml安装Gitlab" class="headerlink" title="通过docker-compose.yml安装Gitlab"></a>通过docker-compose.yml安装Gitlab</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">强制删除目录</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash"><span class="hljs-built_in">sudo</span> <span class="hljs-built_in">rm</span> -rf xxx</span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">安装docker-compose</span><br>sudo apt-get install docker-compose<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">创建Gitlab的配置(etc)、日志(logs)、数据(data)放到容器之外，便于日后升级</span><br>sudo mkdir -p /gitlab/etc<br>sudo mkdir -p /gitlab/logs<br>sudo mkdir -p /gitlab/data<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">新建自签名的证书</span><br>sudo openssl req -new -x509 -days 36500 -nodes -out /gitlab/etc/nginx.pem -keyout /gitlab/etc/nginx.key -subj &quot;/C=US/CN=gitlab/O=gitlab.com&quot;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">新建并编辑文件</span><br>sudo vim /gitlab/docker-compose.yml<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">复制以下内容到文件docker-compose.yml 删除注释</span><br>gitlab:<br>image: yrzr/gitlab-ce-arm64v8:latest #树莓派<br>container_name: gitlab-ce<br>restart: always<br>hostname: &#x27;ip&#x27;<br>environment:<br>TZ: &#x27;Asia/Shanghai&#x27;<br>GITLAB_OMNIBUS_CONFIG: |<br>external_url &quot;https://ip:port&quot;<br>nginx[&#x27;redirect_http_to_https&#x27;] = true<br>letsencrypt[&#x27;enable&#x27;] = false<br>nginx[&#x27;ssl_certificate&#x27;] = &quot;/etc/gitlab/nginx.pem&quot; # docker容器内路径<br>nginx[&#x27;ssl_certificate_key&#x27;] = &quot;/etc/gitlab/nginx.key&quot;<br>gitlab_rails[&#x27;time_zone&#x27;] = &quot;Asia/Shanghai&quot;<br>gitlab_rails[&#x27;smtp_enable&#x27;] = true # 开启 SMTP 功能<br>gitlab_rails[&#x27;smtp_address&#x27;] = &quot;smtp.qq.com&quot;<br>gitlab_rails[&#x27;smtp_port&#x27;] = 465 # 端口不可以选择587，测试过会发送邮件失败<br>gitlab_rails[&#x27;smtp_user_name&#x27;] = &quot;xxx&quot; # * 你的邮箱账号<br>gitlab_rails[&#x27;smtp_password&#x27;] = &quot;xxx&quot; # * 授权码，不是密码<br>gitlab_rails[&#x27;smtp_authentication&#x27;] = &quot;login&quot;<br>gitlab_rails[&#x27;smtp_enable_starttls_auto&#x27;] = false<br>gitlab_rails[&#x27;smtp_tls&#x27;] = true<br>gitlab_rails[&#x27;gitlab_email_from&#x27;] = &#x27;xxx@qq.com&#x27; # * 发件人信息，必须跟‘smtp_user_name’保持一致，否则报错<br>puma[&#x27;worker_timeout&#x27;] = 600<br>puma[&#x27;worker_processes&#x27;] = 1<br>sidekiq[&#x27;max_concurrency&#x27;] = 4<br>prometheus_monitoring[&#x27;enable&#x27;] = false<br>postgresql[&#x27;shared_buffers&#x27;] = &quot;32MB&quot;<br>postgresql[&#x27;max_worker_processes&#x27;] = 1<br>ports:<br>- port:port<br>volumes:<br>- /gitlab/etc:/etc/gitlab<br>- /gitlab/data:/var/opt/gitlab  # 本地目录到docker容器目录<br>- /gitlab/logs:/var/log/gitlab<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">安装gitlab</span><br>sudo docker-compose up -d<br><br><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">进入容器查看初始账号密码(初始账号root)</span><br>docker exec -it gitlab-ce bash<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">进入目录/etc/gitlab</span><br>cd /etc/gitlab<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">查看文件</span><br>ls<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">**** 如下所示</span><br>root@192:/etc/gitlab# ls<br>gitlab-secrets.json initial_root_password nginx.pem           ssh_host_ecdsa_key.pub ssh_host_ed25519_key.pub ssh_host_rsa_key.pub<br>gitlab.rb           nginx.key             ssh_host_ecdsa_key ssh_host_ed25519_key   ssh_host_rsa_key         trusted-certs<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">打开 initial_root_password</span><br>vi initial_root_password<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">**** 如下所示</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">WARNING: This value is valid only <span class="hljs-keyword">in</span> the following conditions</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">        1. If provided manually (either via `GITLAB_ROOT_PASSWORD` environment variable or via `gitlab_rails[<span class="hljs-string">&#x27;initial_root_password&#x27;</span>]` setting <span class="hljs-keyword">in</span> `gi</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">        2. Password hasn<span class="hljs-string">&#x27;t been changed manually, either via UI or via command line.</span></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-string"></span></span><br><span class="hljs-string"><span class="language-bash">#         If the password shown here doesn&#x27;</span>t work, you must reset the admin password following https://docs.gitlab.com/ee/security/reset_user_password.</span><br><br>Password: 1/4phmfAJVGqffWddrS9KJw9wPRKoJg68LwIOvcms98=<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">NOTE: This file will be automatically deleted <span class="hljs-keyword">in</span> the first reconfigure run after 24 hours.</span><br>~<br>~<br>~<br>~<br>~<br>~<br>~<br>~<br>~<br>~<br>~<br>~<br>~<br>~<br>~<br>~<br>~<br>~<br>- initial_root_password 1/9 11%<br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -308,27 +313,6 @@
             <hr/>
             <div>
               <div class="post-metas my-3">
-  
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E9%85%8D%E7%BD%AE/" class="category-chain-item">配置</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
   
   
     <div class="post-meta">
@@ -346,8 +330,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>重装系统后配置git</div>
-      <div>https://njit-77.github.io/2023/08/30/重装系统后配置git/</div>
+      <div>树莓派系统在Docker内安装Gitlab</div>
+      <div>https://njit-77.github.io/2023/12/22/树莓派系统在Docker内安装Gitlab/</div>
     </div>
     <div class="license-meta">
       
@@ -359,7 +343,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年8月30日</div>
+          <div>2023年12月22日</div>
         </div>
       
       
@@ -391,9 +375,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/11/15/%E6%A0%91%E8%8E%93%E6%B4%BENAS/" title="树莓派 NAS">
+                      <a href="/2025/05/23/MQTT/" title="MQTT">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">树莓派 NAS</span>
+                        <span class="hidden-mobile">MQTT</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -401,8 +385,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/06/16/Csharp%E7%AE%80%E5%8D%95%E6%93%8D%E4%BD%9CSqlite%E3%80%81Mysql%E6%95%B0%E6%8D%AE%E5%BA%93/" title="C#简单操作Sqlite、Mysql数据库">
-                        <span class="hidden-mobile">C#简单操作Sqlite、Mysql数据库</span>
+                      <a href="/2023/11/15/%E6%A0%91%E8%8E%93%E6%B4%BENAS/" title="树莓派 NAS">
+                        <span class="hidden-mobile">树莓派 NAS</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

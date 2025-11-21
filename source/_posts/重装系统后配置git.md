@@ -5,8 +5,6 @@ categories: 配置
 tags: 配置
 ---
 
-### 重装系统后配置git
-
 #### 重装系统后配置SSH
 
 ```apl

@@ -229,6 +229,311 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
+        <a href="/2017/10/07/Csharp%E4%B8%ADAs%E4%B8%8EIs%E6%95%88%E7%8E%87/" target="_self">
+          Csharp中As与Is效率
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2017/10/07/Csharp%E4%B8%ADAs%E4%B8%8EIs%E6%95%88%E7%8E%87/" target="_self">
+        <div>
+          十一长假就要过去了，今年假期没有回家，一个人闲着无聊就在看C#语言规范5.0中文版。昨天看了 is运算符和 as运算符，平时项目中也有用到这两种符号，对于其效率也没有进行比较过，趁着假期有空，先看下效率。 is 常用法：1234if(obj is T)&#123;    T value = (T) obj;&#125;  先判断obj是不是T类型，如果是再进行转换。 as 常用法：12345T v
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2017-10-07 00:00" pubdate>
+              2017-10-07
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/c/" class="category-chain-item">c#</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/c/">#c#</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2017/10/07/%E2%80%9C%E5%85%B3%E4%BA%8ECsharp%E8%A3%85%E7%AE%B1%E7%9A%84%E7%96%91%E9%97%AE%E2%80%9D%E5%B8%96%E5%AD%90%E7%9A%84%E4%B8%AA%E4%BA%BA%E7%9C%8B%E6%B3%95/" target="_self">
+          “关于Csharp装箱的疑问”帖子的个人看法
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2017/10/07/%E2%80%9C%E5%85%B3%E4%BA%8ECsharp%E8%A3%85%E7%AE%B1%E7%9A%84%E7%96%91%E9%97%AE%E2%80%9D%E5%B8%96%E5%AD%90%E7%9A%84%E4%B8%AA%E4%BA%BA%E7%9C%8B%E6%B3%95/" target="_self">
+        <div>
+          前言昨天晚上闲着无事，就上csdn逛了一下，突然发现一个帖子很有意思，就点进去看了一下。 问题很精辟 123456int  a = 1;object b=a;object c = b;c = 2;为什么b不会变成2呢？b和c应该指向堆里面的同一个引用啊？大神们的回答也让我深思，这里就把自己的理解写出来，如果有误，还请告知。  本文测试代码：1234567static void Main()&#12
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2017-10-07 00:00" pubdate>
+              2017-10-07
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/c/" class="category-chain-item">c#</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/c/">#c#</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2017/10/01/Csharp%E7%B1%BB%E5%AE%9E%E4%BE%8B%E5%BA%8F%E5%88%97%E5%8C%96%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96json%E6%96%87%E4%BB%B6/" target="_self">
+          Csharp类实例序列化反序列化json文件
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2017/10/01/Csharp%E7%B1%BB%E5%AE%9E%E4%BE%8B%E5%BA%8F%E5%88%97%E5%8C%96%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96json%E6%96%87%E4%BB%B6/" target="_self">
+        <div>
+          前言 前段时间使用了net.json保存对象数据。添加完成后，测试发现300多实例数据保存加载json文件，速度比原方式(BinaryFormatter)慢。但是功能加上后也懒再删掉代码了，索性就采用两种方式。怎么说两种方式也比一种多不是？^_^ net.json详细介绍 测试之前需要引用Newtonsoft.Json.dll，可在官网下载最新安装包。本文写作时最新Version 10.0.3 测
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2017-10-01 00:00" pubdate>
+              2017-10-01
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/c/" class="category-chain-item">c#</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/c/">#c#</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2017/09/25/Csharp%E6%B5%81%E4%BB%8B%E7%BB%8D/" target="_self">
+          Csharp流介绍
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2017/09/25/Csharp%E6%B5%81%E4%BB%8B%E7%BB%8D/" target="_self">
+        <div>
+          FileStream FileStream 详细介绍参考msdn 写数据：123456789101112using (FileStream fs = new FileStream(&quot;File.FileStream&quot;, FileMode.Create, FileAccess.Write))&#123;    for (int i = 0; i &lt; Cycles; i++)
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2017-09-25 00:00" pubdate>
+              2017-09-25
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/c/" class="category-chain-item">c#</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/c/">#c#</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2017/06/26/wpf%E5%90%AF%E5%8A%A8%E9%A1%B5%E9%9D%A2/" target="_self">
+          wpf 启动页面
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2017/06/26/wpf%E5%90%AF%E5%8A%A8%E9%A1%B5%E9%9D%A2/" target="_self">
+        <div>
+          wpf软件启动时，加载启动页面。软件初始化完成之后关闭页面。 App.xaml.cs代码 （实现加载页面功能） 1234567891011121314151617public partial class App : Application&#123;    protected override void OnStartup(StartupEventArgs e)    &#123;
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2017-06-26 00:00" pubdate>
+              2017-06-26
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/wpf/" class="category-chain-item">wpf</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/wpf/">#wpf</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
         <a href="/2017/04/25/wpfDispatcherTimer%E4%B8%80%E4%BA%9B%E4%B8%AA%E4%BA%BA%E7%9C%8B%E6%B3%95/" target="_self">
           wpf DispatcherTimer一些个人看法
         </a>

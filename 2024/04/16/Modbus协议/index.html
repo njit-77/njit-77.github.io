@@ -1,0 +1,873 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="njit-77">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="原文发表在公众号  4种数据模式   基本表格 对象类型 访问类型 内容    离散量输入（Discretes Input） 单个比特 只读 I&#x2F;O系统提供这种类型数据   线圈（Coils） 单个比特 读写 通过应用程序改变这种类型数据   输入寄存器（Input Registers） 16-比特字 只读 I&#x2F;O系统提供这种类型数据   保持寄存器（Holding Regi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Modbus协议">
+<meta property="og:url" content="https://njit-77.github.io/2024/04/16/Modbus%E5%8D%8F%E8%AE%AE/index.html">
+<meta property="og:site_name" content="njit-77&#39;s Blog">
+<meta property="og:description" content="原文发表在公众号  4种数据模式   基本表格 对象类型 访问类型 内容    离散量输入（Discretes Input） 单个比特 只读 I&#x2F;O系统提供这种类型数据   线圈（Coils） 单个比特 读写 通过应用程序改变这种类型数据   输入寄存器（Input Registers） 16-比特字 只读 I&#x2F;O系统提供这种类型数据   保持寄存器（Holding Regi">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://njit-77.github.io/images/Modbus%E5%8D%8F%E8%AE%AE/1.png">
+<meta property="article:published_time" content="2024-04-16T03:59:00.000Z">
+<meta property="article:modified_time" content="2025-12-11T12:32:33.552Z">
+<meta property="article:author" content="njit-77">
+<meta property="article:tag" content="协议">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://njit-77.github.io/images/Modbus%E5%8D%8F%E8%AE%AE/1.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Modbus协议 - njit-77&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"njit-77.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2021-12-20T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Hello World</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Modbus协议"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-04-16 11:59" pubdate>
+          2024-04-16 11:59:00
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          815 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          7 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Modbus协议</h1>
+            
+              <p id="updated-time" class="note note-info" style="">
+                
+                  
+                    本文最后更新于 2025-12-11 20:32:33
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>原文发表在<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Sasls_In-mDYJBCH79_ZPw">公众号</a></p>
+</blockquote>
+<h3 id="4种数据模式"><a href="#4种数据模式" class="headerlink" title="4种数据模式"></a>4种数据模式</h3><table>
+<thead>
+<tr>
+<th align="center">基本表格</th>
+<th align="center">对象类型</th>
+<th align="center">访问类型</th>
+<th align="center">内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">离散量输入（Discretes Input）</td>
+<td align="center">单个比特</td>
+<td align="center">只读</td>
+<td align="center">I&#x2F;O系统提供这种类型数据</td>
+</tr>
+<tr>
+<td align="center">线圈（Coils）</td>
+<td align="center">单个比特</td>
+<td align="center">读写</td>
+<td align="center">通过应用程序改变这种类型数据</td>
+</tr>
+<tr>
+<td align="center">输入寄存器（Input Registers）</td>
+<td align="center">16-比特字</td>
+<td align="center">只读</td>
+<td align="center">I&#x2F;O系统提供这种类型数据</td>
+</tr>
+<tr>
+<td align="center">保持寄存器（Holding Registers）</td>
+<td align="center">16-比特字</td>
+<td align="center">读写</td>
+<td align="center">通过应用程序改变这种类型数据</td>
+</tr>
+</tbody></table>
+<h3 id="3种传输模式"><a href="#3种传输模式" class="headerlink" title="3种传输模式"></a>3种传输模式</h3><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>基于串口的Modbus-RTU</td>
+<td>数据按照标准串口协议进行编码，采用CRC-16_Modbus检验算法。</td>
+</tr>
+<tr>
+<td>基于串口的Modbus-ASCII</td>
+<td>所有数据都是ASCII格式，一个字节的原始数据需要两个字符来表示，效率底，采用LRC校验算法。</td>
+</tr>
+<tr>
+<td>基于网口的Modbus-TCP</td>
+<td>基于TCP&#x2F;IP协议，占用502端口，数据帧主要包括两部分：MBAP（报文头）+ PDU（帧结构）。</td>
+</tr>
+</tbody></table>
+<h3 id="3类功能码"><a href="#3类功能码" class="headerlink" title="3类功能码"></a>3类功能码</h3><p>公共功能码、用户定义功能码、保留功能码</p>
+<p><strong>公共功能码定义</strong></p>
+<p><img src="/images/Modbus%E5%8D%8F%E8%AE%AE/1.png" srcset="/img/loading.gif" lazyload alt="图片"></p>
+<h3 id="Modbus-RTU报文帧"><a href="#Modbus-RTU报文帧" class="headerlink" title="Modbus-RTU报文帧"></a>Modbus-RTU报文帧</h3><table>
+<thead>
+<tr>
+<th align="center">子节点地址</th>
+<th align="center">功能代码</th>
+<th align="center">数据</th>
+<th align="center">CRC校验</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">1个字节</td>
+<td align="center">1个字节</td>
+<td align="center">0~252字节</td>
+<td align="center">2字节（CRC低位，CRC高位）</td>
+</tr>
+</tbody></table>
+<p>Modbus RTU帧最大位256字节</p>
+<p><strong>串口信息（9600Baud、偶校验、1个停止位）</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-number">0x01</span> - Read Coils<br>Address ：<span class="hljs-number">0</span><br>Quantity ：<span class="hljs-number">2000</span><br><br>Tx:<span class="hljs-number">01</span> <span class="hljs-number">01</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">07</span> D0 <span class="hljs-number">3F</span> A6<br><span class="hljs-number">01</span> 表示从机地址<br><span class="hljs-number">01</span> 功能码，表示读线圈<br><span class="hljs-number">0000</span>表示线圈起始地址<br><span class="hljs-number">07</span>D0表示读取线圈数量(<span class="hljs-number">2000</span>)<br><span class="hljs-number">3F</span>A6为CRC校验值<br><br>Rx:<span class="hljs-number">01</span> <span class="hljs-number">01</span> FA <span class="hljs-comment">/*41 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 80/*数据*/</span> <span class="hljs-number">0</span>A DF<br>注释<br><span class="hljs-number">01</span>表示从机地址<br><span class="hljs-number">01</span>功能码，表示读线圈<br>FA表示数据数量<br><br><span class="hljs-number">0</span>ADF 为CRC校验值<br></code></pre></td></tr></table></figure>
+
+<h3 id="Modbus-ASCII报文帧"><a href="#Modbus-ASCII报文帧" class="headerlink" title="Modbus-ASCII报文帧"></a>Modbus-ASCII报文帧</h3><table>
+<thead>
+<tr>
+<th align="center">起始</th>
+<th align="center">子节点地址</th>
+<th align="center">功能代码</th>
+<th align="center">数据</th>
+<th align="center">LRC校验</th>
+<th>结束</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">1字符(冒号字符)</td>
+<td align="center">2字符</td>
+<td align="center">2字符</td>
+<td align="center">0~2*252字符</td>
+<td align="center">2字符</td>
+<td>2字符（CR,LF）</td>
+</tr>
+</tbody></table>
+<p>Modbus ASCII帧最大位2 * 252 + 1 + 2 + 2 + 2 + 2 &#x3D; 513字符</p>
+<p><strong>串口信息（9600Baud、偶校验、1个停止位）</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-number">0x01</span> - Read Coils<br>Address ：<span class="hljs-number">0</span><br>Quantity ：<span class="hljs-number">2000</span><br>   <br>Tx:<span class="hljs-number">3</span>A <span class="hljs-number">30</span> <span class="hljs-number">31</span> <span class="hljs-number">30</span> <span class="hljs-number">31</span> <span class="hljs-number">30</span> <span class="hljs-number">30</span> <span class="hljs-number">30</span> <span class="hljs-number">30</span> <span class="hljs-number">30</span> <span class="hljs-number">37</span> <span class="hljs-number">44</span> <span class="hljs-number">30</span> <span class="hljs-number">32</span> <span class="hljs-number">37</span> <span class="hljs-number">0</span>D <span class="hljs-number">0</span>A<br><span class="hljs-number">3</span>A表示冒号字符    <br><span class="hljs-number">30</span> <span class="hljs-number">31</span>表示字符<span class="hljs-number">0</span>、字符<span class="hljs-number">1</span>，即从机地址<span class="hljs-number">01</span><br><span class="hljs-number">30</span> <span class="hljs-number">31</span>表示字符<span class="hljs-number">0</span>、字符<span class="hljs-number">1</span>，即功能码<span class="hljs-number">01</span>，表示读线圈<br><span class="hljs-number">30</span> <span class="hljs-number">30</span> <span class="hljs-number">30</span> <span class="hljs-number">30</span> 表示字符<span class="hljs-number">0</span>、字符<span class="hljs-number">0</span>、字符<span class="hljs-number">0</span>、字符<span class="hljs-number">0</span>，即线圈起始地址（<span class="hljs-number">0x0000</span>）<br><span class="hljs-number">30</span> <span class="hljs-number">37</span> <span class="hljs-number">44</span> <span class="hljs-number">30</span> 表示字符<span class="hljs-number">0</span>、字符<span class="hljs-number">7</span>、大写字母D、字符<span class="hljs-number">0</span>，即读取线圈数量（<span class="hljs-number">0x07D0</span>）<br><span class="hljs-number">32</span> <span class="hljs-number">37</span>表示LRC校验结果<br><span class="hljs-number">0</span>D <span class="hljs-number">0</span>A   表示回车键CR、换行键LF<br><br>Rx:<span class="hljs-number">3</span>A <span class="hljs-number">30</span> <span class="hljs-number">31</span> <span class="hljs-number">30</span> <span class="hljs-number">31</span> <span class="hljs-number">46</span> <span class="hljs-number">41</span> <span class="hljs-comment">/*34 31 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 38 30/*数据*/</span> <span class="hljs-number">34</span> <span class="hljs-number">33</span> <span class="hljs-number">0</span>D <span class="hljs-number">0</span>A<br><span class="hljs-number">3</span>A表示冒号字符    <br><span class="hljs-number">30</span> <span class="hljs-number">31</span>表示字符<span class="hljs-number">0</span>、字符<span class="hljs-number">1</span>，即从机地址<span class="hljs-number">01</span><br><span class="hljs-number">30</span> <span class="hljs-number">31</span>表示字符<span class="hljs-number">0</span>、字符<span class="hljs-number">1</span>，即功能码<span class="hljs-number">01</span>，表示读线圈<br><span class="hljs-number">46</span> <span class="hljs-number">41</span> 表示大写字母F、大写字母A，即数据数量（<span class="hljs-number">0xFA</span>）<br><br><span class="hljs-number">34</span> <span class="hljs-number">33</span>表示LRC校验结果<br><span class="hljs-number">0</span>D <span class="hljs-number">0</span>A   表示回车键CR、换行键LF<br></code></pre></td></tr></table></figure>
+
+<h3 id="Modbus-TCP报文格式"><a href="#Modbus-TCP报文格式" class="headerlink" title="Modbus-TCP报文格式"></a>Modbus-TCP报文格式</h3><table>
+<thead>
+<tr>
+<th>MBAP报文头</th>
+<th>功能码</th>
+<th>数据</th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>事务元标识符</td>
+<td>协议标识符</td>
+<td>长度</td>
+<td>单元标识符</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2字节</td>
+<td>2字节(0)</td>
+<td>2字节(表示单元标识符 + 功能码 + 数据的字节总数)</td>
+<td>1字节</td>
+<td>1字节</td>
+<td></td>
+</tr>
+</tbody></table>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs c">Tx:<span class="hljs-number">06</span> DF <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">06</span> <span class="hljs-number">01</span> <span class="hljs-number">01</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">07</span> D0<br><span class="hljs-number">06</span>事务处理标识符Hi<br>DF事务处理标识符Lo<br><span class="hljs-number">0000</span>协议标识符<br><span class="hljs-number">0006</span>后续数据长度<br><span class="hljs-number">01</span>单元标识符，即从机地址<br><span class="hljs-number">01</span>功能码<br><span class="hljs-number">0000</span>表示线圈起始地址<br><span class="hljs-number">07</span>D0表示读取线圈数量(<span class="hljs-number">2000</span>)<br>   <br>Rx:<span class="hljs-number">06</span> DF <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> FD <span class="hljs-number">01</span> <span class="hljs-number">01</span> FA <span class="hljs-comment">/*41 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 80/*数据*/</span><br><span class="hljs-number">06</span>事务处理标识符Hi<br>DF事务处理标识符Lo<br><span class="hljs-number">0000</span>协议标识符<br><span class="hljs-number">00F</span>D后续数据长度<br><span class="hljs-number">01</span>单元标识符，即从机地址<br><span class="hljs-number">01</span>功能码<br>FA后续数据长度<br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%8D%8F%E8%AE%AE/" class="print-no-link">#协议</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Modbus协议</div>
+      <div>https://njit-77.github.io/2024/04/16/Modbus协议/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>njit-77</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年4月16日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/06/29/FileZilla%E9%85%8D%E7%BD%AE/" title="FileZilla配置">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">FileZilla配置</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/01/31/OpenCV%20%E5%8D%95%E7%9B%B8%E6%9C%BA%20%E5%86%85%E5%8F%82%E6%95%B0%E6%A0%87%E5%AE%9A%20%EF%BC%88%E6%A3%8B%E7%9B%98%E6%A0%BC%EF%BC%89/" title="OpenCV 单相机 内参数标定 （棋盘格）">
+                        <span class="hidden-mobile">OpenCV 单相机 内参数标定 （棋盘格）</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
